@@ -1,11 +1,12 @@
 <script setup>
-const logout = () => {
-  localStorage.removeItem('access_token')
-  router.push({ name: 'login' })
-}
+import { useAuthStore } from '@/stores/auth'
+import Button from '@/components/Button.vue'
+
+const { logout } = useAuthStore()
 </script>
 
 <template>
-  <div>New Dashboard here</div>
-  <button class="px-4 py-1 bg-green-400 cursor-pointer" @click="logout">Log out</button>
+  <!-- fix: styling of button logout and button component -->
+  <div class="bg-red-800">New Dashboard here</div>
+  <Button classes="px-4 py-1 cursor-pointer" @click="logout">Logout new</Button>
 </template>

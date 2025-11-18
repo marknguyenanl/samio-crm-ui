@@ -1,33 +1,25 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { api } from '@/api/axios.js'
+import { registerAPI } from '@/api/auth.ts'
 import { useRouter } from 'vue-router'
 
 const user = reactive({
   email: '',
   password: '',
 })
-
 const router = useRouter()
 
-function submitForm() {
-  const req_create_user = async () => {
-    const password_confirmation = user.password
-    const response = await api.post('auth/register', {
-      ...user,
-      password_confirmation,
-    })
-
-    if (response.status === 201) {
-      console.log('Successfully created user')
-    }
+async function submitForm() {
+  const status = await registerAPI(user)
+  if (status === 201) {
     router.push({ name: 'login' })
   }
-  req_create_user()
 }
+// todo: add user-role for feat/user-authentication
 </script>
 <template>
-  <div class="mt-50 max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+  <h2 class="font-bold text-center text-2xl mt-50">Register Form</h2>
+  <div class="mt-4 max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
     <form class="space-y-6" @submit.prevent="submitForm">
       <div class="flex flex-col sm:flex-row items-center sm:space-x-4">
         <label class="w-1/4 font-semibold text-gray-700" for="email">Email</label>

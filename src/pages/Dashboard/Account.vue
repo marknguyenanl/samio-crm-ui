@@ -47,7 +47,7 @@ const openFileInput = () => {
 
 <template>
   <!-- form fluently -->
-  <!-- now: avatar image add upload function and work with backend -->
+  <!-- todo: avatar image add upload function and work with backend -->
   <div class="container mx-auto mt-10 md:mt-20 flex flex-col gap-1">
     <!-- click on edit will toggle form input -->
     <h2 class="font-bold text-2xl md:text-4xl">Account:</h2>
