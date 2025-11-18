@@ -9,10 +9,10 @@ function submitForm() {
   alert(`Registering in with ${username.value}`)
   // c: check if has account
   if (username.value === 'admin' && password.value === 'admin') {
-    router.replace('/dashboard')
+    router.replace({ name: '/dashboard' })
   } else {
     // if not having account then route to register
-    router.push('/register')
+    router.push({ name: '/register' })
   }
 }
 </script>

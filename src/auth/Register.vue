@@ -1,30 +1,40 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { reactive } from 'vue'
+import { api } from '@/api/axios.js'
 import { useRouter } from 'vue-router'
 
-const username = ref('')
-const password = ref('')
+const user = reactive({
+  email: '',
+  password: '',
+})
+
 const router = useRouter()
+
 function submitForm() {
-  alert(`Registering in with ${username.value}`)
-  // c: check if has account then send error, else return login
-  if (username.value === 'admin' && password.value === 'admin') {
-    console.error('Account exits already')
-  } else {
-    // if not having account then route to register
-    router.push('/login')
+  const req_create_user = async () => {
+    const password_confirmation = user.password
+    const response = await api.post('auth/register', {
+      ...user,
+      password_confirmation,
+    })
+
+    if (response.status === 201) {
+      console.log('Successfully created user')
+    }
+    router.push({ name: 'login' })
   }
+  req_create_user()
 }
 </script>
 <template>
   <div class="mt-50 max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
     <form class="space-y-6" @submit.prevent="submitForm">
       <div class="flex flex-col sm:flex-row items-center sm:space-x-4">
-        <label class="w-1/4 font-semibold text-gray-700" for="username">Username</label>
+        <label class="w-1/4 font-semibold text-gray-700" for="email">Email</label>
         <input
-          id="username"
+          id="email"
           class="flex-1 border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          v-model="username"
+          v-model="user.email"
         />
       </div>
       <div class="flex flex-col sm:flex-row items-center sm:space-x-4">
@@ -33,7 +43,7 @@ function submitForm() {
           id="password"
           type="password"
           class="flex-1 border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          v-model="password"
+          v-model="user.password"
         />
       </div>
       <div class="flex flex-col gap-4 justify-center mt-4">
