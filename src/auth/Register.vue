@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { registerAPI } from '@/api/auth.ts'
+import { registerAPI } from '@/api/auth'
 import { useRouter } from 'vue-router'
 
 const user = reactive({

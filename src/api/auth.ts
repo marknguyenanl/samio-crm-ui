@@ -1,8 +1,10 @@
 import { api } from "@/api/axios.ts"
 
 export async function loginAPI(data) {
+  const password_confirmation = data.password
   try {
-    const response = await api.post('auth/login', { ...data })
+    const response = await api.post('auth/login', { ...data, password_confirmation })
+    console.log('Successfully sent login request')
     return response.data
   } catch (error) {
     console.log('error is: ', error)
