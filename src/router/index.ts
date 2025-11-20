@@ -1,12 +1,15 @@
-import { createRouter, createWebHistory } from "vue-router"
-import Dashboard from "@/pages/Dashboard.vue"
-import Homepage from "@/pages/Homepage.vue"
-import Docs from "@/pages/Docs.vue"
-import Pricing from "@/pages/Pricing.vue"
 import Login from "@/auth/Login.vue"
 import Register from "@/auth/Register.vue"
-import GuestLayout from "@/layouts/GuestLayout.vue"
 import DashLayout from "@/layouts/DashLayout.vue"
+import GuestLayout from "@/layouts/GuestLayout.vue"
+import Account from "@/pages/Dashboard/Account.vue"
+import Contacts from "@/pages/Dashboard/Contacts.vue"
+import Leads from "@/pages/Dashboard/Leads.vue"
+import Dashboard from "@/pages/Dashboard/Dashboard.vue"
+import Docs from "@/pages/Docs.vue"
+import Homepage from "@/pages/Homepage.vue"
+import Pricing from "@/pages/Pricing.vue"
+import { createRouter, createWebHistory } from "vue-router"
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -14,20 +17,68 @@ export const router = createRouter({
     {
       path: '/',
       component: GuestLayout,
+      meta: { guest: true },
       children: [
-        { path: '', component: Homepage },
-        { path: 'docs', component: Docs },
-        { path: 'pricing', component: Pricing },
-        { path: 'login', component: Login },
-        { path: 'register', component: Register },
-      ]
+        {
+          path: '',
+          name: 'home',
+          component: Homepage
+        },
+        {
+          path: 'docs',
+          name: 'docs',
+          component: Docs
+        },
+        {
+          path: 'pricing',
+          name: 'pricing',
+          component: Pricing
+        },
+        {
+          path: 'login',
+          name: 'login',
+          component: Login
+        },
+        {
+          path: 'register',
+          name: 'register',
+          component: Register
+        },
+      ],
     },
     {
       path: '/dashboard',
       component: DashLayout,
+      meta: { requiresAuth: true },
       children: [
-        { path: '', component: Dashboard }
+        {
+          path: '',
+          name: 'dashboard',
+          component: Dashboard
+        },
+        {
+          path: 'account',
+          name: 'account',
+          component: Account
+        },
+        {
+          path: 'contacts',
+          name: 'contacts',
+          component: Contacts
+        },
+        {
+          path: 'leads',
+          name: 'leads',
+          component: Leads
+        }
       ]
     }
   ]
+})
+
+router.beforeEach((to, from) => {
+  const token = localStorage.getItem("access_token")
+  if (to.meta.requiresAuth && !token) return { name: 'login' }
+  if (to.meta.guest && token) return { name: 'dashboard' }
+  return true
 })
