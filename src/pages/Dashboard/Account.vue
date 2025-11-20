@@ -136,6 +136,7 @@ const openFileInput = () => {
           </button>
         </label>
         <!-- todo: display updated password after click save (checked updated pass then prompt) -->
+        <div class="" v-if="!!newpass">Password is updated</div>
       </div>
     </div>
   </div>

@@ -22,7 +22,7 @@ api.interceptors.response.use(function onFulfilled(response) {
   // Do something with response data
   return response;
 }, function onRejected(error) {
-  // todo: handling response from 401 and request with refresh token
+  // someday: handling response from 401 and request with refresh token
   if (error.response?.status === 401) {
     const auth = useAuthStore()
     auth.logout()
