@@ -1,8 +1,5 @@
-when:
-  event:
-    - push
 
-steps:
+pipeline:
   install:
     image: node:20-alpine
     commands:
@@ -10,17 +7,16 @@ steps:
       - npm ci
     volumes:
       - /cache/npm:/root/.npm
-      - /cache/nx:/workspace/.nx/cache
 
   build:
     image: node:20-alpine
     depends_on: [install]
     commands:
-      - apk add --no-cache git
       - npx nx build frontend --configuration=production
     volumes:
       - /cache/nx:/workspace/.nx/cache
 
+  # Optional: Docker image build
   image-build:
     image: quay.io/buildah/stable
     depends_on: [build]
@@ -29,19 +25,6 @@ steps:
       BUILDAH_ISOLATION: "chroot"
     commands:
       - buildah bud -t harbor.anrostech.com/crm-anros-frontend:latest .
-      - buildah push harbor.anrostech.com/crm-anros-frontend:latest docker://harbor.anrostech.com/crm-anros-frontend:latest
     volumes:
       - /var/lib/containers:/var/lib/containers
-
-  # deploy:
-  #   image: bitnami/kubectl:latest
-  #   depends_on: [image-build]
-  #   secrets: [ kubeconfig ]
-  #   environment:
-  #     KUBECONFIG: /root/.kube/config
-  #   commands:
-  #     - mkdir -p /root/.kube
-  #     - echo "$KUBECONFIG_DATA" > /root/.kube/config
-  #     - kubectl -n production set image deployment/frontend frontend=registry.example.com/frontend:latest
-  #     - kubectl -n production rollout status deployment/frontend
 
