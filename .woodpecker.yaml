@@ -1,32 +1,17 @@
----
 steps:
-  build-and-publish:
-    image: woodpeckerci/plugin-docker-buildx
-    privileged: true
-    settings:
-      # Your target image
-      repo: harbor.anrostech.com/anros/crm-anros-front
+  kaniko:
+    image: gcr.io/kaniko-project/executor:latest
+    commands:
+      - /kaniko/executor \
+          --context=. \
+          --dockerfile=Dockerfile \
+          --destination=harbor.anrostech.com/anros/crm-anros-front:latest \
+          --username=${HARBOR_USERNAME} \
+          --password=${HARBOR_PASSWORD} \
+          --insecure-registry=harbor.anrostech.com \
+          --cache=true
+    secrets: [ admin, anrostech ]
 
-      # Always push :latest (you can add more tags if needed)
-      tags:
-        - latest
-
-      # If you want to tag with commit SHA or git tag as well:
-      # - ${CI_COMMIT_SHA:0:8}
-      # - ${CI_COMMIT_TAG}
-
-      dockerfile: Dockerfile          # assumes Dockerfile is in repo root
-      # dryrun: true                  # uncomment for testing without pushing
-
-      # Login to your Harbor registry
-      logins:
-        - registry: https://harbor.anrostech.com
-          username:
-            from_secret: admin
-          password:
-            from_secret: anrostech
-
-    # Trigger only on main branch, tags or manual runs (adjust as needed)
 when:
-  - event: [push, tag, manual]
-
+  event: [ push, tag, manual ]
+  branch: [ main ]
