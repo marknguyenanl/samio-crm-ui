@@ -1,0 +1,38 @@
+when:
+  - event: push
+    branch: main          # change if you want another branch
+  - event: tag
+  - event: manual
+
+steps:
+  build-and-publish:
+    image: woodpeckerci/plugin-docker-buildx
+    settings:
+      # Your target image
+      repo: harbor.anrostech.com/anros/crm-anros-front
+
+      # Always push :latest (you can add more tags if needed)
+      tags:
+        - latest
+
+      # If you want to tag with commit SHA or git tag as well:
+      # - ${CI_COMMIT_SHA:0:8}
+      # - ${CI_COMMIT_TAG}
+
+      dockerfile: Dockerfile          # assumes Dockerfile is in repo root
+      # dryrun: true                  # uncomment for testing without pushing
+
+      # Login to your Harbor registry
+      logins:
+        - registry: https://harbor.anrostech.com
+          username:
+            from_secret: admin
+          password:
+            from_secret: anrostech
+
+    # Required for Docker-in-Docker / buildx
+    privileged: true
+
+    # Trigger only on main branch, tags or manual runs (adjust as needed)
+    when:
+      - event: [push, tag, manual]
