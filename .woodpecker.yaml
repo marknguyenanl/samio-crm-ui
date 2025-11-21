@@ -1,4 +1,4 @@
-# .woodpecker.yaml – Woodpecker ≥ 2.0 (2025 syntax, no deprecation warnings)
+# .woodpecker.yaml – final version (no confusion)
 steps:
   build-and-push-kaniko:
     image: gcr.io/kaniko-project/executor:latest
@@ -11,13 +11,13 @@ steps:
           --password=${HARBOR_PASSWORD} \
           --cache=true \
           --cache-ttl=168h \
-          --insecure-registry=harbor.anrostech.com   # remove this line if your Harbor has a valid cert
+          --insecure-registry=harbor.anrostech.com   # remove if your cert is valid
     environment:
       HARBOR_USERNAME:
-        from_secret: admin      # ← name of your secret in Woodpecker
+        from_secret: harbor_username   # ← secret name = harbor_username
       HARBOR_PASSWORD:
-        from_secret: Harbor12345      # ← name of your secret in Woodpecker
+        from_secret: harbor_password   # ← secret name = harbor_password
 
 when:
   event: [ push, tag, manual ]
-  branch: [ main ]      # or master / production
+  branch: [ main ]
