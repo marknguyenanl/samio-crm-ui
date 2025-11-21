@@ -1,18 +1,36 @@
-# .woodpecker.yaml – NO secrets required (plain username + password)
+# .woodpecker.yaml – Woodpecker ≥ 2.0
 steps:
   build-and-push:
-    image: woodpeckerci/plugin-kaniko:4
+    image: woodpeckerci/plugin-buildah   # official plugin, rootless by default
     settings:
+      # Registry login (plain text – no secrets if you don't want them)
+      username: admin
+      password: Harbor12345
+
+      # Registry & image
       registry: https://harbor.anrostech.com
-      username: admin                  # ← your real Harbor username here
-      password: Harbor12345            # ← your real Harbor password here (plain text)
       repo: anros/crm-anros-front
       tag: latest
+
+      # Build options (optimized multi-stage Vue build)
       dockerfile: Dockerfile
-      cache: true
-      cache_ttl: 168h                  # optional, keeps build fast
-      insecure_registry: harbor.anrostech.com   # remove this line if you have a valid certificate
+      context: .                     # build context = repo root
+      build_args:
+        - NODE_ENV=production
+
+      # Speed & security
+      cache: true                    # uses Buildah layer cache (very fast after first build)
+      no_cache: false
+      pull: true                     # always pull base images
+
+      # For self-signed Harbor cert
+      insecure: true                 # equivalent to --tls-verify=false
+
+      # Extra tags (optional but recommended)
+      extra_tags:
+        - ${CI_COMMIT_SHA:0:8}       # e.g. abc12345
+        - ${CI_COMMIT_TAG:-latest}   # uses git tag if present
 
 when:
   event: [ push, tag, manual ]
-  branch: [ main ]   # change to master if your default branch is called master
+  branch: [ main ]
