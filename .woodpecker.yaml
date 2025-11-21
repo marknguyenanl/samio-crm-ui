@@ -1,23 +1,18 @@
-# .woodpecker.yaml – final version (no confusion)
+# .woodpecker.yaml – NO secrets required (plain username + password)
 steps:
-  build-and-push-kaniko:
-    image: gcr.io/kaniko-project/executor:latest
-    commands:
-      - /kaniko/executor \
-          --context=${CI_WORKSPACE} \
-          --dockerfile=${CI_WORKSPACE}/Dockerfile \
-          --destination=harbor.anrostech.com/anros/crm-anros-front:latest \
-          --username=${HARBOR_USERNAME} \
-          --password=${HARBOR_PASSWORD} \
-          --cache=true \
-          --cache-ttl=168h \
-          --insecure-registry=harbor.anrostech.com   # remove if your cert is valid
-    environment:
-      HARBOR_USERNAME:
-        from_secret: harbor_username   # ← secret name = harbor_username
-      HARBOR_PASSWORD:
-        from_secret: harbor_password   # ← secret name = harbor_password
+  build-and-push:
+    image: woodpeckerci/plugin-kaniko:4
+    settings:
+      registry: https://harbor.anrostech.com
+      username: admin                  # ← your real Harbor username here
+      password: Harbor12345            # ← your real Harbor password here (plain text)
+      repo: anros/crm-anros-front
+      tag: latest
+      dockerfile: Dockerfile
+      cache: true
+      cache_ttl: 168h                  # optional, keeps build fast
+      insecure_registry: harbor.anrostech.com   # remove this line if you have a valid certificate
 
 when:
   event: [ push, tag, manual ]
-  branch: [ main ]
+  branch: [ main ]   # change to master if your default branch is called master
