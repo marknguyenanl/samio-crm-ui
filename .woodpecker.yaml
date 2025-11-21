@@ -1,3 +1,4 @@
+---
 steps:
   build-and-publish:
     image: woodpeckerci/plugin-docker-buildx
@@ -26,6 +27,6 @@ steps:
             from_secret: anrostech
 
     # Trigger only on main branch, tags or manual runs (adjust as needed)
-    when:
-      - event: [push, tag, manual]
+when:
+  - event: [push, tag, manual]
 
