@@ -1,4 +1,4 @@
-pipeline:
+steps:
   build-and-publish:
     image: woodpeckerci/plugin-docker-buildx
     privileged: true
