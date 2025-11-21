@@ -1,12 +1,7 @@
-when:
-  - event: push
-    branch: main          # change if you want another branch
-  - event: tag
-  - event: manual
-
-steps:
+pipeline:
   build-and-publish:
     image: woodpeckerci/plugin-docker-buildx
+    privileged: true
     settings:
       # Your target image
       repo: harbor.anrostech.com/anros/crm-anros-front
@@ -30,9 +25,3 @@ steps:
           password:
             from_secret: anrostech
 
-    # Required for Docker-in-Docker / buildx
-    privileged: true
-
-    # Trigger only on main branch, tags or manual runs (adjust as needed)
-    when:
-      - event: [push, tag, manual]
