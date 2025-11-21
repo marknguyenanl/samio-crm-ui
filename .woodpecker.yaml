@@ -1,3 +1,11 @@
+clone:
+  git:
+    image: woodpeckerci/plugin-git
+    depth: 1
+    tags: true
+    # This line forces Woodpecker to skip anything in .gitignore
+    skip_verify: false
+    partial: true        # ← this enables .gitignore + .woodpecker.yml ignoring
 # .woodpecker.yaml – Woodpecker ≥ 2.0
 steps:
   build-and-push:
