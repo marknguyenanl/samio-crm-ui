@@ -1,12 +1,13 @@
+import type { LoginPayload } from '@/api/auth'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 
 export const useAuthStore = defineStore('auth', () => {
-  const user = ref(null)
+  const user = ref<LoginPayload | null>(null);
   const router = useRouter()
-  const login = (data, token) => {
+  const login = (data: LoginPayload, token: any) => {
     localStorage.setItem('access_token', token)
     user.value = data
     router.push({ name: 'dashboard' })

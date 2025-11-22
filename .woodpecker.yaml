@@ -6,9 +6,6 @@ clone:
     tags: true
     skip_verify: false
     partial: true
-# Volumes (top-level)
-volumes:
-  npm-cache: {}
 
 # Steps
 steps:

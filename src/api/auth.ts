@@ -1,6 +1,11 @@
 import { api } from "@/api/axios.ts"
 
-export async function loginAPI(data) {
+export interface LoginPayload {
+  email: string;
+  password: string;
+}
+
+export async function loginAPI(data: LoginPayload) {
   const password_confirmation = data.password
   try {
     const response = await api.post('auth/login', { ...data, password_confirmation })
@@ -11,7 +16,7 @@ export async function loginAPI(data) {
   }
 }
 
-export async function registerAPI(data) {
+export async function registerAPI(data: LoginPayload) {
   try {
 
     const response = await api.post('auth/register', {
