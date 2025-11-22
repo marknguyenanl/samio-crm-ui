@@ -19,9 +19,6 @@ steps:
     commands:
       - echo "Installing dependencies..."
       - npm install
-    volumes:
-      - name: npm-cache
-        path: /root/.npm
   # 2️⃣ Build Vue app
   build_vue_app:
     image: node:20
