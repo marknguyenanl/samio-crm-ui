@@ -1,7 +1,7 @@
 # Minimal clone to satisfy CLI
-clone:
-  git:
-    depth: 1
+# clone:
+#   git:
+#     depth: 1
     # image: woodpeckerci/plugin-git
     # tags: true
     # skip_verify: false
