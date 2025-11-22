@@ -3,6 +3,9 @@ import * as am5 from '@amcharts/amcharts5'
 import * as am5xy from '@amcharts/amcharts5/xy'
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated'
 import { onMounted, onBeforeUnmount, useTemplateRef } from 'vue'
+import { contacts } from '@/db'
+
+// todo: count total each stage
 
 const new_leads_chart = useTemplateRef('new_leads')
 let root = null
@@ -15,24 +18,6 @@ onMounted(() => {
       layout: root.verticalLayout,
     }),
   )
-  // Define data
-  let data = [
-    {
-      category: 'Research',
-      value1: 1000,
-      value2: 588,
-    },
-    {
-      category: 'Marketing',
-      value1: 1200,
-      value2: 1800,
-    },
-    {
-      category: 'Sales',
-      value1: 850,
-      value2: 1230,
-    },
-  ]
   // Create Y axis
   let yAxis = chart.yAxes.push(
     am5xy.ValueAxis.new(root, {
@@ -41,34 +26,39 @@ onMounted(() => {
   )
   // Create X axis
   let xAxis = chart.xAxes.push(
-    am5xy.CategoryAxis.new(root, {
+    am5xy.DateAxis.new(root, {
+      min: new Date(2017, 0, 1).getTime(),
+      max: new Date().getTime(),
+      baseInterval: { timeUnit: 'day', count: 1 },
+      dateFormats: { day: 'yyyy/MM/dd' },
+      markUnitChange: false,
       renderer: am5xy.AxisRendererX.new(root, {}),
-      categoryField: 'value2',
     }),
   )
-  xAxis.data.setAll(data)
+  // fix: fix this xAxis to use date not category
+  xAxis.data.setAll(contacts)
   // Create series
   let series1 = chart.series.push(
     am5xy.ColumnSeries.new(root, {
       name: 'Series',
       xAxis: xAxis,
       yAxis: yAxis,
-      valueYField: 'value1',
-      categoryField: 'value2',
+      valueYField: 'stage',
+      categoryField: 'created_at',
     }),
   )
-  series1.data.setAll(data)
+  series1.data.setAll(contacts)
 
   let series2 = chart.series.push(
     am5xy.ColumnSeries.new(root, {
       name: 'Series',
       xAxis: xAxis,
       yAxis: yAxis,
-      valueYField: 'value2',
-      categoryField: 'value2',
+      valueYField: 'stage',
+      categoryField: 'created_at',
     }),
   )
-  series2.data.setAll(data)
+  series2.data.setAll(contacts)
   // Add legend
   let legend = chart.children.push(am5.Legend.new(root, {}))
   legend.data.setAll(chart.series.values)

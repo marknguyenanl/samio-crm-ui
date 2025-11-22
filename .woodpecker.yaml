@@ -8,37 +8,46 @@ clone:
     partial: true        # ← this enables .gitignore + .woodpecker.yml ignoring
 
 steps:
-  build-and-push:
-    image: woodpeckerci/plugin-buildah   # official plugin, rootless by default
-    settings:
-      # Registry login (plain text – no secrets if you don't want them)
-      username: admin
-      password: Harbor12345
+  install_deps:
+    image: node:20
+    commands:
+      # Install dependencies
+      - npm install
+    volumes:
+      - name: npm-cache
+        path: /root/.npm
 
-      # Registry & image
-      registry: https://harbor.anrostech.com
-      repo: anros/crm-anros-front
-      tag: latest
+  build_vue_app:
+    image: node:20
+    commands:
+      # Build Vue app
+      - npm run build
+    depends_on:
+      - install_deps
+    volumes:
+      - name: npm-cache
+        path: /root/.npm
+      - name: vue-dist
+        path: /app/dist
 
-      # Build options (optimized multi-stage Vue build)
-      dockerfile: Dockerfile
-      context: .                     # build context = repo root
-      build_args:
-        - NODE_ENV=production
+  build_image:
+    image: ghcr.io/genuinetools/img:latest
+    commands:
+      # Build a container image using the dist folder
+      - img build -t harbor.anrostech.com/anros/crm-anros-frontend:latest -f ./Containerfile .
+      # Push to registry
+      - echo $HARBOR_PASSWORD | img login my-registry --username $HARBOR_USERNAME --password-stdin
+      - img push my-registry/my-vue-app:latest
+    depends_on:
+      - build_vue_app
+    secrets: [HARBOR_USERNAME, HARBOR_PASSWORD]
+    volumes:
+      - name: vue-dist
+        path: /app/dist
 
-      # Speed & security
-      cache: true                    # uses Buildah layer cache (very fast after first build)
-      no_cache: false
-      pull: true                     # always pull base images
-
-      # For self-signed Harbor cert
-      insecure: true                 # equivalent to --tls-verify=false
-
-      # Extra tags (optional but recommended)
-      extra_tags:
-        - ${CI_COMMIT_SHA:0:8}       # e.g. abc12345
-        - ${CI_COMMIT_TAG:-latest}   # uses git tag if present
-
-when:
-  event: [ push, tag, manual ]
-  branch: [ main ]
+# Volumes for caching
+volumes:
+  npm-cache:
+    temp: {}
+  vue-dist:
+    temp: {}
