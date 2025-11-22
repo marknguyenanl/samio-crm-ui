@@ -1,53 +1,43 @@
+# Minimal clone to satisfy CLI
 clone:
   git:
     image: woodpeckerci/plugin-git
     depth: 1
     tags: true
-    # This line forces Woodpecker to skip anything in .gitignore
     skip_verify: false
-    partial: true        # ← this enables .gitignore + .woodpecker.yml ignoring
+    partial: true
+# Volumes (top-level)
+volumes:
+  npm-cache: {}
 
+# Steps
 steps:
+
+  # 1️⃣ Install dependencies
   install_deps:
     image: node:20
     commands:
-      # Install dependencies
+      - echo "Installing dependencies..."
       - npm install
     volumes:
       - name: npm-cache
         path: /root/.npm
-
+  # 2️⃣ Build Vue app
   build_vue_app:
     image: node:20
     commands:
-      # Build Vue app
+      - echo "Building Vue app..."
       - npm run build
     depends_on:
       - install_deps
-    volumes:
-      - name: npm-cache
-        path: /root/.npm
-      - name: vue-dist
-        path: /app/dist
 
+  # 3️⃣ Build and push container image
   build_image:
     image: ghcr.io/genuinetools/img:latest
     commands:
-      # Build a container image using the dist folder
+      - echo "Building container image..."
       - img build -t harbor.anrostech.com/anros/crm-anros-frontend:latest -f ./Containerfile .
-      # Push to registry
-      - echo $HARBOR_PASSWORD | img login my-registry --username $HARBOR_USERNAME --password-stdin
-      - img push my-registry/my-vue-app:latest
+      - echo 'Harbor12345' | img login harbor.anrostech.com --username 'admin' --password-stdin
+      - img push harbor.anrostech.com/anros/crm-anros-frontend:latest
     depends_on:
       - build_vue_app
-    secrets: [HARBOR_USERNAME, HARBOR_PASSWORD]
-    volumes:
-      - name: vue-dist
-        path: /app/dist
-
-# Volumes for caching
-volumes:
-  npm-cache:
-    temp: {}
-  vue-dist:
-    temp: {}
