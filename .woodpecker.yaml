@@ -13,15 +13,14 @@ steps:
 
   # 3️⃣ Build and push container image
   build_image:
-    image: quay.io/buildah/stable:latest
-    privileged: true   # Needed for building/pushing images
+    image: docker:24-dind  # Docker-in-Docker
+    privileged: true        # Required for DinD
+    environment:
+      DOCKER_HOST: tcp://localhost:2375
     commands:
-      - echo "Building container image with Buildah..."
-      # Create a container from scratch
-      - buildah bud -t harbor.anrostech.com/anros/crm-anros-frontend:latest -f ./Containerfile .
-      # Login to Harbor
-      - echo 'Harbor12345' | buildah login --username admin --password-stdin harbor.anrostech.com
-      # Push the image to Harbor
-      - buildah push harbor.anrostech.com/anros/crm-anros-frontend:latest
+      - echo "Building container image with Docker..."
+      - docker login harbor.anrostech.com -u admin -p 'Harbor12345'
+      - docker build -t harbor.anrostech.com/anros/crm-anros-frontend:latest -f ./Dockerfile .
+      - docker push harbor.anrostech.com/anros/crm-anros-frontend:latest
     depends_on:
       - install_deps
