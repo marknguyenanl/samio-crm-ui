@@ -13,11 +13,15 @@ steps:
 
   # 3️⃣ Build and push container image
   build_image:
-    image: genuinetools/img:latest
+    image: quay.io/buildah/stable:latest
+    privileged: true   # Needed for building/pushing images
     commands:
-      - echo "Building container image..."
-      - img build -t harbor.anrostech.com/anros/crm-anros-frontend:latest -f ./Containerfile .
-      - echo 'Harbor12345' | img login harbor.anrostech.com --username 'admin' --password-stdin
-      - img push harbor.anrostech.com/anros/crm-anros-frontend:latest
+      - echo "Building container image with Buildah..."
+      # Create a container from scratch
+      - buildah bud -t harbor.anrostech.com/anros/crm-anros-frontend:latest -f ./Containerfile .
+      # Login to Harbor
+      - echo 'Harbor12345' | buildah login --username admin --password-stdin harbor.anrostech.com
+      # Push the image to Harbor
+      - buildah push harbor.anrostech.com/anros/crm-anros-frontend:latest
     depends_on:
       - install_deps
