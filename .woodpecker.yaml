@@ -1,7 +1,13 @@
+services:
+  docker:
+    image: docker:dind
+    privileged: true
+
 steps:
   build:
     image: docker:24-dind  # Docker-in-Docker
-    privileged: true        # Required for DinD
+    environment:
+      DOCKER_HOST: tcp://docker:2375
     commands:
       - echo "Building container image with Docker..."
       - docker login harbor.anrostech.com -u admin -p 'Harbor12345'
