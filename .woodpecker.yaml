@@ -13,7 +13,7 @@ steps:
 
   # 3️⃣ Build and push container image
   build_image:
-    image: ghcr.io/genuinetools/img:latest
+    image: genuinetools/img:latest
     commands:
       - echo "Building container image..."
       - img build -t harbor.anrostech.com/anros/crm-anros-frontend:latest -f ./Containerfile .
