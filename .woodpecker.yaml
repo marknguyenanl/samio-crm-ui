@@ -2,8 +2,6 @@ steps:
   build:
     image: docker:24-dind  # Docker-in-Docker
     privileged: true        # Required for DinD
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
     commands:
       - echo "Building container image with Docker..."
       - docker login harbor.anrostech.com -u admin -p 'Harbor12345'
