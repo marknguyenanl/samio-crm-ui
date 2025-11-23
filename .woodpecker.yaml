@@ -1,6 +1,7 @@
 steps:
   build_image:
     image: quay.io/podman/stable
+    privileged: true
     environment:
       REGISTRY: harbor.anrostech.com
       IMAGE: harbor.anrostech.com/anros/crm-anros-frontend:latest
