@@ -1,6 +1,6 @@
 services:
   docker:
-    image: docker:dind
+    image: docker:24-dind
     privileged: true
 
 steps:
