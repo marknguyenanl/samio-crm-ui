@@ -1,15 +1,22 @@
 services:
   docker:
-    image: docker:24-dind
+    image: docker:dind
     privileged: true
+    command: ["dockerd", "-H", "0.0.0.0:2375"]
+    environment:
+      DOCKER_TLS_CERTDIR: ""
+    ports:
+      - 2375
 
 steps:
   build:
-    image: docker:24-dind  # Docker-in-Docker
+    image: docker:25
     environment:
       DOCKER_HOST: tcp://docker:2375
+      DOCKER_TLS_CERTDIR: ""
     commands:
-      - echo "Building container image with Docker..."
+      - docker info
       - docker login harbor.anrostech.com -u admin -p 'Harbor12345'
-      - docker build -t harbor.anrostech.com/anros/crm-anros-frontend:latest -f ./Dockerfile .
+      - docker build -t harbor.anrostech.com/anros/crm-anros-frontend:latest .
       - docker push harbor.anrostech.com/anros/crm-anros-frontend:latest
+
