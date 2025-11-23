@@ -1,16 +1,15 @@
 steps:
-  build_and_push:
-    image: gcr.io/kaniko-project/executor:latest
+  build_image:
+    image: quay.io/podman/stable
     environment:
-      DOCKER_CONFIG: /kaniko/.docker/
+      REGISTRY: harbor.anrostech.com
+      IMAGE: harbor.anrostech.com/anros/crm-anros-frontend:latest
     commands:
-      - |
-        echo "{\"auths\":{\"harbor.anrostech.com\":{\"username\":\"admin\",\"password\":\"Harbor12345\"}}}" \
-        > /kaniko/.docker/config.json
+      - echo "Logging into Harbor..."
+      - podman login $REGISTRY -u admin -p Harbor12345
 
-      - echo "Building & pushing image with Kaniko..."
-      - /kaniko/executor \
-          --context $CI_WORKSPACE \
-          --dockerfile $CI_WORKSPACE/Dockerfile \
-          --destination harbor.anrostech.com/anros/crm-anros-frontend:latest \
-          --cleanup
+      - echo "Building image..."
+      - podman build -t $IMAGE -f Dockerfile .
+
+      - echo "Pushing image..."
+      - podman push $IMAGE
