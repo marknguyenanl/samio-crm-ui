@@ -1,5 +1,5 @@
 steps:
-  build_image:
+  build:
     image: docker:24-dind  # Docker-in-Docker
     privileged: true        # Required for DinD
     volumes:
