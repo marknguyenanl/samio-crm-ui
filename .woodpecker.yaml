@@ -1,22 +1,16 @@
-services:
-  docker:
-    image: docker:dind
-    privileged: true
-    command: ["dockerd", "-H", "0.0.0.0:2375"]
-    environment:
-      DOCKER_TLS_CERTDIR: ""
-    ports:
-      - 2375
-
 steps:
-  build:
-    image: docker:25
+  build_and_push:
+    image: gcr.io/kaniko-project/executor:latest
     environment:
-      DOCKER_HOST: tcp://docker:2375
-      DOCKER_TLS_CERTDIR: ""
+      DOCKER_CONFIG: /kaniko/.docker/
     commands:
-      - docker info
-      - docker login harbor.anrostech.com -u admin -p 'Harbor12345'
-      - docker build -t harbor.anrostech.com/anros/crm-anros-frontend:latest .
-      - docker push harbor.anrostech.com/anros/crm-anros-frontend:latest
+      - |
+        echo "{\"auths\":{\"harbor.anrostech.com\":{\"username\":\"admin\",\"password\":\"Harbor12345\"}}}" \
+        > /kaniko/.docker/config.json
 
+      - echo "Building & pushing image with Kaniko..."
+      - /kaniko/executor \
+          --context $CI_WORKSPACE \
+          --dockerfile $CI_WORKSPACE/Dockerfile \
+          --destination harbor.anrostech.com/anros/crm-anros-frontend:latest \
+          --cleanup
