@@ -1,17 +1,4 @@
 steps:
-
-  # 1️⃣ Install dependencies
-  install_deps:
-    image: node:22-alpine
-    environment:
-      TMPDIR: /tmp
-    commands:
-      - echo "Installing dependencies..."
-      - npm install
-      - npm run build
-  # 2️⃣ Build Vue app    environment:
-
-  # 3️⃣ Build and push container image
   build_image:
     image: docker:24-dind  # Docker-in-Docker
     privileged: true        # Required for DinD
@@ -22,5 +9,3 @@ steps:
       - docker login harbor.anrostech.com -u admin -p 'Harbor12345'
       - docker build -t harbor.anrostech.com/anros/crm-anros-frontend:latest -f ./Dockerfile .
       - docker push harbor.anrostech.com/anros/crm-anros-frontend:latest
-    depends_on:
-      - install_deps
