@@ -1,29 +1,15 @@
-# Minimal clone to satisfy CLI
-# clone:
-#   git:
-#     depth: 1
-    # image: woodpeckerci/plugin-git
-    # tags: true
-    # skip_verify: false
-    # partial: true
-
-# Steps
 steps:
 
   # 1️⃣ Install dependencies
   install_deps:
-    image: node:20
+    image: node:22-alpine
+    environment:
+      TMPDIR: /tmp
     commands:
       - echo "Installing dependencies..."
       - npm install
-  # 2️⃣ Build Vue app
-  build_vue_app:
-    image: node:20
-    commands:
-      - echo "Building Vue app..."
       - npm run build
-    depends_on:
-      - install_deps
+  # 2️⃣ Build Vue app    environment:
 
   # 3️⃣ Build and push container image
   build_image:
@@ -34,4 +20,4 @@ steps:
       - echo 'Harbor12345' | img login harbor.anrostech.com --username 'admin' --password-stdin
       - img push harbor.anrostech.com/anros/crm-anros-frontend:latest
     depends_on:
-      - build_vue_app
+      - install_deps

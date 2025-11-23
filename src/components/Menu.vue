@@ -16,6 +16,7 @@ const { logout } = useAuthStore()
       <!-- fix: fix this searchicon -->
       <li>SearchIcon</li>
       <li>
+        <!-- fix: styling of button logout and button component -->
         <Button classes="rounded-sm bg-green-900 px-4 py-1 cursor-pointer" @click="logout"
           >Logout</Button
         >

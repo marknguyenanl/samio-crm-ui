@@ -6,6 +6,12 @@ import vueDevTools from 'vite-plugin-vue-devtools';
 
 // https://vite.dev/config/
 export default defineConfig({
+  build: {
+    // disables esbuild worker
+    minify: 'esbuild',
+    target: 'esnext',
+    sourcemap: false
+  },
   plugins: [
     vue(),
     vueDevTools(),
@@ -17,4 +23,5 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),
     },
   },
+
 })

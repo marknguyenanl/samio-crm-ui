@@ -1,10 +1,12 @@
 {
-  "files": [],
   "compilerOptions": {
     // other options...
     "target": "ESNext",
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
     "module": "ESNext",
     "moduleResolution": "Node",
+    "outDir": "dist",
     "strict": true,
     "jsx": "preserve",
     "sourceMap": true,
@@ -25,12 +27,8 @@
     "src/**/*.ts",
     "src/**/*.vue"
   ],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    },
-    {
-      "path": "./tsconfig.app.json"
-    }
-  ]
+  "exclude": [
+    "dist",
+    "node_modules"
+  ],
 }
