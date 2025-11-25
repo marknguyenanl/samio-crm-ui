@@ -1,0 +1,11 @@
+services:
+  front:
+    build:
+      context: .
+    env_file:
+      - .env
+      - .env.production
+    container_name: crm-front
+    image: harbor.anrostech.com/anros/crm-front:latest
+    restart: unless-stopped
+
