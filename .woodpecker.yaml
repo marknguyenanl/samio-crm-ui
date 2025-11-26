@@ -16,8 +16,7 @@ steps:
 
       - podman pull $REGISTRY/$IMAGE_BASE || true
       - podman build \
-          --layers \
-          --cache-from ref=$REGISTRY/anros/cache \
-          --cache-to ref=$REGISTRY/anros/cache \
+          --cache-from $REGISTRY/anros/cache \
+          --cache-to $REGISTRY/anros/cache \
           -t $REGISTRY/$IMAGE_BASE:$IMAGE_TAG .
       - podman push $REGISTRY/$IMAGE_BASE:$IMAGE_TAG
