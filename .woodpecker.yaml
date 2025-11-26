@@ -15,5 +15,9 @@ steps:
       - podman login $REGISTRY -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
 
       - podman pull $REGISTRY/$IMAGE_BASE || true
-      - podman build --cache-from $REGISTRY/$IMAGE_BASE -t $REGISTRY/$IMAGE_BASE:$IMAGE_TAG .
+      - podman build \
+          --layers \
+          --cache-from type=registry,ref=$REGISTRY/anros/cache \
+          --cache-to type=registry,ref=$REGISTRY/anros/cache,mode=max \
+          -t $REGISTRY/$IMAGE_BASE:$IMAGE_TAG .
       - podman push $REGISTRY/$IMAGE_BASE:$IMAGE_TAG
