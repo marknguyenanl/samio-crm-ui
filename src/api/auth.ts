@@ -17,11 +17,11 @@ export async function loginAPI(data: LoginPayload) {
 }
 
 export async function registerAPI(data: LoginPayload) {
+  const password_confirmation = data.password
   try {
-
     const response = await api.post('auth/register', {
       ...data,
-      password_confirmation: data.password,
+      password_confirmation,
     })
     if (response.status === 201) {
       console.log('Successfully created user')
