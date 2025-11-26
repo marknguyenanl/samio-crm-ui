@@ -4,7 +4,7 @@ steps:
     privileged: true
     environment:
       REGISTRY: harbor.anrostech.com
-      IMAGE_NAME: anros/crm-front
+      IMAGE_BASE: anros/crm-front
       IMAGE_TAG: latest
       REGISTRY_USER:
         from_secret: registry_user
@@ -14,5 +14,6 @@ steps:
       - echo "Logging into Harbor..."
       - podman login $REGISTRY -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
 
-      - podman build -t $REGISTRY/$IMAGE_NAME:$IMAGE_TAG .
-      - podman push $REGISTRY/$IMAGE_NAME:$IMAGE_TAG
+      - podman pull $REGISTRY/$IMAGE_BASE:$IMAGE_TAG || true
+      - podman build --cache-from $REGISTRY/$IMAGE_BASE -t $REGISTRY/$IMAGE_BASE:$IMAGE_TAG
+      - podman push $REGISTRY/$IMAGE_BASE:$IMAGE_TAG
