@@ -6,9 +6,13 @@ steps:
       REGISTRY: harbor.anrostech.com
       IMAGE_BASE: anros/crm-front
       IMAGE_TAG: latest
+      REGISTRY_USER:
+        from_secret: registry_user
+      REGISTRY_PASS:
+        from_secret: registry_pass
     commands:
       - echo "Logging into Harbor..."
-      - buildah login $REGISTRY -u "$WOODPECKER_REGISTRY_USERNAME" -p "$WOODPECKER_REGISTRY_PASSWORD"
+      - buildah login $REGISTRY -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
 
       - buildah pull $REGISTRY/$IMAGE_BASE || true
       - buildah build --layers --cache-from $REGISTRY/$IMAGE_BASE --cache-to $REGISTRY/$IMAGE_BASE -t $REGISTRY/$IMAGE_BASE:$IMAGE_TAG .
