@@ -32,7 +32,6 @@ steps:
       - curl -L https://cli.github.com/packages/githubcli-archive-keyring.gpg | gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
       - apk add --no-cache gh
 
-      # todo: 2️⃣ Clone repo, update to pull request in future
       - |
         git clone https://$GIT_TOKEN@gitea.anrostech.com/mark/rr.git
         cd rr
