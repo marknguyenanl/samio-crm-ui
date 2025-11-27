@@ -19,7 +19,7 @@ steps:
       - buildah push $REGISTRY/$IMAGE_BASE:$IMAGE_TAG
 
   update_deployment_repo:
-    image: alpine:3.18
+    image: alpine/git
     depends_on:
       - build_image
     environment:
@@ -29,7 +29,6 @@ steps:
       GITEA_REPO: rr
     commands:
       - IMAGE_TAG=${CI_COMMIT_SHA}
-      - apk add --no-cache git curl bash jq
       # Clone repo
       - git clone https://$GIT_TOKEN@gitea.anrostech.com/mark/rr.git
       - cd rr
