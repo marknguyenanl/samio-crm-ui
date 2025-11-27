@@ -5,18 +5,20 @@ steps:
     environment:
       REGISTRY: harbor.anrostech.com
       IMAGE_BASE: anros/crm-front
-      IMAGE_TAG: latest
       REGISTRY_USER:
         from_secret: registry_user
       REGISTRY_PASS:
         from_secret: registry_pass
+      IMAGE_TAG: ${IMAGE_TAG}
     commands:
+      - IMAGE_TAG=$(date +%Y%m%d%H%M%S)
       - echo "Logging into Harbor..."
       - buildah login $REGISTRY -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
 
       - buildah pull $REGISTRY/$IMAGE_BASE || true
       - buildah build --layers --cache-from $REGISTRY/$IMAGE_BASE --cache-to $REGISTRY/$IMAGE_BASE -t $REGISTRY/$IMAGE_BASE:$IMAGE_TAG .
       - buildah push $REGISTRY/$IMAGE_BASE:$IMAGE_TAG
+
   update_deployment_repo:
     image: alpine:3.18
     depends_on:
@@ -24,20 +26,14 @@ steps:
     environment:
       GIT_TOKEN:
         from_secret: git_token
-      GITEA_API: https://gitea.anrostech.com/api/v1
       GITEA_OWNER: mark
       GITEA_REPO: rr
+      IMAGE_TAG: $IMAGE_TAG 
     commands:
       - apk add --no-cache git curl bash jq
-      - curl -L https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -o /usr/bin/yq
-      - chmod +x /usr/bin/yq
-
       # Clone repo
       - git clone https://$GIT_TOKEN@gitea.anrostech.com/mark/rr.git
       - cd rr
-
-      # Image tag
-      - CI_COMMIT_SHA=${CI_COMMIT_SHA:-$(git rev-parse --short HEAD)}
 
       # Git identity
       - git config user.name "woodpecker-bot"
@@ -48,72 +44,19 @@ steps:
       - git pull --rebase origin main
 
       # Create branch safely
-      - BRANCH=ci-update-crm-front-$CI_COMMIT_SHA
       - |
-        git checkout -B $BRANCH
         FILES=$(grep -rl "name: crm-front" . || true)
         for f in $FILES; do
-          yq -i '
-          select(.kind == "Deployment") |
-          with(
-            .spec.template.spec.containers[];
-            select(.name == "crm-front").image
-            = "harbor.anrostech.com/anros/crm-front:'"$CI_COMMIT_SHA"'"
-          )
-          ' "$f"
+          sed -i -E 's|(image: harbor\.anrostech\.com/anros/crm-front:)[^[:space:]]+|\1'"$IMAGE_TAG"'|' "$f"
         done
-
-      # Commit only if changes exist
       - |
         if git diff --quiet; then
-          echo "✅ No changes detected, skipping commit & PR"
+          echo "✅ No changes detected, skipping commit"
           exit 0
         fi
 
         git add $FILES
-        git commit -m "CI: Update crm-front image to ${CI_COMMIT_SHA}"
+        git commit -m "CI: Update crm-front image to ${IMAGE_TAG}"
 
       # Push branch
-      - git push origin $BRANCH --force
-
-      # Create Pull Request
-      - |
-        echo "✅ Creating Pull Request..."
-        PR_RESPONSE=$(curl -s -X POST "$GITEA_API/repos/$GITEA_OWNER/$GITEA_REPO/pulls" \
-          -H "Authorization: token $GIT_TOKEN" \
-          -H "Content-Type: application/json" \
-          -d "{
-            \"title\": \"CI: Update crm-front image to $CI_COMMIT_SHA\",
-            \"body\": \"Automated Harbor image update\",
-            \"head\": \"$BRANCH\",
-            \"base\": \"main\"
-          }")
-        echo "$PR_RESPONSE"
-        PR_NUMBER=$(echo "$PR_RESPONSE" | jq -r '.number')
-        if [ "$PR_NUMBER" = "null" ] || [ -z "$PR_NUMBER" ]; then
-          echo "❌ Failed to create PR"
-          exit 1
-        fi
-        echo "✅ PR Created: #$PR_NUMBER"
-
-      # Approve PR
-      - |
-        echo "✅ Approving Pull Request..."
-        curl -s -X POST "$GITEA_API/repos/$GITEA_OWNER/$GITEA_REPO/pulls/$PR_NUMBER/reviews" \
-          -H "Authorization: token $GIT_TOKEN" \
-          -H "Content-Type: application/json" \
-          -d '{
-            "event": "APPROVED",
-            "body": "Auto-approved by Woodpecker CI"
-          }'
-
-      # Auto-merge PR
-      - |
-        echo "✅ Merging Pull Request..."
-        curl -s -X POST "$GITEA_API/repos/$GITEA_OWNER/$GITEA_REPO/pulls/$PR_NUMBER/merge" \
-          -H "Authorization: token $GIT_TOKEN" \
-          -H "Content-Type: application/json" \
-          -d '{
-            "merge_style": "merge",
-            "Do": "merge"
-          }'
+      - git push origin main --force
