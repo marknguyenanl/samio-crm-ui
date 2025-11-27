@@ -23,9 +23,7 @@ steps:
       - build_image
     environment:
       GIT_TOKEN:
-        from_secret: github_token
-      CI_COMMIT_SHA:
-        from_secret: ci_commit_sha
+        from_secret: git_token
     commands:
       # 1️⃣ Install git, curl, bash, and yq
       - apk add --no-cache git curl bash
@@ -35,8 +33,9 @@ steps:
       - apk add --no-cache gh
 
       # 2️⃣ Clone repo
-      - git clone https://$GIT_TOKEN@github.com/marknguyenanl/rr.git
+      - git clone https://$GIT_TOKEN@gitea.anrostech.com/mark/rr.git
       - cd rr
+      - CI_COMMIT_SHA=$(git rev-parse --short HEAD)
 
       # 3️⃣ Configure git
       - git config user.name "woodpecker-bot"
@@ -47,8 +46,6 @@ steps:
       - git pull --rebase origin main
 
       # 5️⃣ Create a new branch for this CI run
-      - BRANCH="ci/update-crm-front-${CI_COMMIT_SHA}"
-      - git checkout -b $BRANCH
 
       # 6️⃣ Find files containing crm-front
       - FILES=$(grep -rl "name: crm-front" .)
@@ -64,28 +61,7 @@ steps:
           ' "$f"
         done
 
-      # 8️⃣ Commit changes if any
       - git add $FILES
       - git commit -m "CI: Update crm-front image to ${CI_COMMIT_SHA}" || echo "No changes to commit"
 
-      # 9️⃣ Push branch to GitHub
-      - git push origin $BRANCH
-
-      # 🔟 Authenticate GitHub CLI
-      - gh auth login --with-token <<< "$GIT_TOKEN"
-
-      # 1️⃣1️⃣ Create PR
-      - gh pr create --title "CI: Update crm-front image to ${CI_COMMIT_SHA}" --body "Automated update of crm-front image to ${CI_COMMIT_SHA}" --base main --head $BRANCH
-
-      # 1️⃣2️⃣ Approve & merge PR
-
-      # - |
-      #   PR_NUMBER=$(gh pr list --head $BRANCH --state open --json number -q '.[0].number')
-      #   if [ -n "$PR_NUMBER" ]; then
-      #     echo "✅ Approving PR #$PR_NUMBER"
-      #     gh pr review $PR_NUMBER --approve
-      #     echo "✅ Merging PR #$PR_NUMBER"
-      #     gh pr merge $PR_NUMBER --merge --delete-branch --yes
-      #   else
-      #     echo "⚠️ No open PR found for branch $BRANCH"
-      #   fi
+      - git push origin main
