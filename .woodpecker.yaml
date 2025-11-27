@@ -24,28 +24,96 @@ steps:
     environment:
       GIT_TOKEN:
         from_secret: git_token
+      GITEA_API: https://gitea.anrostech.com/api/v1
+      GITEA_OWNER: mark
+      GITEA_REPO: rr
     commands:
-      # 1️⃣ Install git, curl, bash, and yq
-      - apk add --no-cache git curl bash gnupg
+      - apk add --no-cache git curl bash jq
       - curl -L https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -o /usr/bin/yq
       - chmod +x /usr/bin/yq
 
+      # Clone repo
+      - git clone https://$GIT_TOKEN@gitea.anrostech.com/mark/rr.git
+      - cd rr
+
+      # Image tag
+      - CI_COMMIT_SHA=${CI_COMMIT_SHA:-$(git rev-parse --short HEAD)}
+
+      # Git identity
+      - git config user.name "woodpecker-bot"
+      - git config user.email "ci@anrostech.com"
+
+      # Sync main
+      - git checkout main
+      - git pull --rebase origin main
+
+      # Create branch safely
+      - BRANCH=ci-update-crm-front-$CI_COMMIT_SHA
       - |
-        git clone https://$GIT_TOKEN@gitea.anrostech.com/mark/rr.git
-        cd rr
-        CI_COMMIT_SHA=$(git rev-parse --short HEAD)
-        git config user.name "woodpecker-bot"
-        git config user.email "ci@anrostech.com"
-        git checkout main
-        git pull --rebase origin main
-        FILES=$(grep -rl "name: crm-front" .)
+        git checkout -B $BRANCH
+        FILES=$(grep -rl "name: crm-front" . || true)
         for f in $FILES; do
           yq -i '
-            (.spec.template.spec.containers[] | select(.name == "crm-front") | .image)
+          select(.kind == "Deployment") |
+          with(
+            .spec.template.spec.containers[];
+            select(.name == "crm-front").image
             = "harbor.anrostech.com/anros/crm-front:'"$CI_COMMIT_SHA"'"
+          )
           ' "$f"
         done
-        git add $FILES
-        git commit -m "CI: Update crm-front image to ${CI_COMMIT_SHA}" || echo "No changes to commit"
-        git push origin main
 
+      # Commit only if changes exist
+      - |
+        if git diff --quiet; then
+          echo "✅ No changes detected, skipping commit & PR"
+          exit 0
+        fi
+
+        git add $FILES
+        git commit -m "CI: Update crm-front image to ${CI_COMMIT_SHA}"
+
+      # Push branch
+      - git push origin $BRANCH --force
+
+      # Create Pull Request
+      - |
+        echo "✅ Creating Pull Request..."
+        PR_RESPONSE=$(curl -s -X POST "$GITEA_API/repos/$GITEA_OWNER/$GITEA_REPO/pulls" \
+          -H "Authorization: token $GIT_TOKEN" \
+          -H "Content-Type: application/json" \
+          -d "{
+            \"title\": \"CI: Update crm-front image to $CI_COMMIT_SHA\",
+            \"body\": \"Automated Harbor image update\",
+            \"head\": \"$BRANCH\",
+            \"base\": \"main\"
+          }")
+        echo "$PR_RESPONSE"
+        PR_NUMBER=$(echo "$PR_RESPONSE" | jq -r '.number')
+        if [ "$PR_NUMBER" = "null" ] || [ -z "$PR_NUMBER" ]; then
+          echo "❌ Failed to create PR"
+          exit 1
+        fi
+        echo "✅ PR Created: #$PR_NUMBER"
+
+      # Approve PR
+      - |
+        echo "✅ Approving Pull Request..."
+        curl -s -X POST "$GITEA_API/repos/$GITEA_OWNER/$GITEA_REPO/pulls/$PR_NUMBER/reviews" \
+          -H "Authorization: token $GIT_TOKEN" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "event": "APPROVED",
+            "body": "Auto-approved by Woodpecker CI"
+          }'
+
+      # Auto-merge PR
+      - |
+        echo "✅ Merging Pull Request..."
+        curl -s -X POST "$GITEA_API/repos/$GITEA_OWNER/$GITEA_REPO/pulls/$PR_NUMBER/merge" \
+          -H "Authorization: token $GIT_TOKEN" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "merge_style": "merge",
+            "Do": "merge"
+          }'
