@@ -9,9 +9,9 @@ steps:
         from_secret: registry_user
       REGISTRY_PASS:
         from_secret: registry_pass
-      IMAGE_TAG: ${IMAGE_TAG}
     commands:
       - IMAGE_TAG=$(date +%Y%m%d%H%M%S)
+      - echo "IMAGE_TAG=$IMAGE_TAG" >> /woodpecker/pipeline.env 
       - echo "Logging into Harbor..."
       - buildah login $REGISTRY -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
 
@@ -28,7 +28,6 @@ steps:
         from_secret: git_token
       GITEA_OWNER: mark
       GITEA_REPO: rr
-      IMAGE_TAG: $IMAGE_TAG 
     commands:
       - apk add --no-cache git curl bash jq
       # Clone repo
