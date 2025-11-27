@@ -10,14 +10,16 @@ steps:
       REGISTRY_PASS:
         from_secret: registry_pass
     commands:
-      - IMAGE_TAG=${CI_COMMIT_SHA}-${CI_BUILD_NUMBER}
+      - IMAGE_TAG=${CI_COMMIT_SHA}
       - echo "Logging into Harbor..."
       - buildah login $REGISTRY -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
+
+      - buildah pull $REGISTRY/$IMAGE_BASE || true
       - buildah build --layers --cache-from $REGISTRY/$IMAGE_BASE --cache-to $REGISTRY/$IMAGE_BASE -t $REGISTRY/$IMAGE_BASE:$IMAGE_TAG .
       - buildah push $REGISTRY/$IMAGE_BASE:$IMAGE_TAG
 
   update_deployment_repo:
-    image: alpine/git
+    image: alpine:3.18
     depends_on:
       - build_image
     environment:
@@ -27,12 +29,13 @@ steps:
       GITEA_REPO: rr
     commands:
       - IMAGE_TAG=${CI_COMMIT_SHA}
+      - apk add --no-cache git
       # Clone repo
-      - git clone https://$GITEA_OWNER:$GIT_TOKEN@gitea.anrostech.com/mark/rr
+      - git clone https://$GIT_TOKEN@gitea.anrostech.com/mark/rr.git
       - cd rr
 
       # Git identity
-      - git config user.name "woodpecker-bot"
+      - git config user.name "anrostech-bot"
       - git config user.email "ci@anrostech.com"
 
       # Sync main
