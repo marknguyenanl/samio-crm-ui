@@ -28,7 +28,7 @@ steps:
       GITEA_OWNER: mark
       GITEA_REPO: rr
     commands:
-      - IMAGE_TAG=${CI_COMMIT_SHA}
+      - IMAGE_TAG=${CI_COMMIT_SHA}-${CI_BUILD_NUMBER}
       - apk add --no-cache git
       # Clone repo
       - git clone https://$GIT_TOKEN@gitea.anrostech.com/mark/rr.git
