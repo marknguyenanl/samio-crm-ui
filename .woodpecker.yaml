@@ -35,8 +35,8 @@ steps:
       - apk add --no-cache gh
 
       # 2️⃣ Clone repo
-      - git clone https://$GIT_TOKEN@github.com/marknguyenanl/crm-anros-frontend.git
-      - cd crm-anros-frontend
+      - git clone https://$GIT_TOKEN@github.com/marknguyenanl/rr.git
+      - cd rr
 
       # 3️⃣ Configure git
       - git config user.name "woodpecker-bot"
