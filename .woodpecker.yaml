@@ -55,7 +55,7 @@ steps:
         fi
 
         git add $FILES
-        git commit -m "CI: Update crm-front image to ${IMAGE_TAG}"
+        git commit -m "CI: Update crm-front image to $IMAGE_TAG"
 
       # Push branch
       - git push origin main --force
