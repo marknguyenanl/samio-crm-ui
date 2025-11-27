@@ -1,4 +1,4 @@
-FROM oven/bun:latest AS build
+FROM docker.io/oven/bun:latest AS build
 WORKDIR /app
 COPY package.json bun.lock ./
 RUN bun install
