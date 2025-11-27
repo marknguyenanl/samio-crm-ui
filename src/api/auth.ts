@@ -8,7 +8,7 @@ export interface LoginPayload {
 export async function loginAPI(data: LoginPayload) {
   const password_confirmation = data.password
   try {
-    const response = await api.post('auth/login', { ...data, password_confirmation })
+    const response = await api.post('/login', { ...data, password_confirmation })
     console.log('Successfully sent login request')
     return response.data
   } catch (error) {
@@ -19,7 +19,7 @@ export async function loginAPI(data: LoginPayload) {
 export async function registerAPI(data: LoginPayload) {
   const password_confirmation = data.password
   try {
-    const response = await api.post('auth/register', {
+    const response = await api.post('/register', {
       ...data,
       password_confirmation,
     })
