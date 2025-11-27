@@ -10,7 +10,7 @@ steps:
       REGISTRY_PASS:
         from_secret: registry_pass
     commands:
-      - IMAGE_TAG=${CI_COMMIT_SHA}
+      - IMAGE_TAG=${CI_PIPELINE_CREATED}
       - echo "Logging into Harbor..."
       - buildah login $REGISTRY -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
 
@@ -27,7 +27,7 @@ steps:
       GITEA_OWNER: mark
       GITEA_REPO: rr
     commands:
-      - IMAGE_TAG=${CI_BUILD_NUMBER}
+      - IMAGE_TAG=${CI_PIPELINE_CREATED}
       # Clone repo
       - git clone https://$GIT_TOKEN@gitea.anrostech.com/mark/rr.git
       - cd rr
