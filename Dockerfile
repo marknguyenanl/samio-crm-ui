@@ -1,4 +1,4 @@
-FROM harbor.anrostech.com/library/oven/bun:latest AS build
+FROM harbor.anrostech.com/library/oven/bun:1.3 AS build
 WORKDIR /app
 COPY package.json bun.lock ./
 RUN bun install
