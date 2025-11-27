@@ -26,11 +26,9 @@ steps:
         from_secret: git_token
     commands:
       # 1️⃣ Install git, curl, bash, and yq
-      - apk add --no-cache git curl bash
+      - apk add --no-cache git curl bash gnupg
       - curl -L https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -o /usr/bin/yq
       - chmod +x /usr/bin/yq
-      - curl -L https://cli.github.com/packages/githubcli-archive-keyring.gpg | gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
-      - apk add --no-cache gh
 
       - |
         git clone https://$GIT_TOKEN@gitea.anrostech.com/mark/rr.git
