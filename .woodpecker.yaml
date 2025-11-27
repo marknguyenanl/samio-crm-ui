@@ -13,7 +13,6 @@ steps:
       - IMAGE_TAG=${CI_COMMIT_SHA}-${CI_BUILD_NUMBER}
       - echo "Logging into Harbor..."
       - buildah login $REGISTRY -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
-
       - buildah build --layers --cache-from $REGISTRY/$IMAGE_BASE --cache-to $REGISTRY/$IMAGE_BASE -t $REGISTRY/$IMAGE_BASE:$IMAGE_TAG .
       - buildah push $REGISTRY/$IMAGE_BASE:$IMAGE_TAG
 
