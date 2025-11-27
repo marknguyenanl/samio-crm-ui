@@ -41,10 +41,8 @@ steps:
         FILES=$(grep -rl "name: crm-front" .)
         for f in $FILES; do
           yq -i '
-            select(.kind=="Deployment")
-            | .spec.template.spec.containers[]
-            | select(.name=="crm-front")
-            | .image = "harbor.anrostech.com/anros/crm-front:'"$CI_COMMIT_SHA"'"
+            (.spec.template.spec.containers[] | select(.name == "crm-front") | .image)
+            = "harbor.anrostech.com/anros/crm-front:'"$CI_COMMIT_SHA"'"
           ' "$f"
         done
         git add $FILES
