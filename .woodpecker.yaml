@@ -28,7 +28,7 @@ steps:
     commands:
       - IMAGE_TAG=${CI_COMMIT_SHA}
       # Clone repo
-      - git clone https://$GITEA_OWNER:$GIT_TOKEN@gitea.anrostech.com/mark/rr.git
+      - git clone https://$GITEA_OWNER:$GIT_TOKEN@gitea.anrostech.com/mark/rr
       - cd rr
 
       # Git identity
