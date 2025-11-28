@@ -25,12 +25,13 @@ steps:
     environment:
       GIT_TOKEN:
         from_secret: git_token
-      GITEA_OWNER: mark
-      GITEA_REPO: rr
+      GIT_OWNER: marknguyenanl
+      GIT_REPO: rr
+      GIT_URL: github.com
     commands:
       - IMAGE_TAG=${CI_PIPELINE_CREATED}
       # Clone repo
-      - git clone https://$GIT_TOKEN@gitea.anrostech.com/mark/rr.git
+      - git clone https://$GIT_TOKEN@$GIT_URL/$GIT_OWNER/$GIT_REPO
       - cd rr
 
       # Git identity
