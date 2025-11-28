@@ -1,0 +1,121 @@
+name: Build Image & Update Deployment Repo
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-update:
+    runs-on: ubuntu-latest
+
+    env:
+      REGISTRY: harbor.anrostech.com
+      IMAGE_BASE: anros/crm-front
+      GIT_OWNER: marknguyenanl
+      GIT_REPO: rr
+      GIT_URL: github.com
+
+    steps:
+      # =========================
+      # ✅ CHECKOUT SOURCE REPO
+      # =========================
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      # =========================
+      # ✅ SET IMAGE TAG (CI_PIPELINE_CREATED replacement)
+      # =========================
+      - name: Set image tag
+        run: |
+          IMAGE_TAG=$(date +%Y%m%d%H%M%S)
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+
+      # =========================
+      # ✅ INSTALL BUILDAH
+      # =========================
+      - name: Install Buildah
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y buildah
+
+      # =========================
+      # ✅ LOGIN TO HARBOR (LOCAL)
+      # =========================
+      - name: Login to Harbor
+        run: |
+          buildah login $REGISTRY \
+            -u "${{ secrets.REGISTRY_USER }}" \
+            -p "${{ secrets.REGISTRY_PASS }}"
+
+      # =========================
+      # ✅ BUILD IMAGE WITH CACHE
+      # =========================
+      - name: Build image
+        run: |
+          buildah build \
+            --layers \
+            --cache-from $REGISTRY/$IMAGE_BASE \
+            --cache-to $REGISTRY/$IMAGE_BASE \
+            -t $REGISTRY/$IMAGE_BASE:$IMAGE_TAG .
+
+      # =========================
+      # ✅ PUSH IMAGE
+      # =========================
+      - name: Push image
+        run: |
+          buildah push $REGISTRY/$IMAGE_BASE:$IMAGE_TAG
+
+      # =========================
+      # ✅ CLONE DEPLOYMENT REPO
+      # =========================
+      - name: Clone deployment repo
+        run: |
+          git clone https://${{ secrets.GIT_TOKEN }}@$GIT_URL/$GIT_OWNER/$GIT_REPO
+          cd rr
+
+      # =========================
+      # ✅ CONFIGURE GIT IDENTITY
+      # =========================
+      - name: Configure Git identity
+        run: |
+          cd rr
+          git config user.name "anrostech-bot"
+          git config user.email "ci@anrostech.com"
+
+      # =========================
+      # ✅ SYNC MAIN
+      # =========================
+      - name: Sync main
+        run: |
+          cd rr
+          git checkout main
+          git pull --rebase origin main
+
+      # =========================
+      # ✅ UPDATE IMAGE TAG IN YAML FILES
+      # =========================
+      - name: Update image tag
+        run: |
+          cd rr
+          FILES=$(grep -rl "name: crm-front" . || true)
+
+          for f in $FILES; do
+            sed -i -E 's|(image: harbor\.anrostech\.com/anros/crm-front:)[^[:space:]]+|\1'"$IMAGE_TAG"'|' "$f"
+          done
+
+          if git diff --quiet; then
+            echo "✅ No changes detected, skipping commit"
+            exit 0
+          fi
+
+          git add $FILES
+          git commit -m "CI: Update crm-front image to $IMAGE_TAG"
+
+      # =========================
+      # ✅ PUSH TO MAIN
+      # =========================
+      - name: Push changes
+        run: |
+          cd rr
+          git push origin main --force
