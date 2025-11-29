@@ -19,24 +19,33 @@ async function submitForm() {
 </script>
 <template>
   <h2 class="font-bold text-center text-2xl mt-50">Register Form</h2>
-  <div class="mt-4 max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+  <div class="border-yellow-100 border mt-4 max-w-md mx-auto bg-green-100 p-8 rounded-lg shadow-lg">
     <form class="space-y-6" @submit.prevent="submitForm">
-      <div class="flex flex-col sm:flex-row items-center sm:space-x-4">
-        <label class="w-1/4 font-semibold text-gray-700" for="email">Email</label>
+      <div class="flex flex-row items-center space-x-4">
+        <label class="w-1/4 font-semibold text-gray-700" for="email">Email </label>
         <input
           id="email"
-          class="flex-1 border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="bg-gray-50 flex-1 border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           v-model="user.email"
         />
       </div>
-      <div class="flex flex-col sm:flex-row items-center sm:space-x-4">
-        <label class="w-1/4 font-semibold text-gray-700" for="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          class="flex-1 border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          v-model="user.password"
-        />
+      <div class="flex flex-col gap-4 w-full">
+        <div class="flex flex-row items-center space-x-4">
+          <label class="w-1/4 font-semibold text-gray-700" for="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            class="bg-gray-50 flex-1 border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            v-model="user.password"
+          />
+        </div>
+        <!-- Notification -->
+        <p
+          v-if="user.password && user.password.length < 8"
+          class="text-red-500 text-sm w-full mt-1"
+        >
+          Password must be at least 8 characters long!
+        </p>
       </div>
       <div class="flex flex-col gap-4 justify-center mt-4">
         <button
