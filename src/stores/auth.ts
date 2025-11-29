@@ -7,7 +7,7 @@ import { useRouter } from 'vue-router'
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<LoginPayload | null>(null);
   const router = useRouter()
-  const login = (data: LoginPayload, token: any) => {
+  const login = (data: LoginPayload, token: string) => {
     localStorage.setItem('access_token', token)
     user.value = data
     router.push({ name: 'dashboard' })

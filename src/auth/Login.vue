@@ -13,11 +13,10 @@ const { login } = useAuthStore()
 async function submitForm() {
   try {
     const response = await loginAPI(user)
-    console.log(user)
     const token = response.access_token
     login(user, token)
   } catch (error) {
-    alert('Wrong username or password')
+    alert('Wrong email or password')
   }
 }
 </script>

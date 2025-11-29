@@ -6,10 +6,8 @@ export interface LoginPayload {
 }
 
 export async function loginAPI(data: LoginPayload) {
-  const password_confirmation = data.password
   try {
-    const response = await api.post('/v1/login', { ...data, password_confirmation })
-    console.log('Successfully sent login request')
+    const response = await api.post('/v1/login', { ...data })
     return response.data
   } catch (error) {
     console.log('error is: ', error)
