@@ -22,22 +22,22 @@ async function submitForm() {
 </script>
 <template>
   <h2 class="font-bold text-center text-2xl mt-50">Login Form</h2>
-  <div class="mt-4 max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+  <div class="mt-4 max-w-md mx-auto bg-gray-100 p-8 rounded-lg shadow-md">
     <form class="space-y-6" @submit.prevent="submitForm">
-      <div class="flex flex-col sm:flex-row items-center sm:space-x-4">
+      <div class="flex flex-row items-center sm:space-x-4">
         <label class="w-1/4 font-semibold text-gray-700" for="email">Email</label>
         <input
           id="email"
-          class="flex-1 border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="bg-white flex-1 border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           v-model="user.email"
         />
       </div>
-      <div class="flex flex-col sm:flex-row items-center sm:space-x-4">
+      <div class="flex flex-row items-center sm:space-x-4">
         <label class="w-1/4 font-semibold text-gray-700" for="password">Password</label>
         <input
           id="password"
           type="password"
-          class="flex-1 border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="bg-white flex-1 border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           v-model="user.password"
         />
       </div>

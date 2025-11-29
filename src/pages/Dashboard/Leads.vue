@@ -4,8 +4,8 @@ import { contacts } from '@/db'
 
 <template>
   <div class="">
-    <table class="min-w-full divide-y divide-gray-200 table-fixed">
-      <thead class="bg-gray-50">
+    <table class="mt-20 min-w-full divide-y divide-gray-200 table-fixed">
+      <thead class="bg-gray-200">
         <tr>
           <th
             class="px-6 py-3 text-left text-xs font-semibold text-gray-800 uppercase tracking-wider"
