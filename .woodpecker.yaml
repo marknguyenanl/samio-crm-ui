@@ -14,11 +14,13 @@ steps:
         from_secret: registry_pass
     commands:
       - IMAGE_TAG=${CI_PIPELINE_CREATED}
-      - echo "Logging into Harbor..."
-      - buildah login $REGISTRY -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
+      - |
+        echo "Logging into Harbor..."
+        echo "Branch: $CI_COMMIT_BRANCH"
+        buildah login $REGISTRY -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
 
-      - buildah build --layers --cache-from $REGISTRY/$IMAGE_BASE --cache-to $REGISTRY/$IMAGE_BASE -t $REGISTRY/$IMAGE_BASE:$IMAGE_TAG .
-      - buildah push $REGISTRY/$IMAGE_BASE:$IMAGE_TAG
+        buildah build --layers --cache-from $REGISTRY/$IMAGE_BASE --cache-to $REGISTRY/$IMAGE_BASE -t $REGISTRY/$IMAGE_BASE:$IMAGE_TAG .
+        buildah push $REGISTRY/$IMAGE_BASE:$IMAGE_TAG
 
   update_deployment_repo:
     image: alpine/git
@@ -31,26 +33,28 @@ steps:
       GIT_REPO: rr
       GIT_URL: github.com
     commands:
-      - IMAGE_TAG=${CI_PIPELINE_CREATED}
-      # Clone repo
-      - git clone https://$GIT_TOKEN@$GIT_URL/$GIT_OWNER/$GIT_REPO
-      - cd rr
-
-      # Git identity
-      - git config user.name "anrostech-bot"
-      - git config user.email "ci@anrostech.com"
-
-      # Sync main
-      - git checkout main
-      - git pull --rebase origin main
-
-      # Create branch safely
       - |
+        IMAGE_TAG=${CI_PIPELINE_CREATED}
+        BRANCH=${CI_COMMIT_BRANCH}
+
+        echo "Clone repo"
+        git clone https://$GIT_TOKEN@$GIT_URL/$GIT_OWNER/$GIT_REPO
+        cd rr
+
+        echo "Git identity"
+        git config user.name "anrostech-bot"
+        git config user.email "ci@anrostech.com"
+
+
+        echo "Create branch safely"
+        git fetch origin $BRANCH || true
+        git checkout -B $BRANCH origin/$BRANCH || git checkout -B $BRANCH
+        git pull --rebase origin $BRANCH || true
+
         FILES=$(grep -rl "name: crm-front" . || true)
         for f in $FILES; do
           sed -i -E 's|(image: harbor\.anrostech\.com/anros/crm-front:)[^[:space:]]+|\1'"$IMAGE_TAG"'|' "$f"
         done
-      - |
         if git diff --quiet; then
           echo "✅ No changes detected, skipping commit"
           exit 0
@@ -59,5 +63,5 @@ steps:
         git add $FILES
         git commit -m "CI: Update crm-front image to $IMAGE_TAG"
 
-      # Push branch
-      - git push origin main --force
+        echo "Push branch"
+        git push origin $BRANCH

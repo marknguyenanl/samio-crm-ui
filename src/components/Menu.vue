@@ -5,7 +5,7 @@ import Button from './Button.vue'
 const { logout } = useAuthStore()
 </script>
 <template>
-  <nav class="items-center flex justify-between mb-2 p-2 px-4 bg-gray-800 text-white">
+  <nav class="items-center flex justify-between mb-2 p-2 px-4 bg-gray-700 text-white">
     <ul class="items-center flex-row flex gap-8">
       <li class="pb-2">
         <RouterLink :to="{ name: 'dashboard' }">
@@ -15,12 +15,13 @@ const { logout } = useAuthStore()
       <li><RouterLink :to="{ name: 'dashboard' }">Dashboard</RouterLink></li>
       <li><RouterLink :to="{ name: 'leads' }">Leads</RouterLink></li>
       <li><RouterLink :to="{ name: 'contacts' }">Contacts</RouterLink></li>
-      <li><RouterLink :to="{ name: 'contacts' }">Social</RouterLink></li>
+      <!-- <li><RouterLink :to="{ name: 'contacts' }">Social</RouterLink></li> -->
     </ul>
     <ul class="items-center flex-row flex gap-4">
       <!-- todo: use modal popup for this -->
-      <!-- fix: fix this searchicon -->
-      <li>SearchIcon</li>
+      <li>
+        <img src="@/icons/search.svg" alt="Search" class="w-8 aspect-square mx-auto" />
+      </li>
       <li>
         <!-- fix: styling of button logout and button component -->
         <Button classes="rounded-sm bg-green-900 px-4 py-1 cursor-pointer" @click="logout"
