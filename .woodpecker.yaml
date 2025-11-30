@@ -12,6 +12,8 @@ steps:
         from_secret: registry_user
       REGISTRY_PASS:
         from_secret: registry_pass
+      VITE_API_URL: https://api.anrostech.com/api/crm
+      VITE_ENV: production
     commands:
       - IMAGE_TAG=${CI_PIPELINE_CREATED}
       - |
@@ -19,7 +21,7 @@ steps:
         echo "Branch: $CI_COMMIT_BRANCH"
         buildah login $REGISTRY -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
 
-        buildah build --layers --cache-from $REGISTRY/$IMAGE_BASE --cache-to $REGISTRY/$IMAGE_BASE -t $REGISTRY/$IMAGE_BASE:$IMAGE_TAG .
+        buildah build --build-arg VITE_API_URL=$VITE_API_URL --build-arg VITE_ENV=$VITE_ENV --layers --cache-from $REGISTRY/$IMAGE_BASE --cache-to $REGISTRY/$IMAGE_BASE -t $REGISTRY/$IMAGE_BASE:$IMAGE_TAG .
         buildah push $REGISTRY/$IMAGE_BASE:$IMAGE_TAG
 
   update_deployment_repo:

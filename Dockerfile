@@ -1,5 +1,12 @@
 FROM docker.io/oven/bun:1.3 AS build
+ARG VITE_API_URL
+ARG VITE_ENV
+
+ENV VITE_API_URL=$VITE_API_URL
+ENV VITE_ENV=$VITE_ENV
+
 WORKDIR /app
+
 COPY package.json bun.lock ./
 RUN bun install
 COPY . .
