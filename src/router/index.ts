@@ -6,9 +6,9 @@ import Account from "@/pages/Dashboard/Account.vue"
 import Contacts from "@/pages/Dashboard/Contacts.vue"
 import Leads from "@/pages/Dashboard/Leads.vue"
 import Dashboard from "@/pages/Dashboard/index.vue"
-import Docs from "@/pages/Docs.vue"
+import Docs from "@/pages/Welcome/Docs.vue"
 import Homepage from "@/pages/Homepage.vue"
-import Pricing from "@/pages/Pricing.vue"
+import Pricing from "@/pages/Welcome/Pricing.vue"
 import { createRouter, createWebHistory } from "vue-router"
 
 export const router = createRouter({
