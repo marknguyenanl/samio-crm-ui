@@ -3,72 +3,77 @@ import * as am5 from '@amcharts/amcharts5'
 import * as am5xy from '@amcharts/amcharts5/xy'
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated'
 import { onMounted, onBeforeUnmount, useTemplateRef } from 'vue'
-import { contacts } from '@/db'
 
-// todo: count total each stage
+// Sample data: total leads per day
+const leadsPerDay = [
+  { date: new Date(2025, 0, 1).getTime(), totalLeads: 5 },
+  { date: new Date(2025, 0, 2).getTime(), totalLeads: 8 },
+  { date: new Date(2025, 0, 3).getTime(), totalLeads: 3 },
+  { date: new Date(2025, 0, 4).getTime(), totalLeads: 10 },
+  { date: new Date(2025, 0, 5).getTime(), totalLeads: 6 },
+  { date: new Date(2025, 0, 6).getTime(), totalLeads: 12 },
+  { date: new Date(2025, 0, 7).getTime(), totalLeads: 9 },
+]
 
-const new_leads_chart = useTemplateRef('new_leads')
+const newLeadsChart = useTemplateRef('new_leads')
 let root = null
+
 onMounted(() => {
-  root = am5.Root.new(new_leads_chart.value)
+  if (!newLeadsChart.value) return
+
+  root = am5.Root.new(newLeadsChart.value)
   root.setThemes([am5themes_Animated.new(root)])
-  let chart = root.container.children.push(
+
+  const chart = root.container.children.push(
     am5xy.XYChart.new(root, {
+      panX: false,
       panY: false,
+      wheelX: 'panX',
+      wheelY: 'zoomX',
       layout: root.verticalLayout,
     }),
   )
-  // Create Y axis
-  let yAxis = chart.yAxes.push(
+
+  const xAxis = chart.xAxes.push(
+    am5xy.DateAxis.new(root, {
+      baseInterval: { timeUnit: 'day', count: 1 },
+      renderer: am5xy.AxisRendererX.new(root, {}),
+    }),
+  )
+
+  const yAxis = chart.yAxes.push(
     am5xy.ValueAxis.new(root, {
       renderer: am5xy.AxisRendererY.new(root, {}),
     }),
   )
-  // Create X axis
-  let xAxis = chart.xAxes.push(
-    am5xy.DateAxis.new(root, {
-      min: new Date(2017, 0, 1).getTime(),
-      max: new Date().getTime(),
-      baseInterval: { timeUnit: 'day', count: 1 },
-      dateFormats: { day: 'yyyy/MM/dd' },
-      markUnitChange: false,
-      renderer: am5xy.AxisRendererX.new(root, {}),
-    }),
-  )
-  // fix: fix this xAxis to use date not category
-  xAxis.data.setAll(contacts)
-  // Create series
-  let series1 = chart.series.push(
-    am5xy.ColumnSeries.new(root, {
-      name: 'Series',
-      xAxis: xAxis,
-      yAxis: yAxis,
-      valueYField: 'stage',
-      categoryField: 'created_at',
-    }),
-  )
-  series1.data.setAll(contacts)
 
-  let series2 = chart.series.push(
+  const series = chart.series.push(
     am5xy.ColumnSeries.new(root, {
-      name: 'Series',
-      xAxis: xAxis,
-      yAxis: yAxis,
-      valueYField: 'stage',
-      categoryField: 'created_at',
+      name: 'Total Leads',
+      xAxis,
+      yAxis,
+      valueYField: 'totalLeads',
+      valueXField: 'date',
+      tooltip: am5.Tooltip.new(root, {
+        labelText: '{valueY}',
+      }),
     }),
   )
-  series2.data.setAll(contacts)
-  // Add legend
-  let legend = chart.children.push(am5.Legend.new(root, {}))
-  legend.data.setAll(chart.series.values)
 
-  // Add cursor
-  chart.set('cursor', am5xy.XYCursor.new(root, {}))
+  series.data.setAll(leadsPerDay)
+
+  chart.set(
+    'cursor',
+    am5xy.XYCursor.new(root, {
+      behavior: 'zoomX',
+    }),
+  )
 })
-// Cleanup
+
 onBeforeUnmount(() => {
-  if (root) root.dispose()
+  if (root) {
+    root.dispose()
+  }
 })
 </script>
 

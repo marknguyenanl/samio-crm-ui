@@ -9,8 +9,8 @@ export async function loginAPI(data: LoginPayload) {
   try {
     const response = await api.post('/v1/login', { ...data })
     return response.data
-  } catch (error) {
-    console.log('error is: ', error)
+  } catch (err) {
+    console.log('error is: ', err)
   }
 }
 

@@ -4,7 +4,7 @@ import Navbar from '@/components/Navbar.vue'
 
 <template>
   <Navbar />
-  <div>
+  <div class="text-[#386641]">
     <RouterView />
   </div>
 </template>

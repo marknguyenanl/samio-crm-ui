@@ -116,7 +116,7 @@ const openFileInput = () => {
             placeholder="Current password"
           />
           <input
-            type="text"
+            type="password"
             class="px-4 py-1 bg-white rounded-sm"
             v-model="newpass"
             placeholder="New password"

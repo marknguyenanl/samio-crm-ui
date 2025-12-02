@@ -4,13 +4,13 @@
       <ul class="flex-row flex gap-4 items-center">
         <li class="pb-2">
           <RouterLink :to="{ name: 'home' }">
-            <img class="h-14 object-cover" src="/Logo.svg" alt="Anros logo" />
+            <img class="h-26 object-cover" src="/logo-only.svg" alt="Samio logo" />
           </RouterLink>
         </li>
         <!-- <li><RouterLink :to="{ name: 'docs' }">Docs</RouterLink></li> -->
-        <!-- <li><RouterLink :to="{ name: 'pricing' }">Pricing</RouterLink></li> -->
+        <!-- <li class="pt-3"><RouterLink :to="{ name: 'pricing' }">Pricing</RouterLink></li> -->
       </ul>
-      <ul class="flex-row flex items-center gap-4">
+      <ul class="text-[#386641] flex-row flex items-center gap-4 pt-3">
         <li><RouterLink :to="{ name: 'login' }">Login</RouterLink></li>
         <li><RouterLink :to="{ name: 'register' }">Register</RouterLink></li>
       </ul>
