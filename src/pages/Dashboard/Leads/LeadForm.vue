@@ -1,0 +1,104 @@
+<script setup lang="ts">
+const props = defineProps<{
+  form: { name: string; tel: string; email: string; source: string; address: string }
+  openLeadModal: () => void
+}>()
+import ModalLayout from '@/layouts/ModalLayout.vue'
+import { addLeadAPI } from '@/api/leads'
+
+const onSubmitLeadForm = async () => {
+  try {
+    await addLeadAPI({ ...props.form })
+    // clear form only if request succeeded
+    props.form.name = ''
+    props.form.tel = ''
+    props.form.email = ''
+    props.form.source = ''
+    props.form.address = ''
+
+    // close modal
+    props.openLeadModal()
+  } catch (error) {
+    console.error('Error adding lead:', error)
+  }
+}
+</script>
+
+<template>
+  <ModalLayout>
+    <div>
+      <h3 class="pb-4 font-semibold text-[#386641]">ADD LEAD:</h3>
+      <form @submit.prevent="onSubmitLeadForm" class="space-y-4">
+        <div class="flex flex-col">
+          <label for="name" class="text-[#386641] mb-1 text-sm font-medium">Name:</label>
+          <input
+            id="name"
+            v-model="form.name"
+            type="text"
+            name="name"
+            class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+          />
+        </div>
+
+        <div class="flex flex-col">
+          <label for="tel" class="text-[#386641] mb-1 text-sm font-medium">Tel:</label>
+          <input
+            id="tel"
+            v-model="form.tel"
+            type="tel"
+            name="tel"
+            class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+          />
+        </div>
+
+        <div class="flex flex-col">
+          <label for="email" class="text-[#386641] mb-1 text-sm font-medium">
+            Email: <span class="text-red-500">*</span>
+          </label>
+          <input
+            id="email"
+            v-model="form.email"
+            type="email"
+            name="email"
+            required
+            class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+          />
+        </div>
+
+        <div class="flex flex-col">
+          <label for="source" class="text-[#386641] mb-1 text-sm font-medium">Source:</label>
+          <input
+            id="source"
+            v-model="form.source"
+            type="text"
+            name="source"
+            class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+          />
+        </div>
+
+        <div class="flex flex-col">
+          <label for="address" class="text-[#386641] mb-1 text-sm font-medium">Address:</label>
+          <input
+            id="address"
+            v-model="form.address"
+            type="text"
+            name="address"
+            class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+          />
+        </div>
+        <div class="flex gap-4">
+          <button class="cursor-pointer bg-[#f97300] rounded-sm py-1 px-4" type="submit">
+            Submit
+          </button>
+          <button
+            class="cursor-pointer border rounded-sm border-[#386641] py-1 px-4"
+            type="button"
+            @click="openLeadModal"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </ModalLayout>
+</template>
