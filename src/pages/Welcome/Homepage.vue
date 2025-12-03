@@ -12,12 +12,12 @@
           </p>
           <div class="flex flex-wrap gap-6">
             <button
-              class="inline-flex items-center justify-center px-6 py-3 rounded-md bg-gray-200 text-[#386641] font-semibold shadow hover:scale-105 hover:text-amber-900 transition-all"
+              class="cursor-pointer inline-flex items-center justify-center px-6 py-3 rounded-md bg-gray-200 text-[#386641] font-semibold shadow hover:scale-105 hover:text-amber-900 transition-all"
             >
               Explore Our Catalog
             </button>
             <button
-              class="transition-all hover:scale-105 inline-flex items-center justify-center px-6 py-3 rounded-md border border-blue-100 font-semibold hover:text-blue-800"
+              class="cursor-pointer transition-all hover:scale-105 inline-flex items-center justify-center px-6 py-3 rounded-md border border-blue-100 font-semibold hover:text-blue-800"
             >
               Learn About Our Mission
             </button>

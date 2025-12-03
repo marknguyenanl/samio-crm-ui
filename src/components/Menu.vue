@@ -29,21 +29,21 @@ const searchToggle = () => {
           <img class="h-14 object-cover" src="/logo-only.svg" alt="AnrosTech logo" />
         </RouterLink>
       </li>
-      <li
-        class="hover:border-b-2 hover:border-[#f97300] transition-colors ease-in-out duration-500 border-b-0 border-green-50"
-      >
-        <RouterLink :to="{ name: 'dashboard' }">Dashboard</RouterLink>
-      </li>
+      <!-- <li -->
+      <!--   class="hover:border-b-2 hover:border-[#f97300] transition-colors ease-in-out duration-500 border-b-0 border-green-50" -->
+      <!-- > -->
+      <!--   <RouterLink :to="{ name: 'dashboard' }">Dashboard</RouterLink> -->
+      <!-- </li> -->
       <li
         class="hover:border-b-2 hover:border-[#f97300] transition-colors ease-in-out duration-500 border-b-0 border-green-50"
       >
         <RouterLink :to="{ name: 'leads' }">Leads</RouterLink>
       </li>
-      <li
-        class="hover:border-b-2 hover:border-[#f97300] transition-colors ease-in-out duration-500 border-b-0 border-green-50"
-      >
-        <RouterLink :to="{ name: 'contacts' }">Contacts</RouterLink>
-      </li>
+      <!-- <li -->
+      <!--   class="hover:border-b-2 hover:border-[#f97300] transition-colors ease-in-out duration-500 border-b-0 border-green-50" -->
+      <!-- > -->
+      <!--   <RouterLink :to="{ name: 'contacts' }">Contacts</RouterLink> -->
+      <!-- </li> -->
       <!-- <li class='hover:border-b-2 transition-all  hover:border-[#f97300]'><RouterLink :to="{ name: 'contacts' }">Social</RouterLink></li> -->
     </ul>
 

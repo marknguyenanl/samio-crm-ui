@@ -6,8 +6,7 @@ export const contacts = [
     tel: '123-456-7890',
     email: 'john@gmail.com',
     source: 'Referral',
-    address: '123 Main St',
-    stage: 'lead'
+    address: '123 Main St'
   },
   {
     id: '2',
@@ -16,8 +15,7 @@ export const contacts = [
     tel: '234-567-8901',
     email: 'jane@gmail.com',
     source: 'Web',
-    address: '456 Elm St',
-    stage: 'lead'
+    address: '456 Elm St'
   },
   {
     id: '3',
@@ -26,8 +24,7 @@ export const contacts = [
     tel: '345-678-9012',
     email: 'mike@gmail.com',
     source: 'Event',
-    address: '789 Maple Ave',
-    stage: 'lead'
+    address: '789 Maple Ave'
   },
   {
     id: '4',
@@ -36,8 +33,7 @@ export const contacts = [
     tel: '456-789-0123',
     email: 'emily@gmail.com',
     source: 'Referral',
-    address: '101 Oak St',
-    stage: 'lead'
+    address: '101 Oak St'
   },
   {
     id: '5',
@@ -46,8 +42,7 @@ export const contacts = [
     tel: '567-890-1234',
     email: 'chris@gmail.com',
     source: 'Web',
-    address: '202 Pine St',
-    stage: 'lead'
+    address: '202 Pine St'
   },
   {
     id: '6',
@@ -56,8 +51,7 @@ export const contacts = [
     tel: '678-901-2345',
     email: 'sara@gmail.com',
     source: 'Event',
-    address: '303 Birch Rd',
-    stage: 'lead'
+    address: '303 Birch Rd'
   },
   {
     id: '7',
@@ -65,8 +59,7 @@ export const contacts = [
     tel: '789-012-3456',
     email: 'david@outlook.com',
     source: 'Referral',
-    address: '404 Cedar Ln',
-    stage: 'lead'
+    address: '404 Cedar Ln'
   },
   {
     id: '8',
@@ -74,8 +67,7 @@ export const contacts = [
     tel: '890-123-4567',
     email: 'laura@outlook.com',
     source: 'Web',
-    address: '505 Spruce Dr',
-    stage: 'lead'
+    address: '505 Spruce Dr'
   },
   {
     id: '9',
@@ -83,8 +75,7 @@ export const contacts = [
     tel: '901-234-5678',
     email: 'james@outlook.com',
     source: 'Event',
-    address: '606 Walnut St',
-    stage: 'lead'
+    address: '606 Walnut St'
   },
   {
     id: '10',
@@ -92,8 +83,7 @@ export const contacts = [
     tel: '012-345-6789',
     email: 'olivia@outlook.com',
     source: 'Referral',
-    address: '707 Aspen Ct',
-    stage: 'lead'
+    address: '707 Aspen Ct'
   },
   {
     id: '11',
@@ -101,8 +91,7 @@ export const contacts = [
     tel: '111-222-3333',
     email: 'kevin@outlook.com',
     source: 'Web',
-    address: '808 Maple Rd',
-    stage: 'lead'
+    address: '808 Maple Rd'
   },
   {
     id: '12',
@@ -110,8 +99,7 @@ export const contacts = [
     tel: '222-333-4444',
     email: 'sophia@protonmail.com',
     source: 'Event',
-    address: '909 Oak Ave',
-    stage: 'lead'
+    address: '909 Oak Ave'
   },
   {
     id: '13',
@@ -119,8 +107,7 @@ export const contacts = [
     tel: '333-444-5555',
     email: 'liam@protonmail.com',
     source: 'Referral',
-    address: '1010 Pine St',
-    stage: 'lead'
+    address: '1010 Pine St'
   },
   {
     id: '14',
@@ -128,8 +115,7 @@ export const contacts = [
     tel: '444-555-6666',
     email: 'emma@protonmail.com',
     source: 'Web',
-    address: '1111 Birch Rd',
-    stage: 'lead'
+    address: '1111 Birch Rd'
   },
   {
     id: '15',
@@ -137,8 +123,7 @@ export const contacts = [
     tel: '555-666-7777',
     email: 'noah@protonmail.com',
     source: 'Event',
-    address: '1212 Cedar Ln',
-    stage: 'lead'
+    address: '1212 Cedar Ln'
   },
   {
     id: '16',
@@ -146,8 +131,7 @@ export const contacts = [
     tel: '666-777-8888',
     email: 'ava@icloud.com',
     source: 'Referral',
-    address: '1313 Walnut St',
-    stage: 'lead'
+    address: '1313 Walnut St'
   },
   {
     id: '17',
@@ -155,8 +139,7 @@ export const contacts = [
     tel: '777-888-9999',
     email: 'benjamin@icloud.com',
     source: 'Web',
-    address: '1414 Maple Ave',
-    stage: 'lead'
+    address: '1414 Maple Ave'
   },
   {
     id: '18',
@@ -164,8 +147,7 @@ export const contacts = [
     tel: '888-999-0000',
     email: 'mia@icloud.com',
     source: 'Event',
-    address: '1515 Oak Blvd',
-    stage: 'lead'
+    address: '1515 Oak Blvd'
   },
   {
     id: '19',
@@ -173,8 +155,7 @@ export const contacts = [
     tel: '999-000-1111',
     email: 'oliver@icloud.com',
     source: 'Referral',
-    address: '1616 Pine Ln',
-    stage: 'lead'
+    address: '1616 Pine Ln'
   },
   {
     id: '20',
@@ -182,8 +163,7 @@ export const contacts = [
     tel: '000-111-2222',
     email: 'isabella@icloud.com',
     source: 'Web',
-    address: '1717 Birch Ct',
-    stage: 'lead'
+    address: '1717 Birch Ct'
   },
   {
     id: '21',
@@ -191,8 +171,7 @@ export const contacts = [
     tel: '111-222-3333',
     email: 'liam@icloud.com',
     source: 'Referral',
-    address: '123 Maple Ave',
-    stage: 'lead'
+    address: '123 Maple Ave'
   },
   {
     id: '22',
@@ -200,8 +179,7 @@ export const contacts = [
     tel: '222-333-4444',
     email: 'emma@zoho.com',
     source: 'Web',
-    address: '456 Oak St',
-    stage: 'lead'
+    address: '456 Oak St'
   },
   {
     id: '23',
@@ -209,8 +187,7 @@ export const contacts = [
     tel: '333-444-5555',
     email: 'noah@zoho.com',
     source: 'Phone',
-    address: '789 Pine Rd',
-    stage: 'lead'
+    address: '789 Pine Rd'
   },
   {
     id: '24',
@@ -218,8 +195,7 @@ export const contacts = [
     tel: '444-555-6666',
     email: 'ava@zoho.com',
     source: 'Web',
-    address: '1010 Elm St',
-    stage: 'lead'
+    address: '1010 Elm St'
   },
   {
     id: '25',
@@ -227,8 +203,7 @@ export const contacts = [
     tel: '555-666-7777',
     email: 'william@zoho.com',
     source: 'Referral',
-    address: '2020 Cedar Ln',
-    stage: 'lead'
+    address: '2020 Cedar Ln'
   },
   {
     id: '26',
@@ -236,8 +211,7 @@ export const contacts = [
     tel: '666-777-8888',
     email: 'sophia@zoho.com',
     source: 'Web',
-    address: '3030 Spruce Dr',
-    stage: 'lead'
+    address: '3030 Spruce Dr'
   },
   {
     id: '27',
@@ -245,8 +219,7 @@ export const contacts = [
     tel: '777-888-9999',
     email: 'james@zoho.com',
     source: 'Phone',
-    address: '4040 Maple St',
-    stage: 'lead'
+    address: '4040 Maple St'
   },
   {
     id: '28',
@@ -254,8 +227,7 @@ export const contacts = [
     tel: '888-999-0000',
     email: 'mia@zoho.com',
     source: 'Referral',
-    address: '5050 Oak Ave',
-    stage: 'lead'
+    address: '5050 Oak Ave'
   },
   {
     id: '29',
@@ -263,8 +235,7 @@ export const contacts = [
     tel: '999-000-1111',
     email: 'benjamin@zoho.com',
     source: 'Web',
-    address: '6060 Pine Ct',
-    stage: 'lead'
+    address: '6060 Pine Ct'
   },
   {
     id: '30',
@@ -272,8 +243,7 @@ export const contacts = [
     tel: '000-111-2222',
     email: 'charlotte@zoho.com',
     source: 'Referral',
-    address: '7070 Birch Ln',
-    stage: 'lead'
+    address: '7070 Birch Ln'
   },
   {
     id: '31',
@@ -281,8 +251,7 @@ export const contacts = [
     tel: '123-456-7890',
     email: 'michael@zoho.com',
     source: 'Online',
-    address: '123 Maple St',
-    stage: 'lead'
+    address: '123 Maple St'
   },
   {
     id: '32',
@@ -290,8 +259,7 @@ export const contacts = [
     tel: '987-654-3210',
     email: 'sophia@zoho.com',
     source: 'Referral',
-    address: '456 Oak Ave',
-    stage: 'lead'
+    address: '456 Oak Ave'
   },
   {
     id: '33',
@@ -299,8 +267,7 @@ export const contacts = [
     tel: '555-666-7777',
     email: 'james@gmx.com',
     source: 'Event',
-    address: '789 Pine Rd',
-    stage: 'lead'
+    address: '789 Pine Rd'
   },
   {
     id: '34',
@@ -308,8 +275,7 @@ export const contacts = [
     tel: '222-333-4444',
     email: 'olivia@gmx.com',
     source: 'Online',
-    address: '321 Elm St',
-    stage: 'lead'
+    address: '321 Elm St'
   },
   {
     id: '35',
@@ -317,8 +283,7 @@ export const contacts = [
     tel: '444-555-6666',
     email: 'william@gmx.com',
     source: 'Referral',
-    address: '654 Spruce Ln',
-    stage: 'lead'
+    address: '654 Spruce Ln'
   },
   {
     id: '36',
@@ -326,8 +291,7 @@ export const contacts = [
     tel: '777-888-9999',
     email: 'emma@gmx.com',
     source: 'Event',
-    address: '987 Cedar Blvd',
-    stage: 'lead'
+    address: '987 Cedar Blvd'
   },
   {
     id: '37',
@@ -335,8 +299,7 @@ export const contacts = [
     tel: '111-222-3333',
     email: 'liam@gmx.com',
     source: 'Referral',
-    address: '159 Willow Dr',
-    stage: 'lead'
+    address: '159 Willow Dr'
   },
   {
     id: '38',
@@ -344,8 +307,7 @@ export const contacts = [
     tel: '888-999-0000',
     email: 'ava@gmx.com',
     source: 'Online',
-    address: '753 Birch Ln',
-    stage: 'lead'
+    address: '753 Birch Ln'
   },
   {
     id: '39',
@@ -353,8 +315,7 @@ export const contacts = [
     tel: '222-111-3333',
     email: 'benjamin@gmx.com',
     source: 'Referral',
-    address: '852 Maple Ave',
-    stage: 'lead'
+    address: '852 Maple Ave'
   },
   {
     id: '40',
@@ -362,8 +323,7 @@ export const contacts = [
     tel: '666-777-8888',
     email: 'mia@gmx.com',
     source: 'Event',
-    address: '951 Oak St',
-    stage: 'lead'
+    address: '951 Oak St'
   },
   {
     id: '41',
@@ -371,8 +331,7 @@ export const contacts = [
     tel: '333-444-5555',
     email: 'david@gmx.com',
     source: 'Online',
-    address: '357 Pine Rd',
-    stage: 'lead'
+    address: '357 Pine Rd'
   },
   {
     id: '42',
@@ -380,8 +339,7 @@ export const contacts = [
     tel: '999-000-1111',
     email: 'isabella@gmx.com',
     source: 'Referral',
-    address: '246 Elm St',
-    stage: 'lead'
+    address: '246 Elm St'
   },
   {
     id: '43',
@@ -389,8 +347,7 @@ export const contacts = [
     tel: '555-222-3333',
     email: 'matthew@gmx.com',
     source: 'Event',
-    address: '741 Cedar Ave',
-    stage: 'lead'
+    address: '741 Cedar Ave'
   },
   {
     id: '44',
@@ -398,8 +355,7 @@ export const contacts = [
     tel: '444-666-7777',
     email: 'amelia@aol.com',
     source: 'Online',
-    address: '963 Willow Ln',
-    stage: 'lead'
+    address: '963 Willow Ln'
   },
   {
     id: '45',
@@ -407,8 +363,7 @@ export const contacts = [
     tel: '222-444-6666',
     email: 'joseph@aol.com',
     source: 'Referral',
-    address: '159 Spruce St',
-    stage: 'lead'
+    address: '159 Spruce St'
   },
   {
     id: '46',
@@ -416,8 +371,7 @@ export const contacts = [
     tel: '777-555-8888',
     email: 'victoria@aol.com',
     source: 'Online',
-    address: '852 Oak Rd',
-    stage: 'lead'
+    address: '852 Oak Rd'
   },
   {
     id: '47',
@@ -425,8 +379,7 @@ export const contacts = [
     tel: '333-222-1111',
     email: 'henry@aol.com',
     source: 'Event',
-    address: '753 Maple St',
-    stage: 'lead'
+    address: '753 Maple St'
   },
   {
     id: '48',
@@ -434,8 +387,7 @@ export const contacts = [
     tel: '888-777-6666',
     email: 'sofia@aol.com',
     source: 'Referral',
-    address: '456 Pine Ave',
-    stage: 'lead'
+    address: '456 Pine Ave'
   },
   {
     id: '49',
@@ -443,8 +395,7 @@ export const contacts = [
     tel: '555-333-2222',
     email: 'daniel@aol.com',
     source: 'Online',
-    address: '159 Cedar Dr',
-    stage: 'lead'
+    address: '159 Cedar Dr'
   },
   {
     id: '50',
@@ -452,8 +403,7 @@ export const contacts = [
     tel: '999-888-7777',
     email: 'emma@aol.com',
     source: 'Referral',
-    address: '951 Elm St',
-    stage: 'lead'
+    address: '951 Elm St'
   },
   {
     id: '51',
@@ -461,8 +411,7 @@ export const contacts = [
     tel: '123-987-6543',
     email: 'liam.scott@aol.com',
     source: 'Referral',
-    address: '1001 Maple St',
-    stage: 'lead'
+    address: '1001 Maple St'
   },
   {
     id: '52',
@@ -470,8 +419,7 @@ export const contacts = [
     tel: '234-876-5432',
     email: 'emma.turner@aol.com',
     source: 'Web',
-    address: '1002 Oak St',
-    stage: 'lead'
+    address: '1002 Oak St'
   },
   {
     id: '53',
@@ -479,8 +427,7 @@ export const contacts = [
     tel: '345-765-4321',
     email: 'noah.martin@aol.com',
     source: 'Event',
-    address: '1003 Pine Ave',
-    stage: 'lead'
+    address: '1003 Pine Ave'
   },
   {
     id: '54',
@@ -488,8 +435,7 @@ export const contacts = [
     tel: '456-654-3210',
     email: 'ava.robinson@aol.com',
     source: 'Referral',
-    address: '1004 Birch Rd',
-    stage: 'lead'
+    address: '1004 Birch Rd'
   },
   {
     id: '55',
@@ -497,8 +443,7 @@ export const contacts = [
     tel: '567-543-2109',
     email: 'benjamin.lee@aol.com',
     source: 'Web',
-    address: '1005 Cedar Ln',
-    stage: 'lead'
+    address: '1005 Cedar Ln'
   },
   {
     id: '56',
@@ -506,8 +451,7 @@ export const contacts = [
     tel: '678-432-1098',
     email: 'mia.walker@aol.com',
     source: 'Online',
-    address: '1006 Maple Ave',
-    stage: 'lead'
+    address: '1006 Maple Ave'
   },
   {
     id: '57',
@@ -515,8 +459,7 @@ export const contacts = [
     tel: '789-321-0987',
     email: 'oliver.young@hotmail.com',
     source: 'Referral',
-    address: '1007 Oak Blvd',
-    stage: 'lead'
+    address: '1007 Oak Blvd'
   },
   {
     id: '58',
@@ -524,8 +467,7 @@ export const contacts = [
     tel: '890-210-9876',
     email: 'sophia.king@hotmail.com',
     source: 'Event',
-    address: '1008 Pine St',
-    stage: 'lead'
+    address: '1008 Pine St'
   },
   {
     id: '59',
@@ -533,8 +475,7 @@ export const contacts = [
     tel: '901-109-8765',
     email: 'james.scott@hotmail.com',
     source: 'Web',
-    address: '1009 Walnut Rd',
-    stage: 'lead'
+    address: '1009 Walnut Rd'
   },
   {
     id: '60',
@@ -542,8 +483,7 @@ export const contacts = [
     tel: '012-098-7654',
     email: 'isabella.collins@hotmail.com',
     source: 'Referral',
-    address: '1010 Elm St',
-    stage: 'lead'
+    address: '1010 Elm St'
   },
   {
     id: '61',
@@ -551,8 +491,7 @@ export const contacts = [
     tel: '123-887-6543',
     email: 'liam.adams@hotmail.com',
     source: 'Online',
-    address: '1011 Maple Ln',
-    stage: 'lead'
+    address: '1011 Maple Ln'
   },
   {
     id: '62',
@@ -560,8 +499,7 @@ export const contacts = [
     tel: '234-776-5432',
     email: 'emma.evans@hotmail.com',
     source: 'Web',
-    address: '1012 Oak Ave',
-    stage: 'lead'
+    address: '1012 Oak Ave'
   },
   {
     id: '63',
@@ -569,8 +507,7 @@ export const contacts = [
     tel: '345-665-4321',
     email: 'noah.parker@hotmail.com',
     source: 'Event',
-    address: '1013 Pine Rd',
-    stage: 'lead'
+    address: '1013 Pine Rd'
   },
   {
     id: '64',
@@ -578,8 +515,7 @@ export const contacts = [
     tel: '456-554-3210',
     email: 'ava.stewart@hotmail.com',
     source: 'Referral',
-    address: '1014 Birch Ct',
-    stage: 'lead'
+    address: '1014 Birch Ct'
   },
   {
     id: '65',
@@ -587,8 +523,7 @@ export const contacts = [
     tel: '567-443-2109',
     email: 'benjamin.green@hotmail.com',
     source: 'Web',
-    address: '1015 Cedar Ln',
-    stage: 'lead'
+    address: '1015 Cedar Ln'
   },
   {
     id: '66',
@@ -596,8 +531,7 @@ export const contacts = [
     tel: '678-332-1098',
     email: 'mia.lopez@hotmail.com',
     source: 'Online',
-    address: '1016 Maple Ave',
-    stage: 'lead'
+    address: '1016 Maple Ave'
   },
   {
     id: '67',
@@ -605,8 +539,7 @@ export const contacts = [
     tel: '789-221-0987',
     email: 'oliver.nelson@hotmail.com',
     source: 'Referral',
-    address: '1017 Oak Blvd',
-    stage: 'lead'
+    address: '1017 Oak Blvd'
   },
   {
     id: '68',
@@ -614,8 +547,7 @@ export const contacts = [
     tel: '890-110-9876',
     email: 'sophia.ramirez@gmail.com',
     source: 'Event',
-    address: '1018 Pine St',
-    stage: 'lead'
+    address: '1018 Pine St'
   },
   {
     id: '69',
@@ -623,8 +555,7 @@ export const contacts = [
     tel: '901-009-8765',
     email: 'james.cook@gmail.com',
     source: 'Web',
-    address: '1019 Walnut Rd',
-    stage: 'lead'
+    address: '1019 Walnut Rd'
   },
   {
     id: '70',
@@ -632,8 +563,7 @@ export const contacts = [
     tel: '012-998-7654',
     email: 'isabella.torres@gmail.com',
     source: 'Referral',
-    address: '1020 Elm St',
-    stage: 'lead'
+    address: '1020 Elm St'
   },
   {
     id: '71',
@@ -641,8 +571,7 @@ export const contacts = [
     tel: '123-887-6543',
     email: 'liam.hughes@gmail.com',
     source: 'Online',
-    address: '1021 Maple Ln',
-    stage: 'lead'
+    address: '1021 Maple Ln'
   },
   {
     id: '72',
@@ -650,8 +579,7 @@ export const contacts = [
     tel: '234-776-5432',
     email: 'emma.flores@gmail.com',
     source: 'Web',
-    address: '1022 Oak Ave',
-    stage: 'lead'
+    address: '1022 Oak Ave'
   },
   {
     id: '73',
@@ -659,8 +587,7 @@ export const contacts = [
     tel: '345-665-4321',
     email: 'noah.gonzales@gmail.com',
     source: 'Event',
-    address: '1023 Pine Rd',
-    stage: 'lead'
+    address: '1023 Pine Rd'
   },
   {
     id: '74',
@@ -668,8 +595,7 @@ export const contacts = [
     tel: '456-554-3210',
     email: 'ava.ramirez@gmail.com',
     source: 'Referral',
-    address: '1024 Birch Ct',
-    stage: 'lead'
+    address: '1024 Birch Ct'
   },
   {
     id: '75',
@@ -677,8 +603,7 @@ export const contacts = [
     tel: '567-443-2109',
     email: 'benjamin.murphy@gmail.com',
     source: 'Web',
-    address: '1025 Cedar Ln',
-    stage: 'lead'
+    address: '1025 Cedar Ln'
   },
   {
     id: '76',
@@ -686,8 +611,7 @@ export const contacts = [
     tel: '678-332-1098',
     email: 'mia.price@gmail.com',
     source: 'Online',
-    address: '1026 Maple Ave',
-    stage: 'lead'
+    address: '1026 Maple Ave'
   },
   {
     id: '77',
@@ -695,8 +619,7 @@ export const contacts = [
     tel: '789-221-0987',
     email: 'oliver.murphy@gmail.com',
     source: 'Referral',
-    address: '1027 Oak Blvd',
-    stage: 'lead'
+    address: '1027 Oak Blvd'
   },
   {
     id: '78',
@@ -704,8 +627,7 @@ export const contacts = [
     tel: '890-110-9876',
     email: 'sophia.sanchez@gmail.com',
     source: 'Event',
-    address: '1028 Pine St',
-    stage: 'lead'
+    address: '1028 Pine St'
   },
   {
     id: '79',
@@ -713,8 +635,7 @@ export const contacts = [
     tel: '901-009-8765',
     email: 'james.ramirez@gmail.com',
     source: 'Web',
-    address: '1029 Walnut Rd',
-    stage: 'lead'
+    address: '1029 Walnut Rd'
   },
   {
     id: '80',
@@ -722,8 +643,7 @@ export const contacts = [
     tel: '012-998-7654',
     email: 'isabella.vasquez@gmail.com',
     source: 'Referral',
-    address: '1030 Elm St',
-    stage: 'lead'
+    address: '1030 Elm St'
   },
   {
     id: '81',
@@ -731,8 +651,7 @@ export const contacts = [
     tel: '123-987-6543',
     email: 'liam.adams2@gmail.com',
     source: 'Online',
-    address: '1011 Maple Ln',
-    stage: 'lead'
+    address: '1011 Maple Ln'
   },
   {
     id: '82',
@@ -740,8 +659,7 @@ export const contacts = [
     tel: '234-776-5432',
     email: 'emma.evans2@gmail.com',
     source: 'Web',
-    address: '1012 Oak Ave',
-    stage: 'lead'
+    address: '1012 Oak Ave'
   },
   {
     id: '83',
@@ -749,8 +667,7 @@ export const contacts = [
     tel: '345-665-4321',
     email: 'noah.parker2@gmail.com',
     source: 'Event',
-    address: '1013 Pine Rd',
-    stage: 'lead'
+    address: '1013 Pine Rd'
   },
   {
     id: '84',
@@ -758,8 +675,7 @@ export const contacts = [
     tel: '456-554-3210',
     email: 'ava.stewart2@gmail.com',
     source: 'Referral',
-    address: '1014 Birch Ct',
-    stage: 'lead'
+    address: '1014 Birch Ct'
   },
   {
     id: '85',
@@ -767,8 +683,7 @@ export const contacts = [
     tel: '567-443-2109',
     email: 'benjamin.green2@gmail.com',
     source: 'Web',
-    address: '1015 Cedar Ln',
-    stage: 'lead'
+    address: '1015 Cedar Ln'
   },
   {
     id: '86',
@@ -776,8 +691,7 @@ export const contacts = [
     tel: '678-332-1098',
     email: 'mia.lopez2@gmail.com',
     source: 'Online',
-    address: '1016 Maple Ave',
-    stage: 'lead'
+    address: '1016 Maple Ave'
   },
   {
     id: '87',
@@ -785,8 +699,7 @@ export const contacts = [
     tel: '789-221-0987',
     email: 'oliver.nelson2@gmail.com',
     source: 'Referral',
-    address: '1017 Oak Blvd',
-    stage: 'lead'
+    address: '1017 Oak Blvd'
   },
   {
     id: '88',
@@ -794,8 +707,7 @@ export const contacts = [
     tel: '890-110-9876',
     email: 'sophia.ramirez2@gmail.com',
     source: 'Event',
-    address: '1018 Pine St',
-    stage: 'lead'
+    address: '1018 Pine St'
   },
   {
     id: '89',
@@ -803,8 +715,7 @@ export const contacts = [
     tel: '901-009-8765',
     email: 'james.cook2@gmail.com',
     source: 'Web',
-    address: '1019 Walnut Rd',
-    stage: 'lead'
+    address: '1019 Walnut Rd'
   },
   {
     id: '90',
@@ -812,8 +723,7 @@ export const contacts = [
     tel: '012-998-7654',
     email: 'isabella.torres2@gmail.com',
     source: 'Referral',
-    address: '1020 Elm St',
-    stage: 'lead'
+    address: '1020 Elm St'
   },
   {
     id: '91',
@@ -821,8 +731,7 @@ export const contacts = [
     tel: '123-887-6543',
     email: 'liam.hughes2@gmail.com',
     source: 'Online',
-    address: '1021 Maple Ln',
-    stage: 'lead'
+    address: '1021 Maple Ln'
   },
   {
     id: '92',
@@ -830,8 +739,7 @@ export const contacts = [
     tel: '234-776-5432',
     email: 'emma.flores2@gmail.com',
     source: 'Web',
-    address: '1022 Oak Ave',
-    stage: 'lead'
+    address: '1022 Oak Ave'
   },
   {
     id: '93',
@@ -839,8 +747,7 @@ export const contacts = [
     tel: '345-665-4321',
     email: 'noah.gonzales2@gmail.com',
     source: 'Event',
-    address: '1023 Pine Rd',
-    stage: 'lead'
+    address: '1023 Pine Rd'
   },
   {
     id: '94',
@@ -848,8 +755,7 @@ export const contacts = [
     tel: '456-554-3210',
     email: 'ava.ramirez2@gmail.com',
     source: 'Referral',
-    address: '1024 Birch Ct',
-    stage: 'lead'
+    address: '1024 Birch Ct'
   },
   {
     id: '95',
@@ -857,8 +763,7 @@ export const contacts = [
     tel: '567-443-2109',
     email: 'benjamin.murphy2@gmail.com',
     source: 'Web',
-    address: '1025 Cedar Ln',
-    stage: 'lead'
+    address: '1025 Cedar Ln'
   },
   {
     id: '96',
@@ -866,8 +771,7 @@ export const contacts = [
     tel: '678-332-1098',
     email: 'mia.price2@gmail.com',
     source: 'Online',
-    address: '1026 Maple Ave',
-    stage: 'lead'
+    address: '1026 Maple Ave'
   },
   {
     id: '97',
@@ -875,8 +779,7 @@ export const contacts = [
     tel: '789-221-0987',
     email: 'oliver.murphy2@gmail.com',
     source: 'Referral',
-    address: '1027 Oak Blvd',
-    stage: 'lead'
+    address: '1027 Oak Blvd'
   },
   {
     id: '98',
@@ -884,8 +787,7 @@ export const contacts = [
     tel: '890-110-9876',
     email: 'sophia.sanchez2@gmail.com',
     source: 'Event',
-    address: '1028 Pine St',
-    stage: 'lead'
+    address: '1028 Pine St'
   },
   {
     id: '99',
@@ -893,8 +795,7 @@ export const contacts = [
     tel: '901-009-8765',
     email: 'james.ramirez2@gmail.com',
     source: 'Web',
-    address: '1029 Walnut Rd',
-    stage: 'lead'
+    address: '1029 Walnut Rd'
   },
   {
     id: '100',
@@ -902,8 +803,7 @@ export const contacts = [
     tel: '012-998-7654',
     email: 'isabella.vasquez2@gmail.com',
     source: 'Referral',
-    address: '1030 Elm St',
-    stage: 'lead'
+    address: '1030 Elm St'
   },
   {
     id: '101',
@@ -911,8 +811,7 @@ export const contacts = [
     tel: '123-456-7890',
     email: 'liam.anderson@gmail.com',
     source: 'Web',
-    address: '1001 Maple St',
-    stage: 'lead'
+    address: '1001 Maple St'
   },
   {
     id: '102',
@@ -920,8 +819,7 @@ export const contacts = [
     tel: '234-567-8901',
     email: 'emma.thompson@gmail.com',
     source: 'Referral',
-    address: '1002 Oak St',
-    stage: 'lead'
+    address: '1002 Oak St'
   },
   {
     id: '103',
@@ -929,8 +827,7 @@ export const contacts = [
     tel: '345-678-9012',
     email: 'noah.williams@gmail.com',
     source: 'Event',
-    address: '1003 Pine Ave',
-    stage: 'lead'
+    address: '1003 Pine Ave'
   },
   {
     id: '104',
@@ -938,8 +835,7 @@ export const contacts = [
     tel: '456-789-0123',
     email: 'ava.martinez@gmail.com',
     source: 'Web',
-    address: '1004 Birch Rd',
-    stage: 'lead'
+    address: '1004 Birch Rd'
   },
   {
     id: '105',
@@ -947,8 +843,7 @@ export const contacts = [
     tel: '567-890-1234',
     email: 'benjamin.garcia@gmail.com',
     source: 'Online',
-    address: '1005 Cedar Ln',
-    stage: 'lead'
+    address: '1005 Cedar Ln'
   },
   {
     id: '106',
@@ -956,8 +851,7 @@ export const contacts = [
     tel: '678-901-2345',
     email: 'mia.rodriguez@gmail.com',
     source: 'Referral',
-    address: '1006 Maple Ave',
-    stage: 'lead'
+    address: '1006 Maple Ave'
   },
   {
     id: '107',
@@ -965,8 +859,7 @@ export const contacts = [
     tel: '789-012-3456',
     email: 'oliver.lee@gmail.com',
     source: 'Web',
-    address: '1007 Oak Blvd',
-    stage: 'lead'
+    address: '1007 Oak Blvd'
   },
   {
     id: '108',
@@ -974,8 +867,7 @@ export const contacts = [
     tel: '890-123-4567',
     email: 'sophia.perez@gmail.com',
     source: 'Event',
-    address: '1008 Pine St',
-    stage: 'lead'
+    address: '1008 Pine St'
   },
   {
     id: '109',
@@ -983,8 +875,7 @@ export const contacts = [
     tel: '901-234-5678',
     email: 'james.wright@gmail.com',
     source: 'Referral',
-    address: '1009 Elm St',
-    stage: 'lead'
+    address: '1009 Elm St'
   },
   {
     id: '110',
@@ -992,8 +883,7 @@ export const contacts = [
     tel: '012-345-6789',
     email: 'isabella.king@gmail.com',
     source: 'Web',
-    address: '1010 Maple St',
-    stage: 'lead'
+    address: '1010 Maple St'
   },
   {
     id: '111',
@@ -1001,8 +891,7 @@ export const contacts = [
     tel: '123-456-7890',
     email: 'liam.scott2@gmail.com',
     source: 'Referral',
-    address: '1011 Cedar Ln',
-    stage: 'lead'
+    address: '1011 Cedar Ln'
   },
   {
     id: '112',
@@ -1010,8 +899,7 @@ export const contacts = [
     tel: '234-567-8901',
     email: 'emma.evans3@gmail.com',
     source: 'Web',
-    address: '1012 Oak Ave',
-    stage: 'lead'
+    address: '1012 Oak Ave'
   },
   {
     id: '113',
@@ -1019,8 +907,7 @@ export const contacts = [
     tel: '345-678-9012',
     email: 'noah.jenkins@gmail.com',
     source: 'Event',
-    address: '1013 Pine Rd',
-    stage: 'lead'
+    address: '1013 Pine Rd'
   },
   {
     id: '114',
@@ -1028,8 +915,7 @@ export const contacts = [
     tel: '456-789-0123',
     email: 'ava.phillips@gmail.com',
     source: 'Referral',
-    address: '1014 Birch Ct',
-    stage: 'lead'
+    address: '1014 Birch Ct'
   },
   {
     id: '115',
@@ -1037,8 +923,7 @@ export const contacts = [
     tel: '567-890-1234',
     email: 'benjamin.baker@gmail.com',
     source: 'Online',
-    address: '1015 Cedar Ln',
-    stage: 'lead'
+    address: '1015 Cedar Ln'
   },
   {
     id: '116',
@@ -1046,8 +931,7 @@ export const contacts = [
     tel: '678-901-2345',
     email: 'mia.cooper@gmail.com',
     source: 'Web',
-    address: '1016 Maple Ave',
-    stage: 'lead'
+    address: '1016 Maple Ave'
   },
   {
     id: '117',
@@ -1055,8 +939,7 @@ export const contacts = [
     tel: '789-012-3456',
     email: 'oliver.parker@gmail.com',
     source: 'Referral',
-    address: '1017 Oak Blvd',
-    stage: 'lead'
+    address: '1017 Oak Blvd'
   },
   {
     id: '118',
@@ -1064,8 +947,7 @@ export const contacts = [
     tel: '890-123-4567',
     email: 'sophia.reed@gmail.com',
     source: 'Event',
-    address: '1018 Pine St',
-    stage: 'lead'
+    address: '1018 Pine St'
   },
   {
     id: '119',
@@ -1073,8 +955,7 @@ export const contacts = [
     tel: '901-234-5678',
     email: 'james.cox@gmail.com',
     source: 'Referral',
-    address: '1019 Elm St',
-    stage: 'lead'
+    address: '1019 Elm St'
   },
   {
     id: '120',
@@ -1082,8 +963,7 @@ export const contacts = [
     tel: '012-345-6789',
     email: 'isabella.scott@gmail.com',
     source: 'Web',
-    address: '1020 Maple St',
-    stage: 'lead'
+    address: '1020 Maple St'
   },
   {
     id: '121',
@@ -1091,8 +971,7 @@ export const contacts = [
     tel: '123-456-7890',
     email: 'liam.morgan@gmail.com',
     source: 'Online',
-    address: '1021 Cedar Ln',
-    stage: 'lead'
+    address: '1021 Cedar Ln'
   },
   {
     id: '122',
@@ -1100,8 +979,7 @@ export const contacts = [
     tel: '234-567-8901',
     email: 'emma.ward@gmail.com',
     source: 'Web',
-    address: '1022 Oak Ave',
-    stage: 'lead'
+    address: '1022 Oak Ave'
   },
   {
     id: '123',
@@ -1109,8 +987,7 @@ export const contacts = [
     tel: '345-678-9012',
     email: 'noah.evans@gmail.com',
     source: 'Event',
-    address: '1023 Pine Rd',
-    stage: 'lead'
+    address: '1023 Pine Rd'
   },
   {
     id: '124',
@@ -1118,8 +995,7 @@ export const contacts = [
     tel: '456-789-0123',
     email: 'ava.cox@gmail.com',
     source: 'Referral',
-    address: '1024 Birch Ct',
-    stage: 'lead'
+    address: '1024 Birch Ct'
   },
   {
     id: '125',
@@ -1127,8 +1003,7 @@ export const contacts = [
     tel: '567-890-1234',
     email: 'benjamin.barnes@gmail.com',
     source: 'Online',
-    address: '1025 Cedar Ln',
-    stage: 'lead'
+    address: '1025 Cedar Ln'
   },
   {
     id: '126',
@@ -1136,8 +1011,7 @@ export const contacts = [
     tel: '678-901-2345',
     email: 'mia.ramirez@gmail.com',
     source: 'Web',
-    address: '1026 Maple Ave',
-    stage: 'lead'
+    address: '1026 Maple Ave'
   },
   {
     id: '127',
@@ -1145,8 +1019,7 @@ export const contacts = [
     tel: '789-012-3456',
     email: 'oliver.nelson2@gmail.com',
     source: 'Referral',
-    address: '1027 Oak Blvd',
-    stage: 'lead'
+    address: '1027 Oak Blvd'
   },
   {
     id: '128',
@@ -1154,8 +1027,7 @@ export const contacts = [
     tel: '890-123-4567',
     email: 'sophia.martinez@gmail.com',
     source: 'Event',
-    address: '1028 Pine St',
-    stage: 'lead'
+    address: '1028 Pine St'
   },
   {
     id: '129',
@@ -1163,8 +1035,7 @@ export const contacts = [
     tel: '901-234-5678',
     email: 'james.lee@gmail.com',
     source: 'Web',
-    address: '1029 Walnut Rd',
-    stage: 'lead'
+    address: '1029 Walnut Rd'
   },
   {
     id: '130',
@@ -1172,8 +1043,7 @@ export const contacts = [
     tel: '012-998-7654',
     email: 'isabella.rivera@gmail.com',
     source: 'Referral',
-    address: '1030 Elm St',
-    stage: 'lead'
+    address: '1030 Elm St'
   },
   {
     id: '131',
@@ -1181,8 +1051,7 @@ export const contacts = [
     tel: '321-654-9870',
     email: 'ethan.carter@gmail.com',
     source: 'Web',
-    address: '1111 Maple St',
-    stage: 'lead'
+    address: '1111 Maple St'
   },
   {
     id: '132',
@@ -1190,8 +1059,7 @@ export const contacts = [
     tel: '432-765-0981',
     email: 'sophia.morgan@gmail.com',
     source: 'Event',
-    address: '2222 Pine Rd',
-    stage: 'lead'
+    address: '2222 Pine Rd'
   },
   {
     id: '133',
@@ -1199,8 +1067,7 @@ export const contacts = [
     tel: '543-876-1092',
     email: 'liam.walker@gmail.com',
     source: 'Referral',
-    address: '3333 Oak Ave',
-    stage: 'lead'
+    address: '3333 Oak Ave'
   },
   {
     id: '134',
@@ -1208,8 +1075,7 @@ export const contacts = [
     tel: '654-987-2103',
     email: 'emma.scott@gmail.com',
     source: 'Web',
-    address: '4444 Birch Ct',
-    stage: 'lead'
+    address: '4444 Birch Ct'
   },
   {
     id: '135',
@@ -1217,8 +1083,7 @@ export const contacts = [
     tel: '765-098-3214',
     email: 'benjamin.lee@gmail.com',
     source: 'Online',
-    address: '5555 Cedar Ln',
-    stage: 'lead'
+    address: '5555 Cedar Ln'
   },
   {
     id: '136',
@@ -1226,8 +1091,7 @@ export const contacts = [
     tel: '876-109-4325',
     email: 'mia.johnson@gmail.com',
     source: 'Referral',
-    address: '6666 Maple Ave',
-    stage: 'lead'
+    address: '6666 Maple Ave'
   },
   {
     id: '137',
@@ -1235,8 +1099,7 @@ export const contacts = [
     tel: '987-210-5436',
     email: 'oliver.davis@gmail.com',
     source: 'Event',
-    address: '7777 Oak Blvd',
-    stage: 'lead'
+    address: '7777 Oak Blvd'
   },
   {
     id: '138',
@@ -1244,8 +1107,7 @@ export const contacts = [
     tel: '098-321-6547',
     email: 'amelia.martinez@gmail.com',
     source: 'Web',
-    address: '8888 Pine St',
-    stage: 'lead'
+    address: '8888 Pine St'
   },
   {
     id: '139',
@@ -1253,8 +1115,7 @@ export const contacts = [
     tel: '109-432-7658',
     email: 'elijah.hernandez@gmail.com',
     source: 'Referral',
-    address: '9999 Elm St',
-    stage: 'lead'
+    address: '9999 Elm St'
   },
   {
     id: '140',
@@ -1262,8 +1123,7 @@ export const contacts = [
     tel: '210-543-8769',
     email: 'charlotte.wilson@gmail.com',
     source: 'Online',
-    address: '1010 Cedar Ln',
-    stage: 'lead'
+    address: '1010 Cedar Ln'
   },
   {
     id: '141',
@@ -1271,8 +1131,7 @@ export const contacts = [
     tel: '321-654-9870',
     email: 'james.lopez@gmail.com',
     source: 'Event',
-    address: '2020 Maple Ave',
-    stage: 'lead'
+    address: '2020 Maple Ave'
   },
   {
     id: '142',
@@ -1280,8 +1139,7 @@ export const contacts = [
     tel: '432-765-0981',
     email: 'olivia.ramirez@gmail.com',
     source: 'Referral',
-    address: '3030 Pine St',
-    stage: 'lead'
+    address: '3030 Pine St'
   },
   {
     id: '143',
@@ -1289,8 +1147,7 @@ export const contacts = [
     tel: '543-876-1092',
     email: 'william.harris@gmail.com',
     source: 'Web',
-    address: '4040 Birch Rd',
-    stage: 'lead'
+    address: '4040 Birch Rd'
   },
   {
     id: '144',
@@ -1298,8 +1155,7 @@ export const contacts = [
     tel: '654-987-2103',
     email: 'mia.walker@gmail.com',
     source: 'Online',
-    address: '5050 Cedar Ln',
-    stage: 'lead'
+    address: '5050 Cedar Ln'
   },
   {
     id: '145',
@@ -1307,8 +1163,7 @@ export const contacts = [
     tel: '765-098-3214',
     email: 'elijah.nelson@gmail.com',
     source: 'Referral',
-    address: '6060 Maple Ave',
-    stage: 'lead'
+    address: '6060 Maple Ave'
   },
   {
     id: '146',
@@ -1317,7 +1172,7 @@ export const contacts = [
     email: 'ava.johnson@gmail.com',
     source: 'Event',
     address: '7070 Oak Blvd',
-    stage: 'lead'
+
   },
   {
     id: '147',
@@ -1326,7 +1181,7 @@ export const contacts = [
     email: 'henry.lee@gmail.com',
     source: 'Web',
     address: '8080 Pine St',
-    stage: 'lead'
+
   },
   {
     id: '148',
@@ -1335,7 +1190,7 @@ export const contacts = [
     email: 'sofia.lewis@gmail.com',
     source: 'Referral',
     address: '9090 Elm St',
-    stage: 'lead'
+
   },
   {
     id: '149',
@@ -1344,7 +1199,7 @@ export const contacts = [
     email: 'james.clark@gmail.com',
     source: 'Online',
     address: '1010 Cedar Ln',
-    stage: 'lead'
+
   },
   {
     id: '150',
@@ -1352,7 +1207,6 @@ export const contacts = [
     tel: '210-543-8769',
     email: 'isabella.garcia@gmail.com',
     source: 'Referral',
-    address: '1111 Maple St',
-    stage: 'lead'
+    address: '1111 Maple St'
   }
 ];

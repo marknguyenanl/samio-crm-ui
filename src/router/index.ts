@@ -4,8 +4,9 @@ import DashLayout from "@/layouts/DashLayout.vue"
 import GuestLayout from "@/layouts/GuestLayout.vue"
 import Account from "@/pages/Dashboard/Account.vue"
 import Contacts from "@/pages/Dashboard/Contacts.vue"
-import Leads from "@/pages/Dashboard/Leads/index.vue"
 import Dashboard from "@/pages/Dashboard/index.vue"
+import Leads from "@/pages/Dashboard/Leads/index.vue"
+import LeadDetail from "@/pages/Dashboard/Leads/LeadDetail.vue"
 import Docs from "@/pages/Welcome/Docs.vue"
 import Homepage from "@/pages/Welcome/Homepage.vue"
 import Pricing from "@/pages/Welcome/Pricing.vue"
@@ -70,6 +71,11 @@ export const router = createRouter({
           path: 'leads',
           name: 'leads',
           component: Leads
+        },
+        {
+          path: 'leads/:id',
+          name: 'leaddetail',
+          component: LeadDetail
         }
       ]
     }

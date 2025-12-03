@@ -1,10 +1,25 @@
 <script setup lang="ts">
+import { LeadProps } from '@/api/leads'
 import { useLeadStore } from '@/stores/lead'
 import { storeToRefs } from 'pinia'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
+import LeadDetail from '@/pages/Dashboard/Leads/LeadDetail.vue'
+
 const leadStore = useLeadStore()
 const { leads } = storeToRefs(leadStore)
 const { fetchLeads } = leadStore
+
+const showLeadModal = ref(false)
+const selectedLead = ref<LeadProps>()
+
+const openLeadModalFor = (lead: LeadProps) => {
+  selectedLead.value = { ...lead }
+  showLeadModal.value = true
+}
+const closeLeadModal = () => {
+  showLeadModal.value = false
+  selectedLead.value = undefined
+}
 
 onMounted(async () => {
   await fetchLeads()
@@ -50,16 +65,31 @@ onMounted(async () => {
     </thead>
     <tbody class="bg-white divide-y divide-gray-200">
       <!-- Data rows will go here -->
-      <tr v-for="(contact, index) in leads" :key="index">
+      <tr
+        class="cursor-pointer hover:bg-[#fae9d7]"
+        v-for="lead in leads"
+        :key="lead.id + '-' + lead.name"
+        @click="openLeadModalFor(lead)"
+      >
         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-          {{ contact.id }}
+          {{ lead.id }}
         </td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ contact.name }}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ contact.tel }}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ contact.email }}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ contact.source }}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ contact.address }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ lead.name }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ lead.tel }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ lead.email }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ lead.source }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ lead.address }}</td>
       </tr>
+      <Transition
+        enter-active-class="transition-all duration-300"
+        enter-from-class="opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="transition-all duration-300"
+        leave-from-class="opacity-100"
+        leave-to-class="opacity-0"
+      >
+        <LeadDetail v-if="showLeadModal" :lead="selectedLead" @close="closeLeadModal" />
+      </Transition>
     </tbody>
   </table>
 </template>
