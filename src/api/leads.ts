@@ -9,15 +9,29 @@ export interface LeadProps {
   source: string;
   address: string;
 }
-
-export async function getLeadsAPI() {
-  try {
-    const response = await api.get('/v1/leads')
-    return response.data.data
-  } catch (err) {
-    console.log('error when fetch: ', err)
+export interface LeadsResponse {
+  data: any[],
+  meta: {
+    current_page: number
+    last_page: number
+    per_page: number
+    total: number
   }
 }
+
+export async function getLeadsAPI(page = 1, perPage = 100): Promise<LeadsResponse> {
+  const response = await api.get('/v1/leads', {
+    params: {
+      page,
+      per_page: perPage
+    }
+  })
+  return {
+    data: response.data.data,
+    meta: response.data.meta
+  }
+}
+
 export async function addLeadAPI(data: LeadProps) {
   try {
     const response = await api.post('/v1/leads', { ...data })
