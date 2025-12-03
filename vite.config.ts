@@ -10,7 +10,7 @@ export default defineConfig({
     // disables esbuild worker
     minify: 'esbuild',
     target: 'esnext',
-    sourcemap: false
+    sourcemap: true
   },
   plugins: [
     vue(),
