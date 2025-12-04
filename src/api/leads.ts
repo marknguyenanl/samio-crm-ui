@@ -2,7 +2,7 @@ import { AxiosError } from "axios";
 import { api } from "./axios.ts"
 
 export interface LeadProps {
-  id: string | number;
+  id?: string | number | undefined;
   name: string;
   tel: string;
   email: string;
@@ -10,10 +10,11 @@ export interface LeadProps {
   address: string;
 }
 
-export async function getLeadsAPI() {
+export async function getLeadsAPI(page: number, perPage = 15) {
   try {
-    const response = await api.get('/v1/leads?per_page=10')
-    return response.data.data
+    const response = await api.get(`/v1/leads?per_page=${perPage}&page=${page}`)
+    console.log('response data: ', response.data)
+    return response.data
   } catch (err) {
     console.log('error when fetch: ', err)
   }

@@ -17,7 +17,7 @@
               Explore Our Catalog
             </button>
             <button
-              class="cursor-pointer transition-all hover:scale-105 inline-flex items-center justify-center px-6 py-3 rounded-md border border-blue-100 font-semibold hover:text-blue-800"
+              class="cursor-pointer transition-all hover:scale-105 inline-flex items-center justify-center px-6 py-3 rounded-md border border-blue-100 font-semibold hover:text-[#386641] hover:bg-[#FFF4A4]"
             >
               Learn About Our Mission
             </button>
@@ -45,7 +45,7 @@
     <section class="features py-16">
       <div class="max-w-6xl mx-auto px-4">
         <h2 class="text-2xl md:text-3xl font-bold text-center mb-10">
-          Have you tasted a bread at Samio Bakery?
+          Have you tried the bread at Samio?
         </h2>
         <div class="feature-grid grid gap-8 md:grid-cols-3">
           <div class="feature-item bg-white rounded-lg shadow-sm p-6 border border-amber-100">

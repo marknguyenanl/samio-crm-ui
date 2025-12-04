@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+@theme {
+  --color-samio-green: #386641;
+  --color-samio-green-dark: #2F5536;
+
+  --color-samio-orange: #F97A00;
+  --color-samio-orange-dark: #E06D00;
+
+  --color-samio-cream: #FAE9D7;
+  --color-samio-gold: #FED16A;
+  --color-samio-gold-dark: #F5C84F;
+
+  --color-samio-butter: #FFF4A4;
+  --color-samio-butter-light: #FFFDED;
+  --color-samio-butter-dark: #E6CBA8;
+}

@@ -21,7 +21,7 @@ const searchToggle = () => {
 </script>
 <template>
   <nav
-    class="items-center flex justify-between mb-2 p-2 px-4 bg-[#fae9d7] shadow-lg text-[#386641]"
+    class="items-center flex justify-between mb-2 p-2 px-4 bg-samio-butter-light shadow-lg text-samio-green"
   >
     <ul class="items-center flex-row flex gap-8">
       <li class="pb-2">
@@ -35,7 +35,7 @@ const searchToggle = () => {
       <!--   <RouterLink :to="{ name: 'dashboard' }">Dashboard</RouterLink> -->
       <!-- </li> -->
       <li
-        class="hover:border-b-2 hover:border-[#f97300] transition-colors ease-in-out duration-500 border-b-0 border-green-50"
+        class="hover:border-b-2 hover:border-samio-orange transition-colors ease-in-out duration-500 border-b-0 border-green-50"
       >
         <RouterLink :to="{ name: 'leads' }">Leads</RouterLink>
       </li>
@@ -109,11 +109,7 @@ const searchToggle = () => {
       </li>
       <li>
         <!-- fix: styling of button logout and button component -->
-        <Button
-          classes="text-gray-200 rounded-sm bg-green-900 px-4 py-1 cursor-pointer"
-          @click="logout"
-          >Logout</Button
-        >
+        <Button variant="accent" @click="logout">Logout</Button>
       </li>
     </ul>
   </nav>

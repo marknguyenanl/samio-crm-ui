@@ -27,10 +27,10 @@ const onSubmitLeadForm = async () => {
 <template>
   <ModalLayout>
     <div>
-      <h3 class="pb-4 font-semibold text-[#386641]">ADD LEAD:</h3>
+      <h3 class="pb-4 font-semibold text-samio-green">ADD LEAD:</h3>
       <form @submit.prevent="onSubmitLeadForm" class="space-y-4">
         <div class="flex flex-col">
-          <label for="name" class="text-[#386641] mb-1 text-sm font-medium">Name:</label>
+          <label for="name" class="text-samio-green mb-1 text-sm font-medium">Name:</label>
           <input
             id="name"
             v-model="form.name"
@@ -41,7 +41,7 @@ const onSubmitLeadForm = async () => {
         </div>
 
         <div class="flex flex-col">
-          <label for="tel" class="text-[#386641] mb-1 text-sm font-medium">Tel:</label>
+          <label for="tel" class="text-samio-green mb-1 text-sm font-medium">Tel:</label>
           <input
             id="tel"
             v-model="form.tel"
@@ -52,7 +52,7 @@ const onSubmitLeadForm = async () => {
         </div>
 
         <div class="flex flex-col">
-          <label for="email" class="text-[#386641] mb-1 text-sm font-medium">
+          <label for="email" class="text-samio-green mb-1 text-sm font-medium">
             Email: <span class="text-red-500">*</span>
           </label>
           <input
@@ -66,7 +66,7 @@ const onSubmitLeadForm = async () => {
         </div>
 
         <div class="flex flex-col">
-          <label for="source" class="text-[#386641] mb-1 text-sm font-medium">Source:</label>
+          <label for="source" class="text-samio-green mb-1 text-sm font-medium">Source:</label>
           <input
             id="source"
             v-model="form.source"
@@ -77,7 +77,7 @@ const onSubmitLeadForm = async () => {
         </div>
 
         <div class="flex flex-col">
-          <label for="address" class="text-[#386641] mb-1 text-sm font-medium">Address:</label>
+          <label for="address" class="text-samio-green mb-1 text-sm font-medium">Address:</label>
           <input
             id="address"
             v-model="form.address"
@@ -87,11 +87,11 @@ const onSubmitLeadForm = async () => {
           />
         </div>
         <div class="flex gap-4">
-          <button class="cursor-pointer bg-[#f97300] rounded-sm py-1 px-4" type="submit">
+          <button class="cursor-pointer bg-samio-orange rounded-sm py-1 px-4" type="submit">
             Submit
           </button>
           <button
-            class="cursor-pointer border rounded-sm border-[#386641] py-1 px-4"
+            class="cursor-pointer border rounded-sm border-samio-green py-1 px-4"
             type="button"
             @click="openLeadModal"
           >
