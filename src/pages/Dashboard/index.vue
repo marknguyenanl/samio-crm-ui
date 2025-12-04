@@ -78,7 +78,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <!-- fix: styling of button logout and button component -->
+  <!-- fix: Dashboard styling of button logout and button component -->
   <div class="bg-red-800">New Dashboard here</div>
   <div class="total-lead">Total Leads</div>
   <div ref="new_leads" class="w-full h-80"></div>

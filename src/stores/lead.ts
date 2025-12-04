@@ -16,8 +16,10 @@ type LeadsResponse = {
   }
 }
 
+// todo: apply optimistic update for useLeadStore
 export const useLeadStore = defineStore('leads', () => {
   const leads = ref<LeadsResponse | null>(null);
+
   const fetchLeads = async (page = 1, perPage = 15) => {
     const response = await getLeadsAPI(page, perPage);
     leads.value = response;

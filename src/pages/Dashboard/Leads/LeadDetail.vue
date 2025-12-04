@@ -19,7 +19,7 @@ const leadInput = reactive({
   address: props.lead.address,
 })
 
-// todo: post to pinia first then call api later
+// todo: optimize with optimistic update
 const updateLead = async () => {
   const res = await updateLeadAPI(leadInput)
   console.log('update lead with data: ', leadInput)
