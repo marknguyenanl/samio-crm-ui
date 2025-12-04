@@ -1,20 +1,17 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { useAuthStore } from '@/stores/auth'
-import { loginAPI } from '@/api/auth'
 
 const user = reactive({
   email: '',
   password: '',
 })
 
-const { login } = useAuthStore()
+const auth = useAuthStore()
 
 async function submitForm() {
   try {
-    const response = await loginAPI(user)
-    const token = response.access_token
-    login(user, token)
+    await auth.login(user)
   } catch (error) {
     alert('Wrong email or password')
   }
