@@ -5,6 +5,7 @@
     :class="[
       baseClasses,
       sizeClasses,
+      scaleClasses,
       variantClasses,
       full ? 'w-full' : '',
       disabled || loading ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer',
@@ -33,6 +34,14 @@ const props = defineProps({
   variant: {
     type: String,
     default: 'primary', // primary | accent | secondary | soft
+  },
+  size: {
+    type: String,
+    default: 'md', // sm | md | lg
+  },
+  scale: {
+    type: String,
+    default: 'md', // sm | md | lg
   },
   type: {
     type: String,
@@ -67,6 +76,7 @@ const variantClasses = computed(() => {
       return 'bg-samio-green hover:bg-samio-green-dark text-white'
   }
 })
+
 const sizeClasses = computed(() => {
   switch (props.size) {
     case 'sm':
@@ -75,6 +85,21 @@ const sizeClasses = computed(() => {
       return 'px-6 py-3 text-base'
     default: // md
       return 'px-5 py-2.5 text-sm'
+  }
+})
+
+const scaleClasses = computed(() => {
+  switch (props.scale) {
+    case 'sm':
+      return 'transform scale-95'
+    case 'lg':
+      return 'transform scale-110'
+    case 'hover-sm':
+      return 'transform origin-bottom-left hover:scale-105'
+    case 'hover-md':
+      return 'transform origin-bottom-left hover:scale-110'
+    default: //lg
+      return 'transform hover:scale-125'
   }
 })
 

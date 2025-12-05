@@ -1,7 +1,10 @@
+<script setup lang="ts">
+import Button from '@/components/Button.vue'
+</script>
 <template>
   <div class="bg-amber-50 min-h-screen">
     <!-- Banner Section -->
-    <section class="bg-[#f97300] text-gray-200">
+    <section class="bg-samio-orange text-gray-200">
       <div class="max-w-6xl mx-auto py-32 flex flex-col md:flex-row items-center gap-10">
         <div class="banner-content max-w-xl">
           <h1 class="text-2xl md:text-4xl font-bold leading-20">
@@ -11,16 +14,12 @@
             Looking for original authentic cake and sourdough breads, you are at the right place!
           </p>
           <div class="flex flex-wrap gap-6">
-            <button
-              class="cursor-pointer inline-flex items-center justify-center px-6 py-3 rounded-md bg-gray-200 text-[#386641] font-semibold shadow hover:scale-105 hover:text-amber-900 transition-all"
+            <Button variant="primary" size="sm" scale="hover-sm" @click=""
+              >Explore Our Breads</Button
             >
-              Explore Our Catalog
-            </button>
-            <button
-              class="cursor-pointer transition-all hover:scale-105 inline-flex items-center justify-center px-6 py-3 rounded-md border border-blue-100 font-semibold hover:text-[#386641] hover:bg-[#FFF4A4]"
-            >
-              Learn About Our Mission
-            </button>
+            <Button variant="secondary" size="sm" scale="hover-sm" @click=""
+              >Learn About Our Mission
+            </Button>
           </div>
         </div>
         <div class="relative z-1 w-full md:w-1/2 flex justify-center">
@@ -50,19 +49,19 @@
         <div class="feature-grid grid gap-8 md:grid-cols-3">
           <div class="feature-item bg-white rounded-lg shadow-sm p-6 border border-amber-100">
             <h3 class="text-xl font-semibold text-[#f97300] mb-2">Soft</h3>
-            <p class="text-[#386641]">
+            <p class="text-samio-green">
               Handpicked books that foster unity, compassion, and global awareness.
             </p>
           </div>
           <div class="feature-item bg-white rounded-lg shadow-sm p-6 border border-amber-100">
             <h3 class="text-xl font-semibold text-[#f97300] mb-2">Global Voices</h3>
-            <p class="text-[#386641]">
+            <p class="text-samio-green">
               Authors from diverse cultures sharing stories that bridge differences.
             </p>
           </div>
           <div class="feature-item bg-white rounded-lg shadow-sm p-6 border border-amber-100">
             <h3 class="text-xl font-semibold text-[#f97300] mb-2">Ethical Publishing</h3>
-            <p class="text-[#386641]">
+            <p class="text-samio-green">
               Environmentally conscious printing and fair partnerships with creators.
             </p>
           </div>
@@ -73,7 +72,7 @@
     <!-- Products Section -->
     <section class="products py-16 bg-white">
       <div class="max-w-6xl mx-auto px-4">
-        <h2 class="text-2xl md:text-3xl font-bold text-[#386641] text-center mb-10">
+        <h2 class="text-2xl md:text-3xl font-bold text-samio-green text-center mb-10">
           Featured Publications
         </h2>
         <div class="product-grid grid gap-8 md:grid-cols-3">
