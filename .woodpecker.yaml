@@ -7,7 +7,7 @@ steps:
     privileged: true
     environment:
       REGISTRY: harbor.anrostech.com
-      IMAGE_BASE: samio/crm-ui
+      IMAGE_BASE: samio/crm
       REGISTRY_USER:
         from_secret: registry_user
       REGISTRY_PASS:
@@ -21,8 +21,8 @@ steps:
         echo "Branch: $CI_COMMIT_BRANCH"
         buildah login $REGISTRY -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
 
-        buildah build --build-arg VITE_API_URL=$VITE_API_URL --build-arg VITE_ENV=$VITE_ENV --no-cache -t $REGISTRY/$IMAGE_BASE:$IMAGE_TAG .
-        buildah push $REGISTRY/$IMAGE_BASE:$IMAGE_TAG
+        buildah build --build-arg VITE_API_URL=$VITE_API_URL --build-arg VITE_ENV=$VITE_ENV --no-cache -t $REGISTRY/$IMAGE_BASE-ui:$IMAGE_TAG .
+        buildah push $REGISTRY/$IMAGE_BASE-ui:$IMAGE_TAG
 
   update_deployment_repo:
     image: alpine/git
@@ -34,8 +34,7 @@ steps:
       GIT_OWNER: marknguyenanl
       GIT_REPO: rr
       GIT_URL: github.com
-      FILES_NAME: crm-ui
-      IMAGE_BASE: anros/crm-ui
+      IMAGE_BASE: samio/crm
     commands:
       - |
         IMAGE_TAG=${CI_COMMIT_BRANCH}-${CI_PIPELINE_CREATED}
@@ -55,10 +54,10 @@ steps:
         git checkout -B $BRANCH origin/$BRANCH || git checkout -B $BRANCH
         git pull --rebase origin $BRANCH || true
 
-        FILES=$(grep -rl "name: $FILES_NAME" . || true)
-        for f in $FILES; do
-          sed -i -E 's|(image: harbor\.anrostech\.com/"$IMAGE_BASE":)[^[:space:]]+|\1'"$IMAGE_TAG"'|' "$f"
+        for f in /server_prod/apps/crm/*.yaml; do
+          sed -i -E 's|(ui: */'"$IMAGE_BASE-ui"':)[^[:space:]]+|\1'"$IMAGE_TAG"'|' "$f"
         done
+
         if git diff --quiet; then
           echo "✅ No changes detected, skipping commit"
           exit 0
