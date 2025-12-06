@@ -55,7 +55,7 @@ steps:
 
         FILES=$(grep -rl "name: crm-front" . || true)
         for f in $FILES; do
-          sed -i -E 's|(image: harbor\.anrostech\.com/anros/crm-front:)[^[:space:]]+|\1'"$IMAGE_TAG"'|' "$f"
+          sed -i -E 's|(image: harbor\.anrostech\.com/"$IMAGE_BASE":)[^[:space:]]+|\1'"$IMAGE_TAG"'|' "$f"
         done
         if git diff --quiet; then
           echo "✅ No changes detected, skipping commit"
