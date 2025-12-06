@@ -54,8 +54,8 @@ steps:
         git checkout -B $BRANCH origin/$BRANCH || git checkout -B $BRANCH
         git pull --rebase origin $BRANCH || true
 
-        FILES=(**/client-configs/samio-crm-values.yaml)
-        for f in "${FILES[@]}"; do
+        FILES=$(find . -path "*/client-configs/samio-crm-values.yaml" -type f)
+        for f in $FILES; do
           sed -i -E 's|(ui: '"$IMAGE_BASE-ui"':)[^[:space:]]+|\1'"$IMAGE_TAG"'|' "$f"
         done
 
