@@ -7,12 +7,12 @@ steps:
     privileged: true
     environment:
       REGISTRY: harbor.anrostech.com
-      IMAGE_BASE: anros/crm-front
+      IMAGE_BASE: samio/crm-front
       REGISTRY_USER:
         from_secret: registry_user
       REGISTRY_PASS:
         from_secret: registry_pass
-      VITE_API_URL: https://api.anrostech.com/api/crm
+      VITE_API_URL: https://api.samiohome.com/api/crm
       VITE_ENV: production
     commands:
       - IMAGE_TAG=${CI_COMMIT_BRANCH}-${CI_PIPELINE_CREATED}

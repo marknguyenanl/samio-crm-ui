@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import Button from '@/components/Button.vue'
+import { ref } from 'vue'
+const showFeatureDetails = ref(false)
 </script>
 <template>
   <div class="bg-amber-50 min-h-screen">
@@ -14,10 +16,10 @@ import Button from '@/components/Button.vue'
             Looking for original authentic cake and sourdough breads, you are at the right place!
           </p>
           <div class="flex flex-wrap gap-6">
-            <Button variant="primary" size="sm" scale="hover-sm" @click=""
+            <Button variant="primary" size="md" scale="hover-md" @click=""
               >Explore Our Breads</Button
             >
-            <Button variant="secondary" size="sm" scale="hover-sm" @click=""
+            <Button variant="secondary" size="md" scale="hover-md" @click=""
               >Learn About Our Mission
             </Button>
           </div>
@@ -48,22 +50,26 @@ import Button from '@/components/Button.vue'
         </h2>
         <div class="feature-grid grid gap-8 md:grid-cols-3">
           <div class="feature-item bg-white rounded-lg shadow-sm p-6 border border-amber-100">
-            <h3 class="text-xl font-semibold text-[#f97300] mb-2">Soft</h3>
+            <h3 class="text-xl font-semibold text-samio-orange mb-2">Simpler</h3>
             <p class="text-samio-green">
-              Handpicked books that foster unity, compassion, and global awareness.
+              From choosing the right flour to perfect proofing and baking, Samio handles every step
+              with artisan care and consistency.
             </p>
+            <Button variant="text" size="" @click="showFeatureDetails"> See more... </Button>
           </div>
           <div class="feature-item bg-white rounded-lg shadow-sm p-6 border border-amber-100">
-            <h3 class="text-xl font-semibold text-[#f97300] mb-2">Global Voices</h3>
+            <h3 class="text-xl font-semibold text-samio-orange mb-2">Healthier</h3>
             <p class="text-samio-green">
               Authors from diverse cultures sharing stories that bridge differences.
             </p>
+            <Button variant="text" size="" @click="showFeatureDetails"> See more... </Button>
           </div>
           <div class="feature-item bg-white rounded-lg shadow-sm p-6 border border-amber-100">
-            <h3 class="text-xl font-semibold text-[#f97300] mb-2">Ethical Publishing</h3>
+            <h3 class="text-xl font-semibold text-samio-orange mb-2">Tastier</h3>
             <p class="text-samio-green">
               Environmentally conscious printing and fair partnerships with creators.
             </p>
+            <Button variant="text" size="" @click="showFeatureDetails"> See more... </Button>
           </div>
         </div>
       </div>

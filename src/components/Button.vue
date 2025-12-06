@@ -7,6 +7,7 @@
       sizeClasses,
       scaleClasses,
       variantClasses,
+      customClasses,
       full ? 'w-full' : '',
       disabled || loading ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer',
     ]"
@@ -43,6 +44,10 @@ const props = defineProps({
     type: String,
     default: 'md', // sm | md | lg
   },
+  custom: {
+    type: String,
+    default: '',
+  },
   type: {
     type: String,
     default: 'button',
@@ -62,7 +67,7 @@ const props = defineProps({
 })
 
 const baseClasses =
-  'inline-flex items-center justify-center font-medium px-5 py-2.5 rounded-lg transition focus:outline-none'
+  'inline-flex items-center justify-center font-medium rounded-lg transition focus:outline-none'
 
 const variantClasses = computed(() => {
   switch (props.variant) {
@@ -72,6 +77,8 @@ const variantClasses = computed(() => {
       return 'border border-samio-green text-samio-green hover:bg-samio-cream'
     case 'soft':
       return 'bg-samio-gold hover:bg-samio-gold-dark text-samio-green'
+    case 'text':
+      return 'hover:text-samio-gold-dark text-samio-green italic'
     default: // primary
       return 'bg-samio-green hover:bg-samio-green-dark text-white'
   }
@@ -79,12 +86,12 @@ const variantClasses = computed(() => {
 
 const sizeClasses = computed(() => {
   switch (props.size) {
-    case 'sm':
+    case 'md':
       return 'px-3 py-1.5 text-sm'
     case 'lg':
       return 'px-6 py-3 text-base'
-    default: // md
-      return 'px-5 py-2.5 text-sm'
+    default: // sm
+      return 'text-sm'
   }
 })
 
@@ -94,13 +101,17 @@ const scaleClasses = computed(() => {
       return 'transform scale-95'
     case 'lg':
       return 'transform scale-110'
-    case 'hover-sm':
-      return 'transform origin-bottom-left hover:scale-105'
     case 'hover-md':
+      return 'transform origin-bottom-left hover:scale-105'
+    case 'hover-lg':
       return 'transform origin-bottom-left hover:scale-110'
-    default: //lg
-      return 'transform hover:scale-125'
+    default: //sm
+      return 'transform hover:scale-100'
   }
+})
+
+const customClasses = computed(() => {
+  return props.custom
 })
 
 const handleClick = (e) => {

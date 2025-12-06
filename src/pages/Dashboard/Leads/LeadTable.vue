@@ -87,13 +87,13 @@ watch(
       </tbody>
     </table>
     <div class="flex items-center gap-2 mt-4 justify-center">
-      <Button variant="secondary" size="sm" :disabled="currentPage === 1" @click="prevPage">
+      <Button variant="secondary" size="md" :disabled="currentPage === 1" @click="prevPage">
         &lt;&lt;
       </Button>
 
       <span class="text-sm text-gray-600"> Page {{ currentPage }} of {{ lastPage }} </span>
 
-      <Button variant="secondary" size="sm" :disabled="currentPage === lastPage" @click="nextPage">
+      <Button variant="secondary" size="md" :disabled="currentPage === lastPage" @click="nextPage">
         &gt;&gt;</Button
       >
     </div>
