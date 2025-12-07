@@ -1,9 +1,12 @@
 <script setup>
 import { reactive, ref } from 'vue'
+import { storeToRefs } from 'pinia'
 import LeadForm from '@/pages/Dashboard/Leads/LeadForm.vue'
 import LeadTable from '@/pages/Dashboard/Leads/LeadTable.vue'
+import { useLeadStore } from '@/stores/lead'
 
-const setPerPage = ref(15)
+const leadsStore = useLeadStore()
+const { perPage } = storeToRefs(leadsStore)
 const toggleModal = ref(false)
 const form = reactive({
   name: '',
@@ -31,7 +34,7 @@ const openLeadModal = () => {
         <input
           class="focus:ring-0 focus:ring-offset-0 focus:outline-none active:outline-none active:ring-0 text-right w-8 bg-white"
           type="number"
-          v-model.number="setPerPage"
+          v-model.number="perPage"
         />
         per page
       </label>
@@ -48,7 +51,7 @@ const openLeadModal = () => {
       <LeadForm :form :openLeadModal :toggleModal v-if="toggleModal" />
     </Transition>
 
-    <LeadTable :setPerPage />
+    <LeadTable />
   </div>
 </template>
 

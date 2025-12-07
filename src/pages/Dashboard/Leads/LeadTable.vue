@@ -6,9 +6,8 @@ import { computed, onMounted, ref, watch } from 'vue'
 import LeadDetail from '@/pages/Dashboard/Leads/LeadDetail.vue'
 import Button from '@/components/Button.vue'
 
-const props = defineProps(['setPerPage'])
 const leadStore = useLeadStore()
-const { leads } = storeToRefs(leadStore)
+const { leads, currentPage: crtPage, perPage } = storeToRefs(leadStore)
 const { fetchLeads } = leadStore
 
 const showLeadModal = ref(false)
@@ -27,21 +26,21 @@ const leadItems = computed<LeadProps[]>(() => leads.value?.data ?? [])
 const currentPage = computed(() => leads.value?.meta?.current_page || 1)
 const lastPage = computed(() => leads.value?.meta?.last_page || 1)
 const prevPage = async () => {
-  if (currentPage.value > 1) await fetchLeads(currentPage.value - 1, props.setPerPage)
+  if (currentPage.value > 1) await fetchLeads(currentPage.value - 1, perPage.value)
 }
 
 const nextPage = async () => {
-  if (currentPage.value < lastPage.value) await fetchLeads(currentPage.value + 1, props.setPerPage)
+  if (currentPage.value < lastPage.value) await fetchLeads(currentPage.value + 1, perPage.value)
 }
 
 onMounted(async () => {
-  await fetchLeads(1, props.setPerPage)
+  await fetchLeads(crtPage.value, perPage.value)
 })
 
 watch(
-  () => props.setPerPage,
-  async (newPerPage) => {
-    await fetchLeads(1, newPerPage)
+  () => perPage.value,
+  async () => {
+    await fetchLeads(crtPage.value, perPage.value)
   },
 )
 </script>

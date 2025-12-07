@@ -19,6 +19,17 @@ export async function getLeadsAPI(page: number, perPage = 15) {
     console.log('error when fetch: ', err)
   }
 }
+
+export async function getLeadByIdAPI(id: string) {
+  try {
+    const response = await api.get(`/v1/leads/${id}`)
+    console.log('response data: ', response.data)
+    return response.data
+  } catch (err) {
+    console.log('error when fetch: ', err)
+  }
+}
+
 export async function addLeadAPI(data: LeadProps) {
   try {
     const response = await api.post('/v1/leads', { ...data })
@@ -32,8 +43,9 @@ export async function addLeadAPI(data: LeadProps) {
 
 // todo: check api processing from server after send update request
 export async function updateLeadAPI(lead: LeadProps) {
+  const { id, ...payload } = lead
   try {
-    const response = await api.put(`/v1/leads/${lead.id}`, { ...lead })
+    const response = await api.patch(`/v1/leads/${id}`, payload)
     return response.data
   } catch (err) {
     console.error('error is: ', err)

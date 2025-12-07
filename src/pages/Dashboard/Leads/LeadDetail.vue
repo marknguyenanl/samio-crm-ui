@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { updateLeadAPI } from '@/api/leads'
 import ModalLayout from '@/layouts/ModalLayout.vue'
+import { useLeadStore } from '@/stores/lead'
 import { reactive } from 'vue'
 const props = defineProps(['lead', 'showLeadModal'])
 const emit = defineEmits<{
@@ -9,6 +9,8 @@ const emit = defineEmits<{
 const closeModal = () => {
   emit('close')
 }
+
+const leadStore = useLeadStore()
 
 const leadInput = reactive({
   id: props.lead.id,
@@ -20,10 +22,9 @@ const leadInput = reactive({
 })
 
 // todo: optimize with optimistic update
-const updateLead = async () => {
-  const res = await updateLeadAPI(leadInput)
-  console.log('update lead with data: ', leadInput)
-  return res.status
+const onUpdateLead = async () => {
+  // submit update -> pinia state update -> send api, valid if status ok, reject if it is not
+  await leadStore.updateLeadOptimistic(leadInput)
 }
 </script>
 
@@ -31,7 +32,7 @@ const updateLead = async () => {
   <ModalLayout>
     <div>
       <h3 class="pb-4 font-semibold text-samio-green">EDIT LEAD:</h3>
-      <form @submit.prevent="updateLead" class="space-y-4">
+      <form @submit.prevent="onUpdateLead" class="space-y-4">
         <div class="flex flex-col">
           <label for="name" class="text-samio-green mb-1 text-sm font-medium">Name:</label>
           <input
@@ -90,7 +91,11 @@ const updateLead = async () => {
           />
         </div>
         <div class="flex gap-4">
-          <button class="cursor-pointer bg-samio-orange rounded-sm py-1 px-4" type="submit">
+          <button
+            class="cursor-pointer bg-samio-orange rounded-sm py-1 px-4"
+            type="submit"
+            @click="onUpdateLead"
+          >
             Update
           </button>
           <button
