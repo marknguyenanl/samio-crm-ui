@@ -10,6 +10,7 @@ import LeadDetail from "@/pages/Dashboard/Leads/LeadDetail.vue"
 import Docs from "@/pages/Welcome/Docs.vue"
 import Homepage from "@/pages/Welcome/Homepage.vue"
 import Pricing from "@/pages/Welcome/Pricing.vue"
+import DemoLogin from "@/pages/Welcome/DemoLogin.vue"
 import { createRouter, createWebHistory } from "vue-router"
 
 export const router = createRouter({
@@ -44,6 +45,11 @@ export const router = createRouter({
           path: 'register',
           name: 'register',
           component: Register
+        },
+        {
+          path: 'demo',
+          name: 'demo',
+          component: DemoLogin
         },
       ],
     },
