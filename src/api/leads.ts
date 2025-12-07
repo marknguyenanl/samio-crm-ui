@@ -23,10 +23,10 @@ export async function getLeadsAPI(page: number, perPage = 15) {
 export async function getLeadByIdAPI(id: string) {
   try {
     const response = await api.get(`/v1/leads/${id}`)
-    console.log('response data: ', response.data)
+    console.log('response data by Id API: ', response.data)
     return response.data
   } catch (err) {
-    console.log('error when fetch: ', err)
+    console.log('error when fetch id API: ', err)
   }
 }
 

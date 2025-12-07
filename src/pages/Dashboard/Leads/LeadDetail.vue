@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import ModalLayout from '@/layouts/ModalLayout.vue'
 import { useLeadStore } from '@/stores/lead'
+import { useModalStore } from '@/stores/modal'
 import { reactive } from 'vue'
-const props = defineProps(['lead', 'showLeadModal'])
+const props = defineProps(['lead'])
 const emit = defineEmits<{
   (e: 'close'): void
 }>()
 const closeModal = () => {
   emit('close')
 }
+
+const { toggleModal } = useModalStore()
 
 const leadStore = useLeadStore()
 
@@ -25,6 +28,7 @@ const leadInput = reactive({
 const onUpdateLead = async () => {
   // submit update -> pinia state update -> send api, valid if status ok, reject if it is not
   await leadStore.updateLeadOptimistic(leadInput)
+  toggleModal('lead-detail', 'close')
 }
 </script>
 

@@ -5,21 +5,25 @@ import { storeToRefs } from 'pinia'
 import { computed, onMounted, ref, watch } from 'vue'
 import LeadDetail from '@/pages/Dashboard/Leads/LeadDetail.vue'
 import Button from '@/components/Button.vue'
+import { useModalStore } from '@/stores/modal'
 
 const leadStore = useLeadStore()
 const { leads, currentPage: crtPage, perPage } = storeToRefs(leadStore)
 const { fetchLeads } = leadStore
 
-const showLeadModal = ref(false)
+const modalStore = useModalStore()
+const { isModalOn } = storeToRefs(modalStore)
+const { toggleModal } = modalStore
+
 const selectedLead = ref<LeadProps>()
 
-const openLeadModalFor = (lead: LeadProps) => {
+const openLeadModal = (lead: LeadProps) => {
   selectedLead.value = { ...lead }
-  showLeadModal.value = true
+  toggleModal('lead-detail', 'open')
 }
 const closeLeadModal = () => {
-  showLeadModal.value = false
   selectedLead.value = undefined
+  toggleModal('lead-detail', 'close')
 }
 
 const leadItems = computed<LeadProps[]>(() => leads.value?.data ?? [])
@@ -65,7 +69,7 @@ watch(
           class="divide-y divide-gray-200 table-fixed text-samio-green cursor-pointer hover:bg-samio-cream hover:text-samio-orange"
           v-for="lead in leadItems"
           :key="lead.id + '-' + lead.name"
-          @click="openLeadModalFor(lead)"
+          @click="openLeadModal(lead)"
         >
           <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.name }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.tel }}</td>
@@ -81,7 +85,11 @@ watch(
           leave-from-class="opacity-100"
           leave-to-class="opacity-0"
         >
-          <LeadDetail v-if="showLeadModal" :lead="selectedLead" @close="closeLeadModal" />
+          <LeadDetail
+            v-if="isModalOn === 'lead-detail'"
+            :lead="selectedLead"
+            @close="closeLeadModal"
+          />
         </Transition>
       </tbody>
     </table>

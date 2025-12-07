@@ -1,13 +1,16 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive } from 'vue'
 import { storeToRefs } from 'pinia'
 import LeadForm from '@/pages/Dashboard/Leads/LeadForm.vue'
 import LeadTable from '@/pages/Dashboard/Leads/LeadTable.vue'
 import { useLeadStore } from '@/stores/lead'
+import { useModalStore } from '@/stores/modal'
 
+const modalStore = useModalStore()
+const { isModalOn } = storeToRefs(modalStore)
+const { toggleModal } = modalStore
 const leadsStore = useLeadStore()
 const { perPage } = storeToRefs(leadsStore)
-const toggleModal = ref(false)
 const form = reactive({
   name: '',
   tel: '',
@@ -15,16 +18,13 @@ const form = reactive({
   source: '',
   address: '',
 })
-const openLeadModal = () => {
-  toggleModal.value = !toggleModal.value
-}
 </script>
 
 <template>
   <div class="">
     <div class="mt-8 items-center flex mx-10 justify-between">
       <button
-        @click="openLeadModal"
+        @click="toggleModal('lead-form', 'open')"
         class="h-10 cursor-pointer flex items-center px-4 py-2 bg-samio-orange hover:text-samio-orange duration-300 border-samio-orange hover:border transition-all hover:scale-110 hover:bg-samio-cream text-samio-green text-sm font-medium rounded-md shadow-sm focus:outline-none"
       >
         New
@@ -48,7 +48,7 @@ const openLeadModal = () => {
       leave-from-class="opacity-100"
       leave-to-class="opacity-0"
     >
-      <LeadForm :form :openLeadModal :toggleModal v-if="toggleModal" />
+      <LeadForm :form v-if="isModalOn === 'lead-form'" />
     </Transition>
 
     <LeadTable />

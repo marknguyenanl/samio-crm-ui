@@ -30,11 +30,6 @@ export const useLeadStore = defineStore('leads', () => {
     perPage.value = per;
   };
 
-  const fetchLeadById = async (id: string) => {
-    const lead = await getLeadByIdAPI(id)
-    leadsById.value[id] = lead
-  }
-
   const updateLead = async (lead: LeadProps) => {
     const res = await updateLeadAPI(lead);
     return res;
@@ -60,6 +55,7 @@ export const useLeadStore = defineStore('leads', () => {
       throw err;
     }
   };
+
 
   return { leads, leadsById, currentPage, perPage, fetchLeads, updateLead, updateLeadOptimistic };
 })

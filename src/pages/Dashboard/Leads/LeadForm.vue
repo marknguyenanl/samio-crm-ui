@@ -5,6 +5,9 @@ const props = defineProps<{
 }>()
 import ModalLayout from '@/layouts/ModalLayout.vue'
 import { addLeadAPI } from '@/api/leads'
+import { useModalStore } from '@/stores/modal'
+
+const { toggleModal } = useModalStore()
 
 const onSubmitLeadForm = async () => {
   try {
@@ -93,7 +96,7 @@ const onSubmitLeadForm = async () => {
           <button
             class="cursor-pointer border rounded-sm border-samio-green py-1 px-4"
             type="button"
-            @click="openLeadModal"
+            @click="toggleModal('lead-form', 'close')"
           >
             Cancel
           </button>
