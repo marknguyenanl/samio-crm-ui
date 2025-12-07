@@ -79,20 +79,20 @@ const showFeatureDetails = ref(false)
     <section class="products py-16 bg-white">
       <div class="max-w-6xl mx-auto px-4">
         <h2 class="text-2xl md:text-3xl font-bold text-samio-green text-center mb-10">
-          Featured Publications
+          Our breads
         </h2>
         <div class="product-grid grid gap-8 md:grid-cols-3">
           <article
             class="product-card bg-amber-100 rounded-lg shadow-sm overflow-hidden border border-amber-100 flex flex-col"
           >
             <img
-              src=""
+              src="/products/socola2out.png"
               alt="Book: Paths to Oneness"
               class="w-full h-48 object-cover bg-amber-100"
             />
             <div class="p-6 flex flex-col flex-1">
-              <h3 class="text-xl font-semibold text-blue-800 mb-2">Paths to Oneness</h3>
-              <p class="text-slate-700 mb-4 flex-1">
+              <h3 class="text-xl font-semibold text-samio-green mb-2">Paths to Oneness</h3>
+              <p class="text-samio-green mb-4 flex-1">
                 A collection of essays exploring unity across cultures and traditions.
               </p>
               <button
@@ -107,13 +107,13 @@ const showFeatureDetails = ref(false)
             class="product-card bg-amber-100 rounded-lg shadow-sm overflow-hidden border border-amber-100 flex flex-col"
           >
             <img
-              src=""
+              src="/products/briocheout.png"
               alt="Book: Voices of the Earth"
               class="w-full h-48 object-cover bg-amber-100"
             />
             <div class="p-6 flex flex-col flex-1">
-              <h3 class="text-xl font-semibold text-blue-800 mb-2">Voices of the Earth</h3>
-              <p class="text-slate-700 mb-4 flex-1">
+              <h3 class="text-xl font-semibold text-samio-green mb-2">Voices of the Earth</h3>
+              <p class="text-samio-green mb-4 flex-1">
                 Stories from around the world on our shared responsibility to the planet.
               </p>
               <button
@@ -128,13 +128,13 @@ const showFeatureDetails = ref(false)
             class="product-card bg-amber-100 rounded-lg shadow-sm overflow-hidden border border-amber-100 flex flex-col"
           >
             <img
-              src=""
+              src="/products/hatqua2out.png"
               alt="Book: Children of One World"
               class="w-full h-48 object-cover bg-amber-100"
             />
             <div class="p-6 flex col flex-1">
-              <h3 class="text-xl font-semibold text-blue-800 mb-2">Children of One World</h3>
-              <p class="text-slate-700 mb-4 flex-1">
+              <h3 class="text-xl font-semibold text-samio-green mb-2">Children of One World</h3>
+              <p class="text-samio-green mb-4 flex-1">
                 Illustrated stories for young readers about kindness and connection.
               </p>
               <button
@@ -148,70 +148,41 @@ const showFeatureDetails = ref(false)
       </div>
     </section>
 
-    <!-- Image Gallery Section -->
-    <section class="gallery py-16">
-      <div class="max-w-6xl mx-auto px-4">
-        <h2 class="text-2xl md:text-3xl font-bold text-blue-900 text-center mb-10">Gallery</h2>
-        <div class="gallery-grid grid gap-4 sm:grid-cols-2 md:grid-cols-4">
-          <img
-            src=""
-            alt="Author event"
-            class="w-full h-40 object-cover rounded-lg shadow-sm bg-amber-100"
-          />
-          <img
-            src=""
-            alt="Book signing"
-            class="w-full h-40 object-cover rounded-lg shadow-sm bg-amber-100"
-          />
-          <img
-            src=""
-            alt="Reading circle"
-            class="w-full h-40 object-cover rounded-lg shadow-sm bg-amber-100"
-          />
-          <img
-            src=""
-            alt="Publishing workshop"
-            class="w-full h-40 object-cover rounded-lg shadow-sm bg-amber-100"
-          />
-        </div>
-      </div>
-    </section>
-
     <!-- Testimonials Section -->
     <section class="testimonials py-16 bg-white">
       <div class="max-w-6xl mx-auto px-4">
-        <h2 class="text-2xl md:text-3xl font-bold text-blue-900 text-center mb-10">
+        <h2 class="text-2xl md:text-3xl font-bold text-samio-green text-center mb-10">
           What Our Readers Say
         </h2>
         <div class="testimonial-list grid gap-8 md:grid-cols-3">
           <blockquote
             class="testimonial-item bg-amber-100 border border-amber-100 rounded-lg p-6 shadow-sm"
           >
-            <p class="text-slate-800 mb-4">
+            <p class="text-samio-green mb-4">
               “Global Oneness Publishing has changed the way I see the world. Their books are
               thoughtful, beautifully produced, and deeply moving.”
             </p>
-            <footer class="text-sm font-semibold text-blue-700">— Alex R., Educator</footer>
+            <footer class="text-sm font-semibold text-samio-green-dark">— Alex R., Educator</footer>
           </blockquote>
           <blockquote
             class="testimonial-item bg-amber-100 border border-amber-100 rounded-lg p-6 shadow-sm"
           >
-            <p class="text-slate-800 mb-4">
+            <p class="text-samio-green mb-4">
               “Our community reading group keeps coming back to their titles. They spark meaningful
               conversations every time.”
             </p>
-            <footer class="text-sm font-semibold text-blue-700">
+            <footer class="text-sm font-semibold text-samio-green-dark">
               — Priya S., Community Organizer
             </footer>
           </blockquote>
           <blockquote
             class="testimonial-item bg-amber-100 border border-amber-100 rounded-lg p-6 shadow-sm"
           >
-            <p class="text-slate-800 mb-4">
+            <p class="text-samio-green mb-4">
               “As a parent, I love their children’s books. They teach empathy and global citizenship
               in a way kids really understand.”
             </p>
-            <footer class="text-sm font-semibold text-blue-700">— Daniel M., Parent</footer>
+            <footer class="text-sm font-semibold text-samio-green-dark">— Daniel M., Parent</footer>
           </blockquote>
         </div>
       </div>
@@ -220,8 +191,8 @@ const showFeatureDetails = ref(false)
     <!-- Newsletter Section -->
     <section class="newsletter py-16">
       <div class="max-w-2xl mx-auto px-4 text-center">
-        <h2 class="text-2xl md:text-3xl font-bold text-blue-900 mb-4">Join Our Newsletter</h2>
-        <p class="text-slate-700 mb-6">
+        <h2 class="text-2xl md:text-3xl font-bold text-samio-green mb-4">Join Our Newsletter</h2>
+        <p class="text-samio-green mb-6">
           Receive updates on new releases, events, and special offers.
         </p>
         <form class="newsletter-form flex flex-col sm:flex-row gap-3 justify-center">
@@ -243,15 +214,15 @@ const showFeatureDetails = ref(false)
     <!-- Orders Section -->
     <section class="orders py-16 bg-white">
       <div class="max-w-4xl mx-auto px-4">
-        <h2 class="text-2xl md:text-3xl font-bold text-blue-900 text-center mb-6">
+        <h2 class="text-2xl md:text-3xl font-bold text-samio-green text-center mb-6">
           Order &amp; Distribution
         </h2>
         <div class="orders-content bg-amber-100 border border-amber-100 rounded-lg p-8 shadow-sm">
-          <p class="text-slate-700 mb-4">
+          <p class="text-samio-green mb-4">
             Interested in bulk orders, bookstore partnerships, or educational licensing? Contact our
             distribution team for tailored solutions.
           </p>
-          <ul class="list-disc list-inside text-slate-700 space-y-2 mb-6">
+          <ul class="list-disc list-inside text-samio-green space-y-2 mb-6">
             <li>Bulk discounts for schools, libraries, and nonprofits</li>
             <li>Custom collections for reading groups and retreats</li>
             <li>International shipping and digital formats available</li>

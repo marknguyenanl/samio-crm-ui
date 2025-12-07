@@ -42,7 +42,11 @@ api.interceptors.response.use((response) => response, async (error) => {
     isRefreshing = true
 
     try {
-      const { data } = await api.post('/v1/refresh') // or your refresh route
+      const rawApi = axios.create({
+        baseURL: import.meta.env.VITE_API_URL,
+        timeout: 10000
+      })
+      const { data } = await rawApi.post('/v1/refresh') // or your refresh route
       const newToken = data.access_token
 
 
