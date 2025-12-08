@@ -6,6 +6,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import LeadDetail from '@/pages/Dashboard/Leads/LeadDetail.vue'
 import Button from '@/components/Button.vue'
 import { useModalStore } from '@/stores/modal'
+import useDebounce from '@/hooks/useDebounce'
 
 const leadStore = useLeadStore()
 const { leads, currentPage, perPage } = storeToRefs(leadStore)
@@ -16,6 +17,7 @@ const { isModalOn } = storeToRefs(modalStore)
 const { toggleModal } = modalStore
 
 const selectedLead = ref<LeadProps>()
+const { debounceTimer } = useDebounce()
 
 const openLeadModal = (lead: LeadProps) => {
   selectedLead.value = { ...lead }
@@ -28,18 +30,15 @@ const closeLeadModal = () => {
 
 currentPage.value = leads.value?.meta?.current_page || 1
 const lastPage = computed(() => leads.value?.meta?.last_page || 1)
-const debounceTimer = ref<number | null>(null)
 
 const prevPage = async () => {
   if (currentPage.value == 1) return
 
   currentPage.value--
 
-  if (debounceTimer.value !== null) clearTimeout(debounceTimer.value)
-
-  debounceTimer.value = setTimeout(async () => {
+  debounceTimer(async () => {
     await fetchLeads(currentPage.value, perPage.value)
-  }, 250)
+  })
 }
 
 const nextPage = async () => {
@@ -47,11 +46,9 @@ const nextPage = async () => {
 
   currentPage.value++
 
-  if (debounceTimer.value !== null) clearTimeout(debounceTimer.value)
-
-  debounceTimer.value = setTimeout(async () => {
+  debounceTimer(async () => {
     await fetchLeads(currentPage.value, perPage.value)
-  }, 250)
+  })
 }
 
 // onMounted(async () => {
