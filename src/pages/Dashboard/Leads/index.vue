@@ -30,14 +30,23 @@ const form = reactive({
         New
       </button>
 
-      <label class="flex items-center py-1 gap-1 pr-2 border rounded-lg">
-        <input
-          class="focus:ring-0 focus:ring-offset-0 focus:outline-none active:outline-none active:ring-0 text-right w-8 bg-white"
-          type="number"
-          v-model.number="perPage"
-        />
-        per page
-      </label>
+      <div class="items-center flex gap-4 text-samio-green">
+        <div class="flex items-center gap-1">
+          <label>filter: </label>
+          <input
+            class="px-2 border py-1 rounded-lg border-samio-orange focus:ring-0 focus:ring-offset-0 focus:outline-none active:outline-none active:ring-0 text-right w-28 bg-white"
+            type="text"
+          />
+        </div>
+        <label class="border-samio-orange flex items-center py-1 gap-1 pr-2 border rounded-lg">
+          <input
+            class="focus:ring-0 focus:ring-offset-0 focus:outline-none active:outline-none active:ring-0 text-right w-8 bg-white"
+            type="number"
+            v-model="perPage"
+          />
+          per page
+        </label>
+      </div>
     </div>
 
     <Transition

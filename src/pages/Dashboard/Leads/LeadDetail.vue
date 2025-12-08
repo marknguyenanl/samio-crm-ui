@@ -27,8 +27,8 @@ const leadInput = reactive({
 // todo: optimize with optimistic update
 const onUpdateLead = async () => {
   // submit update -> pinia state update -> send api, valid if status ok, reject if it is not
-  await leadStore.updateLeadOptimistic(leadInput)
   toggleModal('lead-detail', 'close')
+  await leadStore.updateLeadOptimistic(leadInput)
 }
 </script>
 

@@ -1,4 +1,5 @@
-import { getLeadByIdAPI, getLeadsAPI, LeadProps, updateLeadAPI } from '@/api/leads';
+import { getLeadsAPI, LeadProps, updateLeadAPI } from '@/api/leads';
+import { useToast } from '@/hooks/useToast';
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
@@ -25,17 +26,14 @@ export const useLeadStore = defineStore('leads', () => {
 
   const fetchLeads = async (page = currentPage.value, per = perPage.value) => {
     const response = await getLeadsAPI(page, per);
+
     leads.value = response;
-    currentPage.value = page;
-    perPage.value = per;
+    currentPage.value = response.meta.current_page;
+    perPage.value = response.meta.per_page;
   };
 
-  const updateLead = async (lead: LeadProps) => {
-    const res = await updateLeadAPI(lead);
-    return res;
-  }
-
   const updateLeadOptimistic = async (partialLead: LeadProps & { id: string }) => {
+    const { success } = useToast()
     const index: any = leads.value?.data.findIndex(l => l.id === partialLead.id);
     if (index === -1) throw new Error(`Lead ${partialLead.id} not found`);
 
@@ -48,14 +46,16 @@ export const useLeadStore = defineStore('leads', () => {
       await updateLeadAPI(partialLead);
 
       // refetch the current page after successful update
+      success('Successfully update Lead')
+
       await fetchLeads(currentPage.value, perPage.value);
-    } catch (err) {
+    } catch (error) {
       // rollback
       leads.value!.data[index] = backup;
-      throw err;
+      throw error;
     }
   };
 
 
-  return { leads, leadsById, currentPage, perPage, fetchLeads, updateLead, updateLeadOptimistic };
+  return { leads, leadsById, currentPage: currentPage, perPage, fetchLeads, updateLeadOptimistic };
 })

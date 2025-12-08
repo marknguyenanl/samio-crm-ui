@@ -62,6 +62,21 @@ api.interceptors.response.use((response) => response, async (error) => {
       originalRequest.headers.Authorization = `Bearer ${newToken}`
       return api(originalRequest)
     } catch (refreshError) {
+      // 2) Log refresh errors
+      if (axios.isAxiosError(refreshError)) {
+        console.error(
+          '[API] Token refresh failed:',
+          'message =', refreshError.message,
+          'status =', refreshError.response?.status,
+          'url =', refreshError.config?.url,
+          'data =', refreshError.response?.data,
+        );
+      } else if (refreshError instanceof Error) {
+        console.error('[API] Token refresh failed:', refreshError.message, refreshError);
+      } else {
+        console.error('[API] Token refresh failed (unknown error):', refreshError);
+      }
+
       localStorage.removeItem('access_token')
       pendingRequests = []
       // Optionally redirect to login
@@ -69,6 +84,21 @@ api.interceptors.response.use((response) => response, async (error) => {
     } finally {
       isRefreshing = false
     }
+  }
+
+  if (axios.isAxiosError(error)) {
+    console.error(
+      '[API] Request failed:',
+      'message =', error.message,
+      'method =', error.config?.method?.toUpperCase(),
+      'url =', error.config?.url,
+      'status =', error.response?.status,
+      'data =', error.response?.data,
+    );
+  } else if (error instanceof Error) {
+    console.error('[API] Request failed:', error.message, error);
+  } else {
+    console.error('[API] Request failed (unknown error):', error);
   }
 
   return Promise.reject(error)

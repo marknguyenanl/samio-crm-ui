@@ -9,8 +9,8 @@ export async function loginAPI(data: LoginPayload) {
   try {
     const response = await api.post('/v1/login', { ...data })
     return response.data
-  } catch (err) {
-    console.log('error is: ', err)
+  } catch (error) {
+    console.error('error is: ', error)
   }
 }
 
@@ -26,7 +26,7 @@ export async function registerAPI(data: LoginPayload) {
     }
     return response.status
   } catch (error) {
-    console.log('Cannot log in with error: ', error)
+    console.error('Cannot log in with error: ', error)
     return null
   }
 }
