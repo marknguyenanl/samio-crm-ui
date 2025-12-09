@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const props = defineProps<{
   form: { name: string; tel: string; email: string; source: string; address: string }
-  openLeadModal: () => void
 }>()
 import ModalLayout from '@/layouts/ModalLayout.vue'
 import { addLeadAPI } from '@/api/leads'
@@ -20,7 +19,7 @@ const onSubmitLeadForm = async () => {
     props.form.address = ''
 
     // close modal
-    props.openLeadModal()
+    toggleModal('lead-form', 'close')
   } catch (error) {
     console.error('Error adding lead:', error)
   }

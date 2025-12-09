@@ -17,6 +17,7 @@
   "dependencies": {
     "@amcharts/amcharts5": "^5.14.4",
     "pinia": "^3.0.4",
+    "uuid": "^13.0.0",
     "vue": "^3.5.22",
     "vue-i18n": "11",
     "vue-router": "^4.6.3"

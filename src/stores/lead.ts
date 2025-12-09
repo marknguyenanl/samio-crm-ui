@@ -1,7 +1,8 @@
-import { getLeadsAPI, LeadProps, updateLeadAPI } from '@/api/leads';
+import { addLeadAPI, getLeadsAPI, LeadProps, updateLeadAPI } from '@/api/leads';
 import { useToast } from '@/hooks/useToast';
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { v4 as uuidv4 } from 'uuid'
 
 
 type LeadsResponse = {
@@ -58,6 +59,35 @@ export const useLeadStore = defineStore('leads', () => {
     } catch (error) {
       // rollback
       leads.value!.data[index] = backup;
+      throw error;
+    }
+  };
+
+  const addLeadOptimistic = async (partialLead: LeadProps & { id: string }) => {
+    const { success } = useToast()
+
+    if (!partialLead.id) {
+      partialLead.id = uuidv4()
+    }
+
+    // push optimistically and remember index
+    const index = leads.value!.data.push(partialLead)
+    leads.value!.data.unshift(partialLead)
+
+    try {
+      const createdLead = await addLeadAPI(partialLead);
+
+      // update local data with real server lead
+      leads.value!.data[index] = createdLead
+      // refetch the current page after successful update
+
+      await fetchLeads(currentPage.value, perPage.value);
+
+      success('Successfully add Lead')
+
+    } catch (error) {
+      // rollback
+      leads.value!.data.splice(index, 1)
       throw error;
     }
   };
