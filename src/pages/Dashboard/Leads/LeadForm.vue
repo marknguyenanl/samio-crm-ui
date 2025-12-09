@@ -3,14 +3,16 @@ const props = defineProps<{
   form: { name: string; tel: string; email: string; source: string; address: string }
 }>()
 import ModalLayout from '@/layouts/ModalLayout.vue'
-import { addLeadAPI } from '@/api/leads'
 import { useModalStore } from '@/stores/modal'
+import { useLeadStore } from '@/stores/lead'
 
 const { toggleModal } = useModalStore()
+const { addLeadOptimistic } = useLeadStore()
 
 const onSubmitLeadForm = async () => {
   try {
-    await addLeadAPI({ ...props.form })
+    await addLeadOptimistic({...props.form})
+
     // clear form only if request succeeded
     props.form.name = ''
     props.form.tel = ''

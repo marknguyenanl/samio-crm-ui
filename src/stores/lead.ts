@@ -93,5 +93,5 @@ export const useLeadStore = defineStore('leads', () => {
   };
 
 
-  return { leads, leadsById, currentPage, perPage, fetchLeads, updateLeadOptimistic };
+  return { leads, leadsById, currentPage, perPage, fetchLeads, updateLeadOptimistic, addLeadOptimistic };
 })
