@@ -11,5 +11,7 @@
 (x) optimistic update (Add lead)
 (x) optimistic update (delete lead)
 (x) filter by name
+(x) modal
+( ) fix filter then next button > is reseted to new db (add query argument to fetch)
 ( ) sorting table column
 ( ) dashboard total lead by day

@@ -5,15 +5,16 @@ import LeadForm from '@/pages/Dashboard/Leads/LeadForm.vue'
 import LeadTable from '@/pages/Dashboard/Leads/LeadTable.vue'
 import { useLeadStore } from '@/stores/lead'
 import { useModalStore } from '@/stores/modal'
-import { ref, watch } from 'vue'
-import { getFilteredLeadsAPI } from '@/api/leads'
+import { watch } from 'vue'
+import useDebounce from '@/hooks/useDebounce'
 
 const modalStore = useModalStore()
 const { isModalOn } = storeToRefs(modalStore)
 const { toggleModal } = modalStore
-const leadsStore = useLeadStore()
-const { leads, currentPage, perPage } = storeToRefs(leadsStore)
-const search = ref('')
+const leadStore = useLeadStore()
+const { currentPage, perPage } = storeToRefs(leadStore)
+const filter = leadStore.filter
+const { debounceTimer } = useDebounce()
 
 const form = reactive({
   name: '',
@@ -23,18 +24,17 @@ const form = reactive({
   address: '',
 })
 
+// fix: here change to fetchLeads
 const loadFilteredLeads = async () => {
-  const response = await getFilteredLeadsAPI({search: search.value})
-  leads.value = response.data
+  await leadStore.fetchLeads()
 }
 
-watch(
-  () => perPage.value ,
-   async (newPerPage) => {
+watch([() => perPage.value, () => filter.search], () => {
+  debounceTimer(async () => {
     currentPage.value = 1
-    await leadsStore.fetchLeads(currentPage.value, newPerPage)
-  },
-)
+    await leadStore.fetchLeads()
+  })
+})
 </script>
 
 <template>
@@ -49,13 +49,14 @@ watch(
 
       <div class="items-center flex gap-4 text-samio-green">
         <div class="flex items-center gap-1">
-          <label>Filter name: 
-          <input
-            class="cursor-pointer h-8 px-2 border py-1 rounded-lg border-samio-orange focus:ring-0 focus:ring-offset-0 focus:outline-none active:outline-none active:ring-0 text-right w-28 bg-white"
-            type="text"
-            v-model="search"
-            @input='loadFilteredLeads'
-          />
+          <label
+            >Filter name:
+            <input
+              class="cursor-pointer h-8 px-2 border py-1 rounded-lg border-samio-orange focus:ring-0 focus:ring-offset-0 focus:outline-none active:outline-none active:ring-0 text-right w-28 bg-white"
+              type="text"
+              v-model="filter.search"
+              @input="loadFilteredLeads"
+            />
           </label>
         </div>
         <label
@@ -64,7 +65,7 @@ watch(
           <input
             class="cursor-pointer focus:ring-0 focus:ring-offset-0 focus:outline-none active:outline-none active:ring-0 text-right w-8 bg-white"
             type="number"
-            v-model="perPage"
+            v-model.number="perPage"
           />
           leads/page
         </label>
@@ -79,7 +80,7 @@ watch(
       leave-from-class="opacity-100"
       leave-to-class="opacity-0"
     >
-      <LeadForm :form v-if="isModalOn === 'lead-form'" />
+      <LeadForm :form="form" v-if="isModalOn === 'lead-form'" />
     </Transition>
 
     <LeadTable />

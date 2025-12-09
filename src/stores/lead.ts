@@ -1,9 +1,10 @@
 import { addLeadAPI, deleteLeadAPI, getLeadsAPI, LeadProps, updateLeadAPI } from '@/api/leads';
 import { useToast } from '@/hooks/useToast';
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 
+export type LeadFilter = { search: string | null }
 
 type LeadsResponse = {
   success: boolean
@@ -20,8 +21,12 @@ type LeadsResponse = {
 
 // todo: apply optimistic update for useLeadStore
 export const useLeadStore = defineStore('leads', () => {
+
   const leads = ref<LeadsResponse | null>(null);
   const leadsById = ref<Record<string, LeadProps>>({})
+  const filter = reactive<LeadFilter>({
+    search: null,
+  })
   const currentPage = ref(1)
   const perPage = ref(15)
   const sortBy = ref('created_at')
@@ -29,16 +34,37 @@ export const useLeadStore = defineStore('leads', () => {
 
   const currentRequestId = ref(0)
 
-  const fetchLeads = async (page = currentPage.value, per = perPage.value, column = sortBy.value, dir = sortDir.value) => {
+  const fetchLeads = async (
+    page = currentPage.value,
+    per = perPage.value,
+    column = sortBy.value,
+    dir = sortDir.value,
+    filt?: LeadFilter
+  ) => {
     const requestId = ++currentRequestId.value
 
-    const response = await getLeadsAPI(page, per, column, dir)
+    // use passed filter if provided, else use store filter
+    const effectiveFilter = filt ?? filter
 
-    // If a newer request was started after this one, ignore this result
-    if (requestId !== currentRequestId.value) {
-      return
+    const params: any = {
+      page,
+      per_page: per,
+      sort_by: column,
+      sort_dir: dir
     }
-    leads.value = response;
+
+    if (effectiveFilter?.search?.trim()) {
+      params.search = effectiveFilter.search
+    }
+
+    try {
+      const response = await getLeadsAPI(params)
+      if (requestId !== currentRequestId.value) return
+      leads.value = response
+    } catch (err) {
+      console.error('fetchLeads failed:', err)
+    }
+
   };
 
   const updateLeadOptimistic = async (partialLead: LeadProps & { id: string }) => {
@@ -57,7 +83,7 @@ export const useLeadStore = defineStore('leads', () => {
       // refetch the current page after successful update
       success('Updated Lead Successfully')
 
-      await fetchLeads(currentPage.value, perPage.value);
+      await fetchLeads();
     } catch (error) {
       // rollback
       leads.value!.data[index] = backup;
@@ -73,8 +99,7 @@ export const useLeadStore = defineStore('leads', () => {
     }
 
     // push optimistically and remember index
-    const index = leads.value!.data.push(partialLead)
-    leads.value!.data.unshift(partialLead)
+    const index = leads.value!.data.unshift(partialLead)
 
     try {
       const createdLead = await addLeadAPI(partialLead);
@@ -83,7 +108,7 @@ export const useLeadStore = defineStore('leads', () => {
       leads.value!.data[index] = createdLead
       // refetch the current page after successful update
 
-      await fetchLeads(currentPage.value, perPage.value);
+      await fetchLeads();
 
       success('Added Lead Successfully')
 
@@ -113,5 +138,5 @@ export const useLeadStore = defineStore('leads', () => {
   }
 
 
-  return { leads, leadsById, currentPage, perPage, sortBy, sortDir, fetchLeads, updateLeadOptimistic, addLeadOptimistic, deleteLeadOptimistic }
+  return { leads, leadsById, currentPage, perPage, sortBy, sortDir, filter, fetchLeads, updateLeadOptimistic, addLeadOptimistic, deleteLeadOptimistic }
 })

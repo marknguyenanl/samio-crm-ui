@@ -1,3 +1,4 @@
+import { LeadFilter } from "@/stores/lead.ts";
 import { api } from "./axios.ts"
 
 export interface LeadProps {
@@ -8,22 +9,21 @@ export interface LeadProps {
   source: string;
   address: string;
 }
-
-export async function getLeadsAPI(page: number, perPage: number, sortBy: string, sortDir: string) {
+interface LeadsResponse {
+  success: boolean
+  data: LeadProps[]
+  meta: {
+    current_page: number
+    last_page: number
+    per_page: number
+    total: number
+  }
+}
+export async function getLeadsAPI(params: any): Promise<LeadsResponse> {
   try {
-    const response = await api.get('/v1/leads', {
-      params: {
-        current_page: page,
-        per_page: perPage,
-        sort_by: sortBy,
-        sortDir: sortDir
-
-      }
-    })
-    // const response = await api.get(`/v1/leads?per_page=${perPage}&page=${page}`)
+    const response = await api.get('/v1/leads', { params })
     return response.data
   } catch (error) {
-    // return { ok: false, error }
     throw error
   }
 }

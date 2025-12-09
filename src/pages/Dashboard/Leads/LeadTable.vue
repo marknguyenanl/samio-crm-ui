@@ -2,15 +2,14 @@
 import { LeadProps } from '@/api/leads'
 import { useLeadStore } from '@/stores/lead'
 import { storeToRefs } from 'pinia'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import LeadDetail from '@/pages/Dashboard/Leads/LeadDetail.vue'
 import Button from '@/components/Button.vue'
 import { useModalStore } from '@/stores/modal'
 import useDebounce from '@/hooks/useDebounce'
 
 const leadStore = useLeadStore()
-const { leads, currentPage, perPage, sortBy, sortDir } = storeToRefs(leadStore)
-const { fetchLeads, deleteLeadOptimistic } = leadStore
+const { leads, currentPage, sortBy, sortDir } = storeToRefs(leadStore)
 
 const modalStore = useModalStore()
 const { isModalOn } = storeToRefs(modalStore)
@@ -29,7 +28,7 @@ const closeLeadModal = () => {
 }
 
 const deleteLead = async (id: string) => {
-  await deleteLeadOptimistic(id)
+  await leadStore.deleteLeadOptimistic(id)
 }
 
 const sort = async (column: any) => {
@@ -39,7 +38,6 @@ const sort = async (column: any) => {
     sortBy.value = column
     sortDir.value = 'desc'
   }
-  await fetchLeads(currentPage.value, perPage.value, sortBy.value, sortDir.value)
 }
 
 currentPage.value = leads.value?.meta?.current_page || 1
@@ -50,9 +48,7 @@ const prevPage = async () => {
 
   currentPage.value--
 
-  debounceTimer(async () => {
-    await fetchLeads(currentPage.value, perPage.value)
-  })
+  console.log('prevPage → currentPage', currentPage.value)
 }
 
 const nextPage = async () => {
@@ -63,13 +59,21 @@ const nextPage = async () => {
 
   currentPage.value++
 
-  debounceTimer(async () => {
-    await fetchLeads(currentPage.value, perPage.value, undefined, undefined)
-  })
+  console.log('nextPage → currentPage', currentPage.value)
 }
 
 onMounted(async () => {
-  await fetchLeads(currentPage.value, perPage.value, undefined, undefined)
+  await leadStore.fetchLeads()
+})
+
+watch([() => currentPage.value, () => sortDir.value, () => sortBy.value], () => {
+  debounceTimer(async () => {
+    try {
+      await leadStore.fetchLeads()
+    } catch (e) {
+      console.error(e)
+    }
+  })
 })
 </script>
 
@@ -79,32 +83,35 @@ onMounted(async () => {
       <thead class="bg-samio-gold text-samio-green-dark">
         <tr>
           <th class="gap-4 px-6 py-3 text-left text-xs font-semibold uppercase">Trash</th>
-          <th
-            @click="sort(sortBy)"
-            class="flex items-center gap-4 px-6 py-3 text-left text-xs font-semibold uppercase"
-          >
-            Name
-            <span v-if="sortBy === 'name'"> {{ sortDir === 'desc' ? '▲' : '▼' }} </span>
+          <th @click="sort('name')" class="">
+            <div
+              class="flex items-center gap-4 px-6 py-3 text-left text-xs font-semibold uppercase"
+            >
+              Name
+              <span v-if="sortBy === 'name'"> {{ sortDir === 'desc' ? '▲' : '▼' }} </span>
+            </div>
           </th>
-          <th @click="sort(sortBy)" class="px-6 py-3 text-left text-xs font-semibold uppercase">
-            Tel
-            <span v-if="sortBy === 'tel'">
-              {{ sortDir === 'desc' ? '▲' : '▼' }}
-            </span>
+          <th @click="sort('tel')" class="">
+            <div class="px-6 py-3 text-left text-xs font-semibold uppercase">
+              Tel
+              <span v-if="sortBy === 'tel'">
+                {{ sortDir === 'desc' ? '▲' : '▼' }}
+              </span>
+            </div>
           </th>
-          <th @click="sort(sortBy)" class="px-6 py-3 text-left text-xs font-semibold uppercase">
+          <th @click="sort('email')" class="px-6 py-3 text-left text-xs font-semibold uppercase">
             Email
             <span v-if="sortBy === 'email'">
               {{ sortDir === 'desc' ? '▲' : '▼' }}
             </span>
           </th>
-          <th @click="sort(sortBy)" class="px-6 py-3 text-left text-xs font-semibold uppercase">
+          <th @click="sort('source')" class="px-6 py-3 text-left text-xs font-semibold uppercase">
             Source
             <span v-if="sortBy === 'source'">
               {{ sortDir === 'desc' ? '▲' : '▼' }}
             </span>
           </th>
-          <th @click="sort(sortBy)" class="px-6 py-3 text-left text-xs font-semibold uppercase">
+          <th @click="sort('address')" class="px-6 py-3 text-left text-xs font-semibold uppercase">
             Address
             <span v-if="sortBy === 'address'">
               {{ sortDir === 'desc' ? '▲' : '▼' }}
