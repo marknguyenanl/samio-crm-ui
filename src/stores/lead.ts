@@ -86,13 +86,14 @@ export const useLeadStore = defineStore('leads', () => {
       await fetchLeads();
     } catch (error) {
       // rollback
+      errorToast('You got an error')
       leads.value!.data[index] = backup;
       throw error;
     }
   };
 
   const addLeadOptimistic = async (partialLead: LeadProps & { id: string }) => {
-    const { success } = useToast()
+    const { success, error: errorToast } = useToast()
 
     if (!partialLead.id) {
       partialLead.id = uuidv4()
@@ -115,6 +116,7 @@ export const useLeadStore = defineStore('leads', () => {
     } catch (error) {
       // rollback
       leads.value!.data.splice(index, 1)
+      errorToast('You got an error')
       throw error;
     }
   };

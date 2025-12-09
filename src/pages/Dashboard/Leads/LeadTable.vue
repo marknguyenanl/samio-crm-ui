@@ -27,7 +27,7 @@ const closeLeadModal = () => {
   toggleModal('lead-detail', 'close')
 }
 
-const deleteLead = async (id: string) => {
+const deleteLead = async (id: any) => {
   await leadStore.deleteLeadOptimistic(id)
 }
 

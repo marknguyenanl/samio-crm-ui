@@ -1,4 +1,3 @@
-import { LeadFilter } from "@/stores/lead.ts";
 import { api } from "./axios.ts"
 
 export interface LeadProps {

@@ -3,6 +3,7 @@ import { createPinia } from 'pinia'
 import { router } from './router'
 import { createI18n } from 'vue-i18n'
 import '@/global.css'
+import '@fortawesome/fontawesome-free/css/all.min.css'
 
 import App from './App.vue'
 
