@@ -9,7 +9,7 @@ export interface LeadProps {
   address: string;
 }
 
-export async function getLeadsAPI(page: number, perPage = 15) {
+export async function getLeadsAPI(page: number, perPage: number) {
   try {
     const response = await api.get(`/v1/leads?per_page=${perPage}&page=${page}`)
     return response.data
@@ -48,4 +48,10 @@ export async function updateLeadAPI(lead: LeadProps) {
     // return { ok: false, error }
     throw error
   }
+}
+
+export function getFilteredLeadsAPI(filter: any) {
+  return api.get('/v1/leads?per_page', {
+    params: filter
+  })
 }

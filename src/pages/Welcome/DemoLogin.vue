@@ -25,6 +25,6 @@ onMounted(() => {
     <span
       class="relative h-12 w-12 animate-spin rounded-full border-4 border-samio-orange border-t-transparent"
     ></span>
-    <span>Logging into the demo account…</span>
+    <span>Logging into your account…</span>
   </div>
 </template>

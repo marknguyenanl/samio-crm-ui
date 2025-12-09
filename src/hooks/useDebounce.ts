@@ -1,5 +1,5 @@
 import { onBeforeUnmount, ref } from 'vue'
-export default function useDebounce(delay = 250) {
+export default function useDebounce(delay = 300) {
   const timer = ref<ReturnType<typeof setTimeout> | null>(null)
 
   const debounceTimer = (fn: () => void | Promise<void>) => {

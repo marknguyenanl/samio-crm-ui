@@ -5,12 +5,16 @@ import LeadForm from '@/pages/Dashboard/Leads/LeadForm.vue'
 import LeadTable from '@/pages/Dashboard/Leads/LeadTable.vue'
 import { useLeadStore } from '@/stores/lead'
 import { useModalStore } from '@/stores/modal'
+import { ref, watch } from 'vue'
+import { getFilteredLeadsAPI } from '@/api/leads'
 
 const modalStore = useModalStore()
 const { isModalOn } = storeToRefs(modalStore)
 const { toggleModal } = modalStore
 const leadsStore = useLeadStore()
-const { perPage } = storeToRefs(leadsStore)
+const { leads, currentPage, perPage } = storeToRefs(leadsStore)
+const search = ref('')
+
 const form = reactive({
   name: '',
   tel: '',
@@ -18,6 +22,19 @@ const form = reactive({
   source: '',
   address: '',
 })
+
+const loadFilteredLeads = async () => {
+  const response = await getFilteredLeadsAPI({search: search.value})
+  leads.value = response.data
+}
+
+watch(
+  () => perPage.value ,
+   async (newPerPage) => {
+    currentPage.value = 1
+    await leadsStore.fetchLeads(currentPage.value, newPerPage)
+  },
+)
 </script>
 
 <template>
@@ -32,19 +49,24 @@ const form = reactive({
 
       <div class="items-center flex gap-4 text-samio-green">
         <div class="flex items-center gap-1">
-          <label>filter: </label>
+          <label>Filter name: 
           <input
-            class="px-2 border py-1 rounded-lg border-samio-orange focus:ring-0 focus:ring-offset-0 focus:outline-none active:outline-none active:ring-0 text-right w-28 bg-white"
+            class="cursor-pointer h-8 px-2 border py-1 rounded-lg border-samio-orange focus:ring-0 focus:ring-offset-0 focus:outline-none active:outline-none active:ring-0 text-right w-28 bg-white"
             type="text"
+            v-model="search"
+            @input='loadFilteredLeads'
           />
+          </label>
         </div>
-        <label class="border-samio-orange flex items-center py-1 gap-1 pr-2 border rounded-lg">
+        <label
+          class="cursor-pointer h-8 text-sm border-samio-orange flex items-center py-1 gap-1 pr-2 border rounded-lg"
+        >
           <input
-            class="focus:ring-0 focus:ring-offset-0 focus:outline-none active:outline-none active:ring-0 text-right w-8 bg-white"
+            class="cursor-pointer focus:ring-0 focus:ring-offset-0 focus:outline-none active:outline-none active:ring-0 text-right w-8 bg-white"
             type="number"
             v-model="perPage"
           />
-          per page
+          leads/page
         </label>
       </div>
     </div>

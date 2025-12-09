@@ -50,7 +50,7 @@ const searchToggle = () => {
     <!-- TODO: Implement feature search once the database is ready -->
 
     <ul class="items-center flex-row flex gap-4">
-      <li>
+      <li hidden> 
         <img
           @click="searchToggle"
           v-if="!isSearching"

@@ -22,14 +22,20 @@ export const useLeadStore = defineStore('leads', () => {
   const leads = ref<LeadsResponse | null>(null);
   const leadsById = ref<Record<string, LeadProps>>({})
   const currentPage = ref(1)
-  const perPage = ref(10)
+  const perPage = ref(15)
+
+  const currentRequestId = ref(0)
 
   const fetchLeads = async (page = currentPage.value, per = perPage.value) => {
-    const response = await getLeadsAPI(page, per);
+    const requestId = ++currentRequestId.value
 
+    const response = await getLeadsAPI(page, per)
+
+    // If a newer request was started after this one, ignore this result
+    if (requestId !== currentRequestId.value) {
+      return
+    }
     leads.value = response;
-    currentPage.value = response.meta.current_page;
-    perPage.value = response.meta.per_page;
   };
 
   const updateLeadOptimistic = async (partialLead: LeadProps & { id: string }) => {
@@ -57,5 +63,5 @@ export const useLeadStore = defineStore('leads', () => {
   };
 
 
-  return { leads, leadsById, currentPage: currentPage, perPage, fetchLeads, updateLeadOptimistic };
+  return { leads, leadsById, currentPage, perPage, fetchLeads, updateLeadOptimistic };
 })

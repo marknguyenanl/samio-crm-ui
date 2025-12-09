@@ -28,6 +28,7 @@ const leadInput = reactive({
 const onUpdateLead = async () => {
   // submit update -> pinia state update -> send api, valid if status ok, reject if it is not
   toggleModal('lead-detail', 'close')
+  console.log("update lead clicked")
   await leadStore.updateLeadOptimistic(leadInput)
 }
 </script>
@@ -98,7 +99,6 @@ const onUpdateLead = async () => {
           <button
             class="cursor-pointer bg-samio-orange rounded-sm py-1 px-4"
             type="submit"
-            @click="onUpdateLead"
           >
             Update
           </button>

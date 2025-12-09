@@ -8,6 +8,9 @@ import Button from '@/components/Button.vue'
 import { useModalStore } from '@/stores/modal'
 import useDebounce from '@/hooks/useDebounce'
 
+const sortBy = ref('name')
+const sortDir = ref('asc')
+
 const leadStore = useLeadStore()
 const { leads, currentPage, perPage } = storeToRefs(leadStore)
 const { fetchLeads } = leadStore
@@ -42,7 +45,10 @@ const prevPage = async () => {
 }
 
 const nextPage = async () => {
-  if (currentPage.value == lastPage.value) return
+  if (currentPage.value >= lastPage.value) {
+    currentPage.value = lastPage.value
+    return
+  }
 
   currentPage.value++
 
@@ -51,21 +57,11 @@ const nextPage = async () => {
   })
 }
 
-// onMounted(async () => {
-//   await fetchLeads(crtPage.value, perPage.value)
-// })
+onMounted(async () => {
+  await fetchLeads(currentPage.value, perPage.value)
+})
 
-let perPageTimeout: ReturnType<typeof setTimeout> | null = null
 
-watch(
-  perPage,
-  (newVal) => {
-    perPageTimeout = setTimeout(() => {
-      fetchLeads(currentPage.value, newVal)
-    }, 0)
-  },
-  { immediate: true },
-)
 </script>
 
 <template>
@@ -73,12 +69,35 @@ watch(
     <table class="mt-4 min-w-full divide-y divide-gray-200">
       <thead class="bg-samio-gold text-samio-green-dark">
         <tr>
-          <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">Name</th>
-          <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">Tel</th>
-          <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">Email</th>
-          <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">Source</th>
+          <th class="flex items-center gap-4 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+            Name
+            <span v-if="sortBy === 'name'">
+            {{ sortDir === 'asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+          <th class=" px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+            Tel
+            <span v-if="sortBy === 'tel'">
+            {{ sortDir === 'asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+            Email
+            <span v-if="sortBy === 'email'">
+            {{ sortDir === 'asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+            Source
+            <span v-if="sortBy === 'source'">
+            {{ sortDir === 'asc' ? '▲' : '▼' }}
+            </span>
+          </th>
           <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
             Address
+            <span v-if="sortBy === 'address'">
+            {{ sortDir === 'asc' ? '▲' : '▼' }}
+            </span>
           </th>
         </tr>
       </thead>
