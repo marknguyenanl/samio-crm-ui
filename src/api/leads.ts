@@ -55,3 +55,12 @@ export function getFilteredLeadsAPI(filter: any) {
     params: filter
   })
 }
+
+export const deleteLeadAPI = async (id: string): Promise<void> => {
+  try {
+    const response = await api.delete(`/v1/leads/${id}`);
+    return response.data
+  } catch (error) {
+    throw error
+  }
+};

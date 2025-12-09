@@ -13,7 +13,7 @@ const sortDir = ref('asc')
 
 const leadStore = useLeadStore()
 const { leads, currentPage, perPage } = storeToRefs(leadStore)
-const { fetchLeads } = leadStore
+const { fetchLeads, deleteLeadOptimistic } = leadStore
 
 const modalStore = useModalStore()
 const { isModalOn } = storeToRefs(modalStore)
@@ -29,6 +29,10 @@ const openLeadModal = (lead: LeadProps) => {
 const closeLeadModal = () => {
   selectedLead.value = undefined
   toggleModal('lead-detail', 'close')
+}
+
+const deleteLead = async (id: string) => {
+    await deleteLeadOptimistic(id)
 }
 
 currentPage.value = leads.value?.meta?.current_page || 1
@@ -65,10 +69,13 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="max-w-10/12 mx-auto h-fit">
+  <div class="max-w-full mx-auto h-fit">
     <table class="mt-4 min-w-full divide-y divide-gray-200">
       <thead class="bg-samio-gold text-samio-green-dark">
         <tr>
+          <th class="flex items-center gap-4 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+            Trash
+          </th>
           <th class="flex items-center gap-4 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
             Name
             <span v-if="sortBy === 'name'">
@@ -107,11 +114,14 @@ onMounted(async () => {
         <tbody class="bg-white divide-y divide-gray-200">
           <!-- Data rows will go here -->
           <tr
-            class="divide-y divide-gray-200 table-fixed text-samio-green cursor-pointer hover:bg-samio-cream hover:text-samio-orange"
+            class="transition-all duration-300 divide-y divide-gray-200 table-fixed text-samio-green cursor-pointer hover:bg-samio-cream hover:text-samio-orange"
             v-for="lead in leads?.data"
             :key="lead.id + '-' + lead.name"
             @click="openLeadModal(lead)"
           >
+            <td  @click.stop='deleteLead(lead.id)' class="px-6 py-4 whitespace-nowrap text-sm">  
+            <i class="fa fa-trash text-red-500 cursor-pointer"></i>
+            </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.name }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.tel }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.email }}</td>

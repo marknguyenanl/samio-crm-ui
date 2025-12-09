@@ -1,4 +1,4 @@
-import { addLeadAPI, getLeadsAPI, LeadProps, updateLeadAPI } from '@/api/leads';
+import { addLeadAPI, deleteLeadAPI, getLeadsAPI, LeadProps, updateLeadAPI } from '@/api/leads';
 import { useToast } from '@/hooks/useToast';
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
@@ -40,7 +40,7 @@ export const useLeadStore = defineStore('leads', () => {
   };
 
   const updateLeadOptimistic = async (partialLead: LeadProps & { id: string }) => {
-    const { success } = useToast()
+    const { success , error: errorToast } = useToast()
     const index: any = leads.value?.data.findIndex(l => l.id === partialLead.id);
     if (index === -1) throw new Error(`Lead ${partialLead.id} not found`);
 
@@ -92,6 +92,24 @@ export const useLeadStore = defineStore('leads', () => {
     }
   };
 
+  const deleteLeadOptimistic = async (id: any) => {
+    const { success , error: errorToast } = useToast()
+    const backup = leads.value!.data.find(l => l.id == id)
+    const index = leads.value!.data.findIndex(l => l.id == id)
+    if (index !== -1) {
+      leads.value!.data.splice(index, 1)
 
-  return { leads, leadsById, currentPage, perPage, fetchLeads, updateLeadOptimistic, addLeadOptimistic };
+      try {
+        await deleteLeadAPI(id)
+        await fetchLeads(currentPage.value, perPage.value);
+        success('Successfully deleted Lead')
+      } catch (error) {
+        errorToast('Error deleting Lead')
+        leads.value!.data.splice(index, 0, backup)
+      }
+  }
+  }
+
+
+  return { leads, leadsById, currentPage, perPage, fetchLeads, updateLeadOptimistic, addLeadOptimistic, deleteLeadOptimistic }
 })
