@@ -1,22 +1,23 @@
 <script setup>
 import { onMounted, reactive } from 'vue'
+import { demoLoginAPI } from '@/api/auth' 
 import { useAuthStore } from '@/stores/auth'
+import { useRouter } from 'vue-router' 
 
-const user = reactive({
-  email: 'demo@samiohome.com',
-  password: 'demoaccount',
-})
-
-const auth = useAuthStore()
+const { setTokens } = useAuthStore()
+const router = useRouter()
 
 onMounted(() => {
   setTimeout(async () => {
     try {
-      await auth.login(user)
+      // await auth.login(user)
+      const data = await demoLoginAPI()
+      setTokens(data.access_token)
+      router.push({ name: 'dashboard' })
     } catch (error) {
       console.error('Demo login failed', error)
     }
-  }, 2000)
+  }, 1000)
 })
 </script>
 

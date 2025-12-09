@@ -14,6 +14,15 @@ export async function loginAPI(data: LoginPayload) {
   }
 }
 
+export async function demoLoginAPI() {
+  try {
+    const response = await api.post('/v1/demo')
+    return response.data
+  } catch (error) {
+    console.error('error is: ', error)
+  }
+}
+
 export async function registerAPI(data: LoginPayload) {
   const password_confirmation = data.password
   try {
