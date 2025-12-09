@@ -24,13 +24,15 @@ export const useLeadStore = defineStore('leads', () => {
   const leadsById = ref<Record<string, LeadProps>>({})
   const currentPage = ref(1)
   const perPage = ref(15)
+  const sortBy = ref('created_at')
+  const sortDir = ref('desc')
 
   const currentRequestId = ref(0)
 
-  const fetchLeads = async (page = currentPage.value, per = perPage.value) => {
+  const fetchLeads = async (page = currentPage.value, per = perPage.value, column = sortBy.value, dir = sortDir.value) => {
     const requestId = ++currentRequestId.value
 
-    const response = await getLeadsAPI(page, per)
+    const response = await getLeadsAPI(page, per, column, dir)
 
     // If a newer request was started after this one, ignore this result
     if (requestId !== currentRequestId.value) {
@@ -40,7 +42,7 @@ export const useLeadStore = defineStore('leads', () => {
   };
 
   const updateLeadOptimistic = async (partialLead: LeadProps & { id: string }) => {
-    const { success , error: errorToast } = useToast()
+    const { success, error: errorToast } = useToast()
     const index: any = leads.value?.data.findIndex(l => l.id === partialLead.id);
     if (index === -1) throw new Error(`Lead ${partialLead.id} not found`);
 
@@ -53,7 +55,7 @@ export const useLeadStore = defineStore('leads', () => {
       await updateLeadAPI(partialLead);
 
       // refetch the current page after successful update
-      success('Successfully update Lead')
+      success('Updated Lead Successfully')
 
       await fetchLeads(currentPage.value, perPage.value);
     } catch (error) {
@@ -83,7 +85,7 @@ export const useLeadStore = defineStore('leads', () => {
 
       await fetchLeads(currentPage.value, perPage.value);
 
-      success('Successfully add Lead')
+      success('Added Lead Successfully')
 
     } catch (error) {
       // rollback
@@ -93,7 +95,7 @@ export const useLeadStore = defineStore('leads', () => {
   };
 
   const deleteLeadOptimistic = async (id: any) => {
-    const { success , error: errorToast } = useToast()
+    const { success, error: errorToast } = useToast()
     const backup = leads.value!.data.find(l => l.id == id)
     const index = leads.value!.data.findIndex(l => l.id == id)
     if (index !== -1) {
@@ -102,14 +104,14 @@ export const useLeadStore = defineStore('leads', () => {
       try {
         await deleteLeadAPI(id)
         await fetchLeads(currentPage.value, perPage.value);
-        success('Successfully deleted Lead')
+        success('Deleted Lead Successfully')
       } catch (error) {
         errorToast('Error deleting Lead')
-        leads.value!.data.splice(index, 0, backup)
+        leads.value!.data.splice(index, 0, backup!)
       }
-  }
+    }
   }
 
 
-  return { leads, leadsById, currentPage, perPage, fetchLeads, updateLeadOptimistic, addLeadOptimistic, deleteLeadOptimistic }
+  return { leads, leadsById, currentPage, perPage, sortBy, sortDir, fetchLeads, updateLeadOptimistic, addLeadOptimistic, deleteLeadOptimistic }
 })

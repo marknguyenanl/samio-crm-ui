@@ -2,10 +2,14 @@
 
 # Todo
 
-( ) lead crud ui
+(x) setup ci/cd ui
+(x) demo account
 (x) applied useToast helper for notify updated lead (not check on error yet)
 (x) useDebounce helper for repeated click on prev and next page (Lead Table)
 (x) simple filter name feat
-( ) optimistic update (Add lead)
-( ) optimistic update (delete lead)
-( ) dashboard
+(x) lead crud ui
+(x) optimistic update (Add lead)
+(x) optimistic update (delete lead)
+(x) filter by name
+( ) sorting table column
+( ) dashboard total lead by day

@@ -9,9 +9,18 @@ export interface LeadProps {
   address: string;
 }
 
-export async function getLeadsAPI(page: number, perPage: number) {
+export async function getLeadsAPI(page: number, perPage: number, sortBy: string, sortDir: string) {
   try {
-    const response = await api.get(`/v1/leads?per_page=${perPage}&page=${page}`)
+    const response = await api.get('/v1/leads', {
+      params: {
+        current_page: page,
+        per_page: perPage,
+        sort_by: sortBy,
+        sortDir: sortDir
+
+      }
+    })
+    // const response = await api.get(`/v1/leads?per_page=${perPage}&page=${page}`)
     return response.data
   } catch (error) {
     // return { ok: false, error }
