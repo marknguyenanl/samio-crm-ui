@@ -17,8 +17,12 @@ export async function loginAPI(data: LoginPayload) {
 }
 
 export async function demoLoginAPI() {
+  const demo = {
+    'email': 'demo@samiohome.com',
+    'password': 'demoaccount',
+  };
   try {
-    const response = await axios.post(`${import.meta.env.VITE_API_URL}/v1/demo`)
+    const response = await api.post('/v1/demo', { demo })
     return response.data
   } catch (error) {
     console.error('error is: ', error)
