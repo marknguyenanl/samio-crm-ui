@@ -12,6 +12,18 @@
 (x) optimistic update (delete lead)
 (x) filter by name
 (x) modal
-( ) fix filter then next button > is reseted to new db (add query argument to fetch)
-( ) sorting table column
+(x) fix filter then next button
+(x) sorting table column
+( ) fix width column table
 ( ) dashboard total lead by day
+( ) toast style by type
+( ) ui fix, and mobile responsive
+
+# Features
+
+(x) fetch db, CRUD
+(x) filter search name
+(x) sorting table column
+(x) adjust pages per page
+( ) dashboard
+( ) mobile responsive
