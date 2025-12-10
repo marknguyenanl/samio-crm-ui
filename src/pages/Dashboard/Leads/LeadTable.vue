@@ -79,79 +79,87 @@ watch([() => currentPage.value, () => sortDir.value, () => sortBy.value], () => 
 
 <template>
   <div class="max-w-full mx-auto h-fit">
-    <table class="mt-4 min-w-full divide-y divide-gray-200">
-      <thead class="bg-samio-gold text-samio-green-dark">
-        <tr>
-          <th class="gap-4 px-6 py-3 text-left text-xs font-semibold uppercase">Trash</th>
-          <th @click="sort('name')" class="">
-            <div
-              class="flex items-center gap-4 px-6 py-3 text-left text-xs font-semibold uppercase"
+    <div class="mt-4 h-[600px] overflow-y-auto">
+      <table class="table-fixed w-7xl mx-auto divide-y divide-gray-200">
+        <thead class="sticky top-0 z-10 bg-samio-gold text-samio-green-dark">
+          <tr>
+            <th class="w-16 gap-4 px-6 py-3 text-left text-xs font-semibold uppercase">Trash</th>
+            <th @click="sort('name')" class="">
+              <div
+                class="flex items-center gap-4 px-6 py-3 text-left text-xs font-semibold uppercase"
+              >
+                Name
+                <span v-if="sortBy === 'name'"> {{ sortDir === 'desc' ? '▲' : '▼' }} </span>
+              </div>
+            </th>
+            <th @click="sort('tel')" class="">
+              <div class="px-6 py-3 text-left text-xs font-semibold uppercase">
+                Tel
+                <span v-if="sortBy === 'tel'">
+                  {{ sortDir === 'desc' ? '▲' : '▼' }}
+                </span>
+              </div>
+            </th>
+            <th
+              @click="sort('email')"
+              class="w-64 px-6 py-3 text-left text-xs font-semibold uppercase"
             >
-              Name
-              <span v-if="sortBy === 'name'"> {{ sortDir === 'desc' ? '▲' : '▼' }} </span>
-            </div>
-          </th>
-          <th @click="sort('tel')" class="">
-            <div class="px-6 py-3 text-left text-xs font-semibold uppercase">
-              Tel
-              <span v-if="sortBy === 'tel'">
+              Email
+              <span v-if="sortBy === 'email'">
                 {{ sortDir === 'desc' ? '▲' : '▼' }}
               </span>
-            </div>
-          </th>
-          <th @click="sort('email')" class="px-6 py-3 text-left text-xs font-semibold uppercase">
-            Email
-            <span v-if="sortBy === 'email'">
-              {{ sortDir === 'desc' ? '▲' : '▼' }}
-            </span>
-          </th>
-          <th @click="sort('source')" class="px-6 py-3 text-left text-xs font-semibold uppercase">
-            Source
-            <span v-if="sortBy === 'source'">
-              {{ sortDir === 'desc' ? '▲' : '▼' }}
-            </span>
-          </th>
-          <th @click="sort('address')" class="px-6 py-3 text-left text-xs font-semibold uppercase">
-            Address
-            <span v-if="sortBy === 'address'">
-              {{ sortDir === 'desc' ? '▲' : '▼' }}
-            </span>
-          </th>
-        </tr>
-      </thead>
-      <tbody class="bg-white divide-y divide-gray-200">
-        <!-- Data rows will go here -->
-        <tr
-          class="transition-all duration-300 divide-y divide-gray-200 table-fixed text-samio-green cursor-pointer hover:bg-samio-cream hover:text-samio-orange"
-          v-for="lead in leads?.data"
-          :key="lead.id + '-' + lead.name"
-          @click="openLeadModal(lead)"
-        >
-          <td @click.stop="deleteLead(lead.id)" class="px-6 py-4 whitespace-nowrap text-sm">
-            <i class="fa fa-trash text-red-500 cursor-pointer"></i>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.name }}</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.tel }}</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.email }}</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.source }}</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.address }}</td>
-        </tr>
-        <Transition
-          enter-active-class="transition-all duration-300"
-          enter-from-class="opacity-0"
-          enter-to-class="opacity-100"
-          leave-active-class="transition-all duration-300"
-          leave-from-class="opacity-100"
-          leave-to-class="opacity-0"
-        >
-          <LeadDetail
-            v-if="isModalOn === 'lead-detail'"
-            :lead="selectedLead"
-            @close="closeLeadModal"
-          />
-        </Transition>
-      </tbody>
-    </table>
+            </th>
+            <th @click="sort('source')" class="px-6 py-3 text-left text-xs font-semibold uppercase">
+              Source
+              <span v-if="sortBy === 'source'">
+                {{ sortDir === 'desc' ? '▲' : '▼' }}
+              </span>
+            </th>
+            <th
+              @click="sort('address')"
+              class="w-80 px-6 py-3 text-left text-xs font-semibold uppercase"
+            >
+              Address
+              <span v-if="sortBy === 'address'">
+                {{ sortDir === 'desc' ? '▲' : '▼' }}
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <!-- Data rows will go here -->
+          <tr
+            class="transition-all duration-300 divide-y divide-gray-200 table-fixed text-samio-green cursor-pointer hover:bg-samio-cream hover:text-samio-orange"
+            v-for="lead in leads?.data"
+            :key="lead.id + '-' + lead.name"
+            @click="openLeadModal(lead)"
+          >
+            <td @click.stop="deleteLead(lead.id)" class="px-6 py-4 whitespace-nowrap text-sm">
+              <i class="fa fa-trash text-red-500 cursor-pointer"></i>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.name }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.tel }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.email }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.source }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.address }}</td>
+          </tr>
+          <Transition
+            enter-active-class="transition-all duration-300"
+            enter-from-class="opacity-0"
+            enter-to-class="opacity-100"
+            leave-active-class="transition-all duration-300"
+            leave-from-class="opacity-100"
+            leave-to-class="opacity-0"
+          >
+            <LeadDetail
+              v-if="isModalOn === 'lead-detail'"
+              :lead="selectedLead"
+              @close="closeLeadModal"
+            />
+          </Transition>
+        </tbody>
+      </table>
+    </div>
   </div>
   <div class="flex items-center gap-2 mt-4 justify-center">
     <Button variant="secondary" size="md" :disabled="currentPage === 1" @click="prevPage">
