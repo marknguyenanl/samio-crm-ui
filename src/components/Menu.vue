@@ -21,7 +21,7 @@ const searchToggle = () => {
 </script>
 <template>
   <nav
-    class="items-center flex justify-between mb-2 p-2 px-4 bg-samio-butter-light shadow-lg text-samio-green"
+    class="sticky top-0 z-20 items-center flex justify-between mb-2 p-2 px-4 bg-samio-butter-light shadow-lg text-samio-green"
   >
     <ul class="items-center flex-row flex gap-8">
       <li class="pb-2">
@@ -50,7 +50,7 @@ const searchToggle = () => {
     <!-- TODO: Implement feature search once the database is ready -->
 
     <ul class="items-center flex-row flex gap-4">
-      <li hidden> 
+      <li hidden>
         <img
           @click="searchToggle"
           v-if="!isSearching"

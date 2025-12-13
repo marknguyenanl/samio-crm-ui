@@ -2,12 +2,16 @@
 
 @theme {
   --color-samio-green: #386641;
+  --color-samio-green-slight: #a6deb1;
+  --color-samio-green-light: #4f945c;
   --color-samio-green-dark: #2F5536;
 
   --color-samio-orange: #F97A00;
   --color-samio-orange-dark: #E06D00;
 
   --color-samio-cream: #FAE9D7;
+  --color-samio-cream-light: #FEF4EB;
+
   --color-samio-gold: #FED16A;
   --color-samio-gold-dark: #F5C84F;
 
