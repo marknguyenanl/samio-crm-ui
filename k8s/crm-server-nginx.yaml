@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ $.Values.core.host }}-{{ $.Values.core.app }}-server-nginx"
+  namespace: "{{ $.Values.core.host }}-{{ $.Values.core.app }}"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crm-server
+  template:
+    metadata:
+      labels:
+        app: crm-server
+    spec:
+      imagePullSecrets:
+        - name: harbor-secret
+      containers:
+        - name: nginx
+          image: "{{ $.Values.server.image.url }}/{{ $.Values.server.image.nginx }}"
+          ports:
+            - containerPort: {{ $.Values.server.targetPort }}
+          livenessProbe:
+            httpGet:
+              path: /api/crm/v1/health
+              port: {{ $.Values.server.targetPort }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          volumeMounts:
+            - name: uploads
+              mountPath: /var/www/html/storage/app/public
+      volumes:
+        - name: uploads
+          persistentVolumeClaim:
+            claimName: "{{ $.Values.core.host }}-{{ $.Values.core.app }}-server-pvc"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ $.Values.core.host }}-{{ $.Values.core.app }}-server-nginx-svc"
+  namespace: "{{ $.Values.core.host }}-{{ $.Values.core.app }}"
+spec:
+  selector:
+    app: crm-server
+  ports:
+    - protocol: TCP
+      port: {{ $.Values.server.port }}
+      targetPort: {{ $.Values.server.targetPort }}
+  type: ClusterIP

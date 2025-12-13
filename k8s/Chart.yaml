@@ -1,0 +1,7 @@
+apiVersion: v2
+name: crm
+description: crm app
+type: application
+version: 0.1.0
+# renovate: datasource=github-releases depName=woodpecker-ci/woodpecker extractVersion=^v(?<version>.*)$
+appVersion: 0.1.0
