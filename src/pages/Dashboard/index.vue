@@ -15,7 +15,7 @@ import SalesAverage from '@/components/Charts/SalesAverage.vue'
         <li
           class="text-sm cursor-pointer px-4 py-1 border-samio-butter hover:border-samio-orange transition-all duration-300 border rounded-lg"
         >
-          7 days
+          Lifetime
         </li>
         <!-- <li -->
         <!--   class="cursor-pointer px-4 py-1 border-samio-butter hover:border-samio-orange transition-all duration-300 border rounded-lg" -->
