@@ -73,3 +73,12 @@ export const deleteContactAPI = async (id: string): Promise<void> => {
     throw error
   }
 };
+
+export const getDailyLeads = async () => {
+  try {
+    const res = await api.get('/v1/contacts/daily-leads')
+    return res.data
+  } catch (error) {
+    throw error
+  }
+}

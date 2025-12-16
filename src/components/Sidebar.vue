@@ -5,7 +5,7 @@
       <li
         class="cursor-pointer px-4 py-1 border-samio-butter hover:border-samio-orange transition-all duration-300 border rounded-lg"
       >
-        Day
+        7 days period
       </li>
       <!-- <li -->
       <!--   class="cursor-pointer px-4 py-1 border-samio-butter hover:border-samio-orange transition-all duration-300 border rounded-lg" -->

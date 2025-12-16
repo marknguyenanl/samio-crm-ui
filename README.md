@@ -11,7 +11,8 @@
 
 # Todo
 
-( ) dashboard backend logic
+(>) dashboard backend logic
+(>) total leads per day -> sum lead each day
 ( ) lead to contacts, lead as a stage
 ( ) deals, target, products list
 ( ) facebook app connector

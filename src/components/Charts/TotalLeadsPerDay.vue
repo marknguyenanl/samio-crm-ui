@@ -1,28 +1,34 @@
 <script setup>
-import { useContactStore } from '@/stores/contact'
 import * as am5 from '@amcharts/amcharts5'
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated'
 import * as am5xy from '@amcharts/amcharts5/xy'
-import { computed, onBeforeUnmount, onMounted, useTemplateRef } from 'vue'
-const contactStore = useContactStore()
+import { onBeforeUnmount, onMounted, useTemplateRef } from 'vue'
+import { getDailyLeads } from '@/api/contacts'
 
 // Sample data: total leads per day
 
-const totalLeadPerDay = computed(() => contactStore.totalLeadsPerDay)
-const leadsPerDay = [
-  { date: new Date(2025, 0, 1).getTime(), totalLeads: 5 },
-  { date: new Date(2025, 0, 2).getTime(), totalLeads: 8 },
-  { date: new Date(2025, 0, 3).getTime(), totalLeads: 3 },
-  { date: new Date(2025, 0, 4).getTime(), totalLeads: 10 },
-  { date: new Date(2025, 0, 5).getTime(), totalLeads: 6 },
-  { date: new Date(2025, 0, 6).getTime(), totalLeads: 12 },
-  { date: new Date(2025, 0, 7).getTime(), totalLeads: 9 },
-]
+// const leadsPerDay = [
+//   { date: new Date(2025, 0, 1).getTime(), totalLeads: 5 },
+//   { date: new Date(2025, 0, 2).getTime(), totalLeads: 8 },
+//   { date: new Date(2025, 0, 3).getTime(), totalLeads: 3 },
+//   { date: new Date(2025, 0, 4).getTime(), totalLeads: 10 },
+//   { date: new Date(2025, 0, 5).getTime(), totalLeads: 6 },
+//   { date: new Date(2025, 0, 6).getTime(), totalLeads: 12 },
+//   { date: new Date(2025, 0, 7).getTime(), totalLeads: 9 },
+// ]
 
-const newLeadsChart = useTemplateRef('total_leads_per_day')
+const newLeadsChart = useTemplateRef('leadsPerDay')
 let root = null
 
-onMounted(() => {
+onMounted(async () => {
+  const res = await getDailyLeads()
+  const leadsPerDay = res.data
+    .map((item) => ({
+      date: Date.parse(item.date),
+      total: item.total,
+    }))
+    .sort((a, b) => a.date - b.date)
+
   if (!newLeadsChart.value) return
 
   root = am5.Root.new(newLeadsChart.value)
@@ -58,7 +64,8 @@ onMounted(() => {
       name: 'Total Leads',
       xAxis,
       yAxis,
-      valueYField: 'totalLeads',
+      stroke: '#f97a00',
+      valueYField: 'total',
       valueXField: 'date',
       tooltip: am5.Tooltip.new(root, {
         labelText: '{valueY}',
@@ -88,6 +95,6 @@ onBeforeUnmount(() => {
     class="rounded-lg p-4 flex-1 flex-col gap-2 bg-samio-butter-light border-samio-gold border shadow-sm text-samio-green"
   >
     <h4 class="text-sm font-semibold">Total Leads Per Day</h4>
-    <div ref="total_leads_per_day" class="w-full h-[340px]"></div>
+    <div ref="leadsPerDay" class="w-full h-[340px]"></div>
   </div>
 </template>
