@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ModalLayout from '@/layouts/ModalLayout.vue'
-import { useLeadStore } from '@/stores/lead'
+import { useContactStore } from '@/stores/contact'
 import { useModalStore } from '@/stores/modal'
 import { reactive } from 'vue'
 const props = defineProps(['lead'])
@@ -13,11 +13,12 @@ const closeModal = () => {
 
 const { toggleModal } = useModalStore()
 
-const leadStore = useLeadStore()
+const contactStore = useContactStore()
 
 const leadInput = reactive({
   id: props.lead.id,
   name: props.lead.name,
+  stage: props.lead.stage,
   tel: props.lead.tel,
   email: props.lead.email,
   source: props.lead.source,
@@ -25,19 +26,19 @@ const leadInput = reactive({
 })
 
 // todo: optimize with optimistic update
-const onUpdateLead = async () => {
+const onUpdateContact = async () => {
   // submit update -> pinia state update -> send api, valid if status ok, reject if it is not
-  toggleModal('lead-detail', 'close')
-  console.log("update lead clicked")
-  await leadStore.updateLeadOptimistic(leadInput)
+  toggleModal('contact-detail', 'close')
+  console.log('update contact clicked')
+  await contactStore.updateContactOptimistic(leadInput)
 }
 </script>
 
 <template>
   <ModalLayout>
     <div>
-      <h3 class="pb-4 font-semibold text-samio-green">EDIT LEAD:</h3>
-      <form @submit.prevent="onUpdateLead" class="space-y-4">
+      <h3 class="pb-4 font-semibold text-samio-green">EDIT CONTACT:</h3>
+      <form @submit.prevent="onUpdateContact" class="space-y-4">
         <div class="flex flex-col">
           <label for="name" class="text-samio-green mb-1 text-sm font-medium">Name:</label>
           <input
@@ -47,6 +48,30 @@ const onUpdateLead = async () => {
             v-model="leadInput.name"
             class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
           />
+        </div>
+
+        <!-- todo: update select input for edit contact form -->
+        <div class="flex flex-col">
+          <label for="stage" class="text-samio-green mb-1 text-sm font-medium">
+            Stage: <span class="text-red-500">*</span>
+          </label>
+          <!-- todo: update select input for edit contact form -->
+          <select
+            class="border shadow-sm rounded-sm py-2 border-gray-300 px-4 text-samio-green mb-1 text-sm font-medium"
+            v-model="leadInput.stage"
+            @change="leadInput.stage = (leadInput.stage || '').toLowerCase()"
+          >
+            <option value="lead">Lead</option>
+            <option value="customer">Customer</option>
+          </select>
+
+          <!-- <input -->
+          <!--   id="stage" -->
+          <!--   v-model="form.stage" -->
+          <!--   type="text" -->
+          <!--   name="stage" -->
+          <!--   class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm" -->
+          <!-- /> -->
         </div>
 
         <div class="flex flex-col">
@@ -96,10 +121,7 @@ const onUpdateLead = async () => {
           />
         </div>
         <div class="flex gap-4">
-          <button
-            class="cursor-pointer bg-samio-orange rounded-sm py-1 px-4"
-            type="submit"
-          >
+          <button class="cursor-pointer bg-samio-orange rounded-sm py-1 px-4" type="submit">
             Update
           </button>
           <button

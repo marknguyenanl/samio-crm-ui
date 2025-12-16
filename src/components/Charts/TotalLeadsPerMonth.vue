@@ -3,12 +3,12 @@ import * as am5 from '@amcharts/amcharts5'
 import * as am5xy from '@amcharts/amcharts5/xy'
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated'
 import { onMounted, onBeforeUnmount, useTemplateRef, computed } from 'vue'
-import { useLeadStore } from '@/stores/lead'
-const leadStore = useLeadStore()
+import { useContactStore } from '@/stores/contact'
+const contactStore = useContactStore()
 
 // Sample data: total leads per day
 
-const totalLeadPerMonth = computed(() => leadStore.totalLeadsPerMonth)
+const totalLeadPerMonth = computed(() => contactStore.totalLeadsPerMonth)
 const leadsPerMonth = [
   { date: new Date(2025, 0, 1).getTime(), totalLeads: 35 }, // Jan
   { date: new Date(2025, 1, 1).getTime(), totalLeads: 48 }, // Feb

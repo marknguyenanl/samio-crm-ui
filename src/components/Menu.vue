@@ -37,7 +37,7 @@ const searchToggle = () => {
       <li
         class="hover:border-b-2 hover:border-samio-orange transition-colors ease-in-out duration-500 border-b-0 border-green-50"
       >
-        <RouterLink :to="{ name: 'leads' }">Leads</RouterLink>
+        <RouterLink :to="{ name: 'contacts' }">Contacts</RouterLink>
       </li>
       <!-- <li -->
       <!--   class="hover:border-b-2 hover:border-[#f97300] transition-colors ease-in-out duration-500 border-b-0 border-green-50" -->

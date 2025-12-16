@@ -1,27 +1,29 @@
 <script setup lang="ts">
 const props = defineProps<{
-  form: { name: string; tel: string; email: string; source: string; address: string }
+  form: { name: string; stage: string; tel: string; email: string; source: string; address: string }
 }>()
 import ModalLayout from '@/layouts/ModalLayout.vue'
 import { useModalStore } from '@/stores/modal'
-import { useLeadStore } from '@/stores/lead'
+import { useContactStore } from '@/stores/contact'
+import { v4 as uuidv4 } from 'uuid'
 
 const { toggleModal } = useModalStore()
-const { addLeadOptimistic } = useLeadStore()
+const contactStore = useContactStore()
 
-const onSubmitLeadForm = async () => {
+const onSubmitContactForm = async () => {
   try {
-    await addLeadOptimistic({...props.form})
+    await contactStore.addContactOptimistic({ ...props.form, id: uuidv4() })
 
     // clear form only if request succeeded
     props.form.name = ''
+    props.form.stage = 'lead'
     props.form.tel = ''
     props.form.email = ''
     props.form.source = ''
     props.form.address = ''
 
     // close modal
-    toggleModal('lead-form', 'close')
+    toggleModal('contact-form', 'close')
   } catch (error) {
     console.error('Error adding lead:', error)
   }
@@ -31,8 +33,8 @@ const onSubmitLeadForm = async () => {
 <template>
   <ModalLayout>
     <div>
-      <h3 class="pb-4 font-semibold text-samio-green">ADD LEAD:</h3>
-      <form @submit.prevent="onSubmitLeadForm" class="space-y-4">
+      <h3 class="pb-4 font-semibold text-samio-green">ADD CONTACT:</h3>
+      <form @submit.prevent="onSubmitContactForm" class="space-y-4">
         <div class="flex flex-col">
           <label for="name" class="text-samio-green mb-1 text-sm font-medium">Name:</label>
           <input
@@ -43,7 +45,27 @@ const onSubmitLeadForm = async () => {
             class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
           />
         </div>
+        <div class="flex flex-col">
+          <label for="stage" class="text-samio-green mb-1 text-sm font-medium">
+            Stage: <span class="text-red-500">*</span>
+          </label>
+          <!-- todo: update select input for edit contact form -->
+          <select
+            class="border shadow-sm rounded-sm py-2 border-gray-300 px-4 text-samio-green mb-1 text-sm font-medium"
+            v-model="form.stage"
+          >
+            <option>Lead</option>
+            <option>Customer</option>
+          </select>
 
+          <!-- <input -->
+          <!--   id="stage" -->
+          <!--   v-model="form.stage" -->
+          <!--   type="text" -->
+          <!--   name="stage" -->
+          <!--   class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm" -->
+          <!-- /> -->
+        </div>
         <div class="flex flex-col">
           <label for="tel" class="text-samio-green mb-1 text-sm font-medium">Tel:</label>
           <input
@@ -67,6 +89,7 @@ const onSubmitLeadForm = async () => {
             required
             class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
           />
+          <!-- todo: fix add new contact and its project -->
         </div>
 
         <div class="flex flex-col">
@@ -97,7 +120,7 @@ const onSubmitLeadForm = async () => {
           <button
             class="cursor-pointer border rounded-sm border-samio-green py-1 px-4"
             type="button"
-            @click="toggleModal('lead-form', 'close')"
+            @click="toggleModal('contact-form', 'close')"
           >
             Cancel
           </button>

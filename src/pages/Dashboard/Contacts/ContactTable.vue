@@ -1,34 +1,34 @@
 <script setup lang="ts">
-import { LeadProps } from '@/api/leads'
-import { useLeadStore } from '@/stores/lead'
+import { ContactProps } from '@/api/contacts'
+import { useContactStore } from '@/stores/contact'
 import { storeToRefs } from 'pinia'
 import { computed, onMounted, ref, watch } from 'vue'
-import LeadDetail from '@/pages/Dashboard/Leads/LeadDetail.vue'
+import ContactDetail from '@/pages/Dashboard/Contacts/ContactDetail.vue'
 import Button from '@/components/Button.vue'
 import { useModalStore } from '@/stores/modal'
 import useDebounce from '@/hooks/useDebounce'
 
-const leadStore = useLeadStore()
-const { leads, currentPage, sortBy, sortDir } = storeToRefs(leadStore)
+const contactStore = useContactStore()
+const { contacts, currentPage, sortBy, sortDir } = storeToRefs(contactStore)
 
 const modalStore = useModalStore()
 const { isModalOn } = storeToRefs(modalStore)
 const { toggleModal } = modalStore
 
-const selectedLead = ref<LeadProps>()
+const selectedLead = ref<ContactProps>()
 const { debounceTimer } = useDebounce()
 
-const openLeadModal = (lead: LeadProps) => {
+const openLeadModal = (lead: ContactProps) => {
   selectedLead.value = { ...lead }
-  toggleModal('lead-detail', 'open')
+  toggleModal('contact-detail', 'open')
 }
 const closeLeadModal = () => {
   selectedLead.value = undefined
-  toggleModal('lead-detail', 'close')
+  toggleModal('contact-detail', 'close')
 }
 
 const deleteLead = async (id: any) => {
-  await leadStore.deleteLeadOptimistic(id)
+  await contactStore.deleteContactOptimistic(id)
 }
 
 const sort = async (column: any) => {
@@ -40,14 +40,13 @@ const sort = async (column: any) => {
   }
 }
 
-currentPage.value = leads.value?.meta?.current_page || 1
-const lastPage = computed(() => leads.value?.meta?.last_page || 1)
+currentPage.value = contacts.value?.meta?.current_page || 1
+const lastPage = computed(() => contacts.value?.meta?.last_page || 1)
 
 const prevPage = async () => {
   if (currentPage.value == 1) return
 
   currentPage.value--
-
   console.log('prevPage → currentPage', currentPage.value)
 }
 
@@ -63,13 +62,14 @@ const nextPage = async () => {
 }
 
 onMounted(async () => {
-  await leadStore.fetchLeads()
+  contactStore.filter.stage = null
+  await contactStore.fetchContacts()
 })
 
 watch([() => currentPage.value, () => sortDir.value, () => sortBy.value], () => {
   debounceTimer(async () => {
     try {
-      await leadStore.fetchLeads()
+      await contactStore.fetchContacts()
     } catch (e) {
       console.error(e)
     }
@@ -90,6 +90,14 @@ watch([() => currentPage.value, () => sortDir.value, () => sortBy.value], () => 
               >
                 Name
                 <span v-if="sortBy === 'name'"> {{ sortDir === 'desc' ? '▲' : '▼' }} </span>
+              </div>
+            </th>
+            <th @click="sort('stage')" class="">
+              <div
+                class="flex items-center gap-4 px-6 py-3 text-left text-xs font-semibold uppercase"
+              >
+                Stage
+                <span v-if="sortBy === 'stage'"> {{ sortDir === 'desc' ? '▲' : '▼' }} </span>
               </div>
             </th>
             <th @click="sort('tel')" class="">
@@ -130,7 +138,7 @@ watch([() => currentPage.value, () => sortDir.value, () => sortBy.value], () => 
           <!-- Data rows will go here -->
           <tr
             class="transition-all duration-300 divide-y divide-gray-200 table-fixed text-samio-green cursor-pointer hover:bg-samio-cream hover:text-samio-orange"
-            v-for="lead in leads?.data"
+            v-for="lead in contacts?.data"
             :key="lead.id + '-' + lead.name"
             @click="openLeadModal(lead)"
           >
@@ -138,6 +146,7 @@ watch([() => currentPage.value, () => sortDir.value, () => sortBy.value], () => 
               <i class="fa fa-trash text-red-500 cursor-pointer"></i>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.name }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.stage }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.tel }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.email }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.source }}</td>
@@ -151,8 +160,8 @@ watch([() => currentPage.value, () => sortDir.value, () => sortBy.value], () => 
             leave-from-class="opacity-100"
             leave-to-class="opacity-0"
           >
-            <LeadDetail
-              v-if="isModalOn === 'lead-detail'"
+            <ContactDetail
+              v-if="isModalOn === 'contact-detail'"
               :lead="selectedLead"
               @close="closeLeadModal"
             />

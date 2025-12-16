@@ -1,9 +1,9 @@
 <script setup>
 import { reactive } from 'vue'
 import { storeToRefs } from 'pinia'
-import LeadForm from '@/pages/Dashboard/Leads/LeadForm.vue'
-import LeadTable from '@/pages/Dashboard/Leads/LeadTable.vue'
-import { useLeadStore } from '@/stores/lead'
+import ContactForm from '@/pages/Dashboard/Contacts/ContactForm.vue'
+import ContactTable from '@/pages/Dashboard/Contacts/ContactTable.vue'
+import { useContactStore } from '@/stores/contact'
 import { useModalStore } from '@/stores/modal'
 import { watch } from 'vue'
 import useDebounce from '@/hooks/useDebounce'
@@ -11,28 +11,29 @@ import useDebounce from '@/hooks/useDebounce'
 const modalStore = useModalStore()
 const { isModalOn } = storeToRefs(modalStore)
 const { toggleModal } = modalStore
-const leadStore = useLeadStore()
-const { currentPage, perPage } = storeToRefs(leadStore)
-const filter = leadStore.filter
+const contactStore = useContactStore()
+const { currentPage, perPage } = storeToRefs(contactStore)
+const filter = contactStore.filter
 const { debounceTimer } = useDebounce()
 
 const form = reactive({
   name: '',
+  stage: '',
   tel: '',
   email: '',
   source: '',
   address: '',
 })
 
-// fix: here change to fetchLeads
-const loadFilteredLeads = async () => {
-  await leadStore.fetchLeads()
+// fix: here change to fetchContacts
+const loadFilteredContacts = async () => {
+  await contactStore.fetchContacts()
 }
 
 watch([() => perPage.value, () => filter.search], () => {
   debounceTimer(async () => {
     currentPage.value = 1
-    await leadStore.fetchLeads()
+    await contactStore.fetchContacts()
   })
 })
 </script>
@@ -41,7 +42,7 @@ watch([() => perPage.value, () => filter.search], () => {
   <div class="">
     <div class="mt-8 items-center flex mx-10 justify-between">
       <button
-        @click="toggleModal('lead-form', 'open')"
+        @click="toggleModal('contact-form', 'open')"
         class="h-10 cursor-pointer flex items-center px-4 py-2 bg-samio-orange hover:text-samio-orange duration-300 border-samio-orange hover:border transition-all hover:scale-110 hover:bg-samio-cream text-samio-green text-sm font-medium rounded-md shadow-sm focus:outline-none"
       >
         New
@@ -55,7 +56,7 @@ watch([() => perPage.value, () => filter.search], () => {
               class="cursor-pointer h-8 px-2 border py-1 rounded-lg border-samio-orange focus:ring-0 focus:ring-offset-0 focus:outline-none active:outline-none active:ring-0 text-right w-28 bg-white"
               type="text"
               v-model="filter.search"
-              @input="loadFilteredLeads"
+              @input="loadFilteredContacts"
             />
           </label>
         </div>
@@ -67,7 +68,7 @@ watch([() => perPage.value, () => filter.search], () => {
             type="number"
             v-model.number="perPage"
           />
-          leads/page
+          contacts/page
         </label>
       </div>
     </div>
@@ -80,10 +81,10 @@ watch([() => perPage.value, () => filter.search], () => {
       leave-from-class="opacity-100"
       leave-to-class="opacity-0"
     >
-      <LeadForm :form="form" v-if="isModalOn === 'lead-form'" />
+      <ContactForm :form="form" v-if="isModalOn === 'contact-form'" />
     </Transition>
 
-    <LeadTable />
+    <ContactTable />
   </div>
 </template>
 

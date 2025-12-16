@@ -12,6 +12,9 @@
 # Todo
 
 ( ) dashboard backend logic
+( ) lead to contacts, lead as a stage
+( ) deals, target, products list
+( ) facebook app connector
 ( ) toast style by type
 ( ) ui fix, and mobile responsive
 

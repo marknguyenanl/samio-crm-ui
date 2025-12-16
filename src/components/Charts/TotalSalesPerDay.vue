@@ -1,14 +1,14 @@
 <script setup>
-import { useLeadStore } from '@/stores/lead'
+import { useContactStore } from '@/stores/contact'
 import * as am5 from '@amcharts/amcharts5'
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated'
 import * as am5xy from '@amcharts/amcharts5/xy'
 import { computed, onBeforeUnmount, onMounted, useTemplateRef } from 'vue'
-const leadStore = useLeadStore()
+const contactStore = useContactStore()
 
 // Sample data: total leads per day
 
-const totalLeadPerDay = computed(() => leadStore.totalLeadsPerDay)
+const totalLeadPerDay = computed(() => contactStore.totalLeadsPerDay)
 const leadsPerDay = [
   { date: new Date(2025, 0, 1).getTime(), totalLeads: 5 },
   { date: new Date(2025, 0, 2).getTime(), totalLeads: 8 },
