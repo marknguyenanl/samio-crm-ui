@@ -12,7 +12,7 @@ const modalStore = useModalStore()
 const { isModalOn } = storeToRefs(modalStore)
 const { toggleModal } = modalStore
 const contactStore = useContactStore()
-const { currentPage, perPage } = storeToRefs(contactStore)
+const { currentPage } = storeToRefs(contactStore)
 const filter = contactStore.filter
 const { debounceTimer } = useDebounce()
 
@@ -25,17 +25,19 @@ const form = reactive({
   address: '',
 })
 
-// fix: here change to fetchContacts
 const loadFilteredContacts = async () => {
   await contactStore.fetchContacts()
 }
 
-watch([() => perPage.value, () => filter.search], () => {
-  debounceTimer(async () => {
-    currentPage.value = 1
-    await contactStore.fetchContacts()
-  })
-})
+watch(
+  () => filter.search,
+  () => {
+    debounceTimer(async () => {
+      currentPage.value = 1
+      await contactStore.fetchContacts()
+    })
+  },
+)
 </script>
 
 <template>
@@ -60,16 +62,6 @@ watch([() => perPage.value, () => filter.search], () => {
             />
           </label>
         </div>
-        <label
-          class="cursor-pointer h-8 text-sm border-samio-orange flex items-center py-1 gap-1 pr-2 border rounded-lg"
-        >
-          <input
-            class="cursor-pointer focus:ring-0 focus:ring-offset-0 focus:outline-none active:outline-none active:ring-0 text-right w-8 bg-white"
-            type="number"
-            v-model.number="perPage"
-          />
-          contacts/page
-        </label>
       </div>
     </div>
 
