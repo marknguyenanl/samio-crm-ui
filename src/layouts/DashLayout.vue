@@ -3,8 +3,8 @@ import Menu from '@/components/Menu.vue'
 </script>
 
 <template>
-  <Menu />
-  <div>
+  <div class="relative">
+    <Menu />
     <RouterView />
   </div>
 </template>

@@ -2,7 +2,6 @@
 import { useAuthStore } from '@/stores/auth'
 import Button from './Button.vue'
 import { nextTick, ref } from 'vue'
-
 const { logout } = useAuthStore()
 const isSearching = ref(false)
 const searchInput = ref<HTMLElement | null>(null)
@@ -17,13 +16,14 @@ const searchToggle = () => {
     })
   }
 }
-// todo: search for actions / leads/ marketing (all put in search array)
+
+const menuPopup = ref(false)
 </script>
 <template>
   <nav
-    class="sticky top-0 z-20 items-center flex justify-between mb-2 p-2 px-4 bg-samio-butter-light shadow-lg text-samio-green"
+    class="sticky top-0 z-30 md:items-center flex justify-between p-2 px-4 bg-samio-butter-light shadow-lg text-samio-green"
   >
-    <ul class="items-center flex-row flex gap-8">
+    <ul class="tablet hidden md:items-center md:flex-row md:flex md:gap-8">
       <li class="pb-2">
         <RouterLink :to="{ name: 'dashboard' }">
           <img class="h-14 object-cover" src="/logo-only.svg" alt="AnrosTech logo" />
@@ -49,7 +49,7 @@ const searchToggle = () => {
 
     <!-- TODO: Implement feature search once the database is ready -->
 
-    <ul class="items-center flex-row flex gap-4">
+    <ul class="tablet hidden items-center flex-row md:flex gap-4">
       <li hidden>
         <img
           @click="searchToggle"
@@ -60,7 +60,7 @@ const searchToggle = () => {
         />
         <label
           v-if="isSearching"
-          class="px-2 rounded-sm py-1 bg-white flex flex-row items-center"
+          class="hidden px-2 rounded-sm py-1 bg-white md:flex flex-row items-center"
           for="isSearching"
         >
           <input
@@ -72,6 +72,7 @@ const searchToggle = () => {
           />
           <img src="@/icons/close.svg" alt="Close" class="w-6 aspect-square" />
         </label>
+
         <!-- Simple modal -->
 
         <div
@@ -112,5 +113,64 @@ const searchToggle = () => {
         <Button variant="accent" @click="logout">Logout</Button>
       </li>
     </ul>
+
+    <ul class="mobile items-center flex-row flex md:hidden w-full justify-between gap-8">
+      <li class="pb-2">
+        <RouterLink :to="{ name: 'dashboard' }">
+          <img class="h-14 object-cover" src="/logo-only.svg" alt="AnrosTech logo" />
+        </RouterLink>
+      </li>
+      <li class="cursor-pointer pb-2" @click="menuPopup = !menuPopup">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+        <transition name="menu">
+          <ul
+            class="py-4 flex flex-col rounded-b-md bg-samio-butter-light h-fit fixed top-0 left-0 w-full z-100"
+            v-if="menuPopup"
+          >
+            <li
+              class="px-4 py-2 hover:bg-samio-orange transition-colors ease-in-out duration-500 border-b-0 border-green-50"
+            >
+              <RouterLink :to="{ name: 'contacts' }">Contacts</RouterLink>
+            </li>
+            <li
+              class="px-4 py-2 hover:bg-samio-orange transition-colors ease-in-out duration-500 border-b-0 border-green-50"
+            >
+              <RouterLink :to="{ name: 'contacts' }">Socials</RouterLink>
+            </li>
+          </ul>
+        </transition>
+        <transition name="fade">
+          <div
+            class="fixed z-50 top-0 left-0 h-full w-full bg-gray-900 opacity-50"
+            v-if="menuPopup"
+          ></div>
+        </transition>
+      </li>
+    </ul>
   </nav>
 </template>
+
+<style scoped>
+.menu-enter-active,
+.menu-leave-active {
+  transition:
+    opacity 0.5s ease-out,
+    transform 0.5s ease-out;
+}
+
+.menu-enter-from,
+.menu-leave-to {
+  opacity: 0;
+  transform: translateY(-40px);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
