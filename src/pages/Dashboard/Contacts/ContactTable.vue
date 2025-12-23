@@ -7,6 +7,8 @@ import ContactDetail from '@/pages/Dashboard/Contacts/ContactDetail.vue'
 import Button from '@/components/Button.vue'
 import { useModalStore } from '@/stores/modal'
 import useDebounce from '@/hooks/useDebounce'
+import { api } from '@/api/axios'
+import { getContactStageAPI } from '@/api/contactStages'
 
 const contactStore = useContactStore()
 const { contacts, currentPage, sortBy, sortDir } = storeToRefs(contactStore)
@@ -15,20 +17,25 @@ const modalStore = useModalStore()
 const { isModalOn } = storeToRefs(modalStore)
 const { toggleModal } = modalStore
 
-const selectedLead = ref<ContactProps>()
+const selectedContact = ref<ContactProps>()
 const { debounceTimer } = useDebounce()
 
-const openLeadModal = (lead: ContactProps) => {
-  selectedLead.value = { ...lead }
+const openContactModal = (contact: ContactProps) => {
+  selectedContact.value = { ...contact }
   toggleModal('contact-detail', 'open')
 }
-const closeLeadModal = () => {
-  selectedLead.value = undefined
+const closecontactModal = () => {
+  selectedContact.value = undefined
   toggleModal('contact-detail', 'close')
 }
 
-const deleteLead = async (id: any) => {
+const deleteContact = async (id: any) => {
   await contactStore.deleteContactOptimistic(id)
+}
+
+const movingStage = async (id: any, curStage_id: any) => {
+  await api.post('/v1/contact-stages/next', { contact_id: id, current_stage_id: curStage_id })
+  await contactStore.fetchContacts()
 }
 
 const sort = async (column: any) => {
@@ -47,7 +54,6 @@ const prevPage = async () => {
   if (currentPage.value == 1) return
 
   currentPage.value--
-  console.log('prevPage → currentPage', currentPage.value)
 }
 
 const nextPage = async () => {
@@ -57,12 +63,26 @@ const nextPage = async () => {
   }
 
   currentPage.value++
-
-  console.log('nextPage → currentPage', currentPage.value)
 }
 
+const stageMap = ref<Record<number, any>>({})
+
+const fetchStages = async () => {
+  const res = await getContactStageAPI()
+  const list = res.data
+  stageMap.value = list.reduce((map: Record<number, any>, s: any) => {
+    map[Number(s.id)] = s
+    return map
+  }, {})
+}
+const displayStageName = (contact_stage_id: any) => {
+  const id = Number(contact_stage_id)
+  const stage = stageMap.value[id]
+  return stage ? stage.label : '' // or 'Unknown'
+}
 onMounted(async () => {
-  contactStore.filter.stage = null
+  fetchStages()
+  contactStore.filter.stage_id = null
   await contactStore.fetchContacts()
 })
 
@@ -83,21 +103,21 @@ watch([() => currentPage.value, () => sortDir.value, () => sortBy.value], () => 
       <table class="table-fixed w-7xl mx-auto divide-y divide-gray-200">
         <thead class="sticky top-0 z-10 bg-samio-gold text-samio-green-dark">
           <tr>
-            <th class="w-16 gap-4 px-6 py-3 text-left text-xs font-semibold uppercase">Trash</th>
+            <th class="w-16 gap-4 px-6 py-3 text-left text-xs font-semibold uppercase">Utils</th>
+            <th @click="sort('stage')" class="w-24">
+              <div
+                class="flex items-center gap-4 px-6 py-3 text-left text-xs font-semibold uppercase"
+              >
+                Stage
+                <span v-if="sortBy === 'stage'"> {{ sortDir === 'desc' ? '▲' : '▼' }} </span>
+              </div>
+            </th>
             <th @click="sort('name')" class="">
               <div
                 class="flex items-center gap-4 px-6 py-3 text-left text-xs font-semibold uppercase"
               >
                 Name
                 <span v-if="sortBy === 'name'"> {{ sortDir === 'desc' ? '▲' : '▼' }} </span>
-              </div>
-            </th>
-            <th @click="sort('stage')" class="">
-              <div
-                class="flex items-center gap-4 px-6 py-3 text-left text-xs font-semibold uppercase"
-              >
-                Stage
-                <span v-if="sortBy === 'stage'"> {{ sortDir === 'desc' ? '▲' : '▼' }} </span>
               </div>
             </th>
             <th @click="sort('tel')" class="">
@@ -138,19 +158,31 @@ watch([() => currentPage.value, () => sortDir.value, () => sortBy.value], () => 
           <!-- Data rows will go here -->
           <tr
             class="transition-all duration-300 divide-y divide-gray-200 table-fixed text-samio-green cursor-pointer hover:bg-samio-cream hover:text-samio-orange"
-            v-for="lead in contacts?.data"
-            :key="lead.id + '-' + lead.name"
-            @click="openLeadModal(lead)"
+            v-for="contact in contacts?.data"
+            :key="contact.id + '-' + contact.name"
+            @click="openContactModal(contact)"
           >
-            <td @click.stop="deleteLead(lead.id)" class="px-6 py-4 whitespace-nowrap text-sm">
-              <i class="fa fa-trash text-red-500 cursor-pointer"></i>
+            <td
+              @click.stop=""
+              class="flex gap-2 items-center justify-center px-6 py-4 whitespace-nowrap text-sm"
+            >
+              <i
+                @click.stop="deleteContact(contact.id)"
+                class="fa fa-trash text-red-500 cursor-pointer p-2"
+              ></i>
+              <i
+                @click.stop="movingStage(contact.id, contact.stage_id)"
+                class="fa fa-angles-right text-blue-500 cursor-pointer p-2"
+              ></i>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.name }}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.stage }}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.tel }}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.email }}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.source }}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm">{{ lead.address }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm">
+              {{ displayStageName(contact.stage_id) }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm">{{ contact.name }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm">{{ contact.tel }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm">{{ contact.email }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm">{{ contact.source }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm">{{ contact.address }}</td>
           </tr>
           <Transition
             enter-active-class="transition-all duration-300"
@@ -162,8 +194,8 @@ watch([() => currentPage.value, () => sortDir.value, () => sortBy.value], () => 
           >
             <ContactDetail
               v-if="isModalOn === 'contact-detail'"
-              :lead="selectedLead"
-              @close="closeLeadModal"
+              :contact="selectedContact"
+              @close="closecontactModal"
             />
           </Transition>
         </tbody>

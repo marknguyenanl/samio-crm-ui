@@ -2,12 +2,12 @@ import { api } from "./axios.ts"
 
 export interface ContactProps {
   id?: string | number | undefined;
-  name: string;
-  stage: string;
-  tel: string;
-  email: string;
-  source: string;
-  address: string;
+  stage_id?: number;
+  name?: string;
+  tel?: string;
+  email?: string;
+  source?: string;
+  address?: string;
 }
 export interface ContactResponse {
   success: boolean

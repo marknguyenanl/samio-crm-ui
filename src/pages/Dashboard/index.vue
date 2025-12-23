@@ -17,14 +17,6 @@ import SalesAverage from '@/components/Charts/SalesAverage.vue'
         >
           Lifetime
         </li>
-        <!-- <li -->
-        <!--   class="cursor-pointer px-4 py-1 border-samio-butter hover:border-samio-orange transition-all duration-300 border rounded-lg" -->
-        <!-- > -->
-        <!--   Month -->
-        <!-- </li> -->
-        <!-- <li>Quarter</li> -->
-        <!-- <li>SemiQuarter</li> -->
-        <!-- <li>Year</li> -->
       </ul>
     </aside>
     <div class="ml-40 mt-2 px-4 w-full gap-4">

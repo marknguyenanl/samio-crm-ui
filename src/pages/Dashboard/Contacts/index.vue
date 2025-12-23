@@ -18,7 +18,7 @@ const { debounceTimer } = useDebounce()
 
 const form = reactive({
   name: '',
-  stage: '',
+  stage_id: '1',
   tel: '',
   email: '',
   source: '',
@@ -47,12 +47,12 @@ watch(
         @click="toggleModal('contact-form', 'open')"
         class="h-10 cursor-pointer flex items-center px-4 py-2 bg-samio-orange hover:text-samio-orange duration-300 border-samio-orange hover:border transition-all hover:scale-110 hover:bg-samio-cream text-samio-green text-sm font-medium rounded-md shadow-sm focus:outline-none"
       >
-        New
+        New Prospect
       </button>
 
       <div class="items-center flex gap-4 text-samio-green">
         <div class="flex items-center gap-1">
-          <label
+          <label class="cursor-pointer"
             >Filter name:
             <input
               class="cursor-pointer h-8 px-2 border py-1 rounded-lg border-samio-orange focus:ring-0 focus:ring-offset-0 focus:outline-none active:outline-none active:ring-0 text-right w-28 bg-white"

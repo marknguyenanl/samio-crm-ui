@@ -16,7 +16,7 @@ const onSubmitContactForm = async () => {
 
     // clear form only if request succeeded
     props.form.name = ''
-    props.form.stage = 'lead'
+    props.form.stage = 'prospect'
     props.form.tel = ''
     props.form.email = ''
     props.form.source = ''
@@ -45,27 +45,7 @@ const onSubmitContactForm = async () => {
             class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
           />
         </div>
-        <div class="flex flex-col">
-          <label for="stage" class="text-samio-green mb-1 text-sm font-medium">
-            Stage: <span class="text-red-500">*</span>
-          </label>
-          <!-- todo: update select input for edit contact form -->
-          <select
-            class="border shadow-sm rounded-sm py-2 border-gray-300 px-4 text-samio-green mb-1 text-sm font-medium"
-            v-model="form.stage"
-          >
-            <option>Lead</option>
-            <option>Customer</option>
-          </select>
 
-          <!-- <input -->
-          <!--   id="stage" -->
-          <!--   v-model="form.stage" -->
-          <!--   type="text" -->
-          <!--   name="stage" -->
-          <!--   class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm" -->
-          <!-- /> -->
-        </div>
         <div class="flex flex-col">
           <label for="tel" class="text-samio-green mb-1 text-sm font-medium">Tel:</label>
           <input

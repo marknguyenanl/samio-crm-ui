@@ -3,7 +3,7 @@ import ModalLayout from '@/layouts/ModalLayout.vue'
 import { useContactStore } from '@/stores/contact'
 import { useModalStore } from '@/stores/modal'
 import { reactive } from 'vue'
-const props = defineProps(['lead'])
+const props = defineProps(['contact'])
 const emit = defineEmits<{
   (e: 'close'): void
 }>()
@@ -16,13 +16,13 @@ const { toggleModal } = useModalStore()
 const contactStore = useContactStore()
 
 const leadInput = reactive({
-  id: props.lead.id,
-  name: props.lead.name,
-  stage: props.lead.stage,
-  tel: props.lead.tel,
-  email: props.lead.email,
-  source: props.lead.source,
-  address: props.lead.address,
+  id: props.contact.id,
+  name: props.contact.name,
+  stage_id: props.contact.stage_id,
+  tel: props.contact.tel,
+  email: props.contact.email,
+  source: props.contact.source,
+  address: props.contact.address,
 })
 
 // todo: optimize with optimistic update
@@ -48,30 +48,6 @@ const onUpdateContact = async () => {
             v-model="leadInput.name"
             class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
           />
-        </div>
-
-        <!-- todo: update select input for edit contact form -->
-        <div class="flex flex-col">
-          <label for="stage" class="text-samio-green mb-1 text-sm font-medium">
-            Stage: <span class="text-red-500">*</span>
-          </label>
-          <!-- todo: update select input for edit contact form -->
-          <select
-            class="border shadow-sm rounded-sm py-2 border-gray-300 px-4 text-samio-green mb-1 text-sm font-medium"
-            v-model="leadInput.stage"
-            @change="leadInput.stage = (leadInput.stage || '').toLowerCase()"
-          >
-            <option value="lead">Lead</option>
-            <option value="customer">Customer</option>
-          </select>
-
-          <!-- <input -->
-          <!--   id="stage" -->
-          <!--   v-model="form.stage" -->
-          <!--   type="text" -->
-          <!--   name="stage" -->
-          <!--   class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm" -->
-          <!-- /> -->
         </div>
 
         <div class="flex flex-col">

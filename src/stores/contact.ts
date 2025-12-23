@@ -4,7 +4,10 @@ import { defineStore } from 'pinia'
 import { reactive, ref } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 
-export type ContactFilter = { search: string | null, stage: string | null }
+export type ContactFilter = {
+  search: string | null,
+  stage_id: string | null | 'lead' | 'qualified' | 'opportunity' | 'customer' | 'churned'
+}
 
 
 // todo: apply optimistic update for useContactStore
@@ -14,7 +17,7 @@ export const useContactStore = defineStore('contacts', () => {
   const contactsById = ref<Record<string, ContactProps>>({})
   const filter = reactive<ContactFilter>({
     search: null,
-    stage: null,
+    stage_id: null,
   })
   const currentPage = ref(1)
   const perPage = ref(15)
@@ -45,8 +48,8 @@ export const useContactStore = defineStore('contacts', () => {
     if (effectiveFilter?.search?.trim()) {
       params.search = effectiveFilter.search
     }
-    if (effectiveFilter?.stage?.trim()) {
-      params.stage = effectiveFilter.stage
+    if (effectiveFilter?.stage_id?.trim()) {
+      params.stage = effectiveFilter.stage_id
     }
 
     try {

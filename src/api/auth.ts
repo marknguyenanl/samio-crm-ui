@@ -1,5 +1,4 @@
 import { api } from "@/api/axios.ts"
-import axios from "axios";
 
 export interface LoginPayload {
   email: string;
@@ -12,7 +11,8 @@ export async function loginAPI(data: LoginPayload) {
     const response = await api.post('/v1/login', { ...data })
     return response.data
   } catch (error) {
-    console.error('error is: ', error)
+    console.error('Login failed:', error)
+    throw error
   }
 }
 
@@ -29,6 +29,6 @@ export async function registerAPI(data: LoginPayload) {
     return response.status
   } catch (error) {
     console.error('Cannot log in with error: ', error)
-    return null
+    throw error
   }
 }

@@ -15,7 +15,6 @@ onMounted(() => {
       await auth.login(demoUser)
     } catch (error) {
       console.error('Demo login failed', error)
-      // fix: use toast here
     }
   }, 1000)
 })
