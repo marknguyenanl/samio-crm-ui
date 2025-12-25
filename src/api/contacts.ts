@@ -74,9 +74,9 @@ export const deleteContactAPI = async (id: string): Promise<void> => {
   }
 };
 
-export const getDailyLeads = async () => {
+export const getTotalLeadsPerDay = async () => {
   try {
-    const res = await api.get('/v1/contacts/daily-leads')
+    const res = await api.get('/v1/metrics/total-leads-per-day')
     return res.data
   } catch (error) {
     throw error

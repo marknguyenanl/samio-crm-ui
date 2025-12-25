@@ -3,29 +3,17 @@ import * as am5 from '@amcharts/amcharts5'
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated'
 import * as am5xy from '@amcharts/amcharts5/xy'
 import { onBeforeUnmount, onMounted, useTemplateRef } from 'vue'
-import { getDailyLeads } from '@/api/contacts'
-
-// Sample data: total leads per day
-
-// const leadsPerDay = [
-//   { date: new Date(2025, 0, 1).getTime(), totalLeads: 5 },
-//   { date: new Date(2025, 0, 2).getTime(), totalLeads: 8 },
-//   { date: new Date(2025, 0, 3).getTime(), totalLeads: 3 },
-//   { date: new Date(2025, 0, 4).getTime(), totalLeads: 10 },
-//   { date: new Date(2025, 0, 5).getTime(), totalLeads: 6 },
-//   { date: new Date(2025, 0, 6).getTime(), totalLeads: 12 },
-//   { date: new Date(2025, 0, 7).getTime(), totalLeads: 9 },
-// ]
+import { getTotalLeadsPerDay } from '@/api/contacts'
 
 const newLeadsChart = useTemplateRef('leadsPerDay')
 let root = null
 
 onMounted(async () => {
-  const res = await getDailyLeads()
+  const res = await getTotalLeadsPerDay()
   const leadsPerDay = res.data
     .map((item) => ({
       date: Date.parse(item.date),
-      total: item.total,
+      total: item.total_leads,
     }))
     .sort((a, b) => a.date - b.date)
 
